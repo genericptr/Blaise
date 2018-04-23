@@ -1,0 +1,420 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 48;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		531B95572082ED5F00FAA1EA /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 531B95562082ED5F00FAA1EA /* TestView.swift */; };
+		531B955A208300DD00FAA1EA /* RenderTexture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 531B9558208300DD00FAA1EA /* RenderTexture.swift */; };
+		531B955B208300DD00FAA1EA /* RenderContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 531B9559208300DD00FAA1EA /* RenderContext.swift */; };
+		531B955D2083392F00FAA1EA /* Matrix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 531B955C2083392F00FAA1EA /* Matrix.swift */; };
+		53230D5320898DD0006CD9D9 /* ColorPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53230D5220898DD0006CD9D9 /* ColorPicker.swift */; };
+		5346AEAD2079CFEA00DEC2FE /* Brush.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5346AEAC2079CFEA00DEC2FE /* Brush.swift */; };
+		53CE72CF207F0DEE003C3A2B /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53CE72CE207F0DEE003C3A2B /* Utils.swift */; };
+		53CE72D1207F169E003C3A2B /* GLCanvasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53CE72D0207F169E003C3A2B /* GLCanvasView.swift */; };
+		53CE72D3207F17B7003C3A2B /* Styles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53CE72D2207F17B7003C3A2B /* Styles.swift */; };
+		53CE72D520804D92003C3A2B /* UndoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53CE72D420804D92003C3A2B /* UndoManager.swift */; };
+		53CE72D72081A0D2003C3A2B /* Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53CE72D62081A0D2003C3A2B /* Types.swift */; };
+		53D61BDE2079BAD40051E8E6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53D61BDD2079BAD40051E8E6 /* AppDelegate.swift */; };
+		53D61BE02079BAD40051E8E6 /* Document.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53D61BDF2079BAD40051E8E6 /* Document.swift */; };
+		53D61BE32079BAD40051E8E6 /* Document.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53D61BE12079BAD40051E8E6 /* Document.xib */; };
+		53D61BE52079BAD40051E8E6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 53D61BE42079BAD40051E8E6 /* Assets.xcassets */; };
+		53D61BE82079BAD40051E8E6 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53D61BE62079BAD40051E8E6 /* MainMenu.xib */; };
+		53DF02F02084B3340065B70D /* GLUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53DF02EF2084B3340065B70D /* GLUtils.swift */; };
+		53DF02F42084C7460065B70D /* MemUtils.c in Sources */ = {isa = PBXBuildFile; fileRef = 53DF02F32084C7460065B70D /* MemUtils.c */; };
+		53DF02F820858DC50065B70D /* CGUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53DF02F720858DC50065B70D /* CGUtils.swift */; };
+		53E5A3FE2086ED1100380422 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53E5A3FD2086ED1100380422 /* Tests.swift */; };
+		53E5A400208856E000380422 /* TypeUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53E5A3FF208856E000380422 /* TypeUtils.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		531B95562082ED5F00FAA1EA /* TestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestView.swift; sourceTree = "<group>"; };
+		531B9558208300DD00FAA1EA /* RenderTexture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenderTexture.swift; sourceTree = "<group>"; };
+		531B9559208300DD00FAA1EA /* RenderContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenderContext.swift; sourceTree = "<group>"; };
+		531B955C2083392F00FAA1EA /* Matrix.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Matrix.swift; sourceTree = "<group>"; };
+		53230D5220898DD0006CD9D9 /* ColorPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPicker.swift; sourceTree = "<group>"; };
+		5346AEAC2079CFEA00DEC2FE /* Brush.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Brush.swift; sourceTree = "<group>"; };
+		53CE72CE207F0DEE003C3A2B /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
+		53CE72D0207F169E003C3A2B /* GLCanvasView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GLCanvasView.swift; sourceTree = "<group>"; };
+		53CE72D2207F17B7003C3A2B /* Styles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Styles.swift; sourceTree = "<group>"; };
+		53CE72D420804D92003C3A2B /* UndoManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UndoManager.swift; sourceTree = "<group>"; };
+		53CE72D62081A0D2003C3A2B /* Types.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Types.swift; sourceTree = "<group>"; };
+		53D61BDA2079BAD40051E8E6 /* Blaise.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Blaise.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		53D61BDD2079BAD40051E8E6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		53D61BDF2079BAD40051E8E6 /* Document.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Document.swift; sourceTree = "<group>"; };
+		53D61BE22079BAD40051E8E6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/Document.xib; sourceTree = "<group>"; };
+		53D61BE42079BAD40051E8E6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		53D61BE72079BAD40051E8E6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		53D61BE92079BAD40051E8E6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		53D61BEA2079BAD40051E8E6 /* Blaise.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Blaise.entitlements; sourceTree = "<group>"; };
+		53DF02EF2084B3340065B70D /* GLUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GLUtils.swift; sourceTree = "<group>"; };
+		53DF02F12084C7460065B70D /* Blaise-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Blaise-Bridging-Header.h"; sourceTree = "<group>"; };
+		53DF02F22084C7460065B70D /* MemUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MemUtils.h; sourceTree = "<group>"; };
+		53DF02F32084C7460065B70D /* MemUtils.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = MemUtils.c; sourceTree = "<group>"; };
+		53DF02F720858DC50065B70D /* CGUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGUtils.swift; sourceTree = "<group>"; };
+		53E5A3FD2086ED1100380422 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
+		53E5A3FF208856E000380422 /* TypeUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeUtils.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		53D61BD72079BAD40051E8E6 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		53D61BD12079BAD40051E8E6 = {
+			isa = PBXGroup;
+			children = (
+				53D61BDC2079BAD40051E8E6 /* Blaise */,
+				53D61BDB2079BAD40051E8E6 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		53D61BDB2079BAD40051E8E6 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				53D61BDA2079BAD40051E8E6 /* Blaise.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		53D61BDC2079BAD40051E8E6 /* Blaise */ = {
+			isa = PBXGroup;
+			children = (
+				53D61BDD2079BAD40051E8E6 /* AppDelegate.swift */,
+				53D61BDF2079BAD40051E8E6 /* Document.swift */,
+				53CE72D0207F169E003C3A2B /* GLCanvasView.swift */,
+				531B9559208300DD00FAA1EA /* RenderContext.swift */,
+				531B9558208300DD00FAA1EA /* RenderTexture.swift */,
+				53CE72D420804D92003C3A2B /* UndoManager.swift */,
+				53230D5220898DD0006CD9D9 /* ColorPicker.swift */,
+				53CE72D2207F17B7003C3A2B /* Styles.swift */,
+				5346AEAC2079CFEA00DEC2FE /* Brush.swift */,
+				531B955C2083392F00FAA1EA /* Matrix.swift */,
+				53CE72D62081A0D2003C3A2B /* Types.swift */,
+				53CE72CE207F0DEE003C3A2B /* Utils.swift */,
+				53DF02F720858DC50065B70D /* CGUtils.swift */,
+				53DF02EF2084B3340065B70D /* GLUtils.swift */,
+				53E5A3FF208856E000380422 /* TypeUtils.swift */,
+				53E5A3FD2086ED1100380422 /* Tests.swift */,
+				531B95562082ED5F00FAA1EA /* TestView.swift */,
+				53DF02F520858C900065B70D /* C */,
+				53DF02F620858CDB0065B70D /* Resources */,
+			);
+			path = Blaise;
+			sourceTree = "<group>";
+		};
+		53DF02F520858C900065B70D /* C */ = {
+			isa = PBXGroup;
+			children = (
+				53DF02F22084C7460065B70D /* MemUtils.h */,
+				53DF02F32084C7460065B70D /* MemUtils.c */,
+				53DF02F12084C7460065B70D /* Blaise-Bridging-Header.h */,
+			);
+			name = C;
+			sourceTree = "<group>";
+		};
+		53DF02F620858CDB0065B70D /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				53D61BE12079BAD40051E8E6 /* Document.xib */,
+				53D61BE62079BAD40051E8E6 /* MainMenu.xib */,
+				53D61BE42079BAD40051E8E6 /* Assets.xcassets */,
+				53D61BE92079BAD40051E8E6 /* Info.plist */,
+				53D61BEA2079BAD40051E8E6 /* Blaise.entitlements */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		53D61BD92079BAD40051E8E6 /* Blaise */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 53D61BED2079BAD40051E8E6 /* Build configuration list for PBXNativeTarget "Blaise" */;
+			buildPhases = (
+				53D61BD62079BAD40051E8E6 /* Sources */,
+				53D61BD72079BAD40051E8E6 /* Frameworks */,
+				53D61BD82079BAD40051E8E6 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Blaise;
+			productName = Blaise;
+			productReference = 53D61BDA2079BAD40051E8E6 /* Blaise.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		53D61BD22079BAD40051E8E6 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0900;
+				LastUpgradeCheck = 0900;
+				ORGANIZATIONNAME = "The Alchemist Guild";
+				TargetAttributes = {
+					53D61BD92079BAD40051E8E6 = {
+						CreatedOnToolsVersion = 9.0;
+						LastSwiftMigration = 0900;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 53D61BD52079BAD40051E8E6 /* Build configuration list for PBXProject "Blaise" */;
+			compatibilityVersion = "Xcode 8.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 53D61BD12079BAD40051E8E6;
+			productRefGroup = 53D61BDB2079BAD40051E8E6 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				53D61BD92079BAD40051E8E6 /* Blaise */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		53D61BD82079BAD40051E8E6 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				53D61BE52079BAD40051E8E6 /* Assets.xcassets in Resources */,
+				53D61BE32079BAD40051E8E6 /* Document.xib in Resources */,
+				53D61BE82079BAD40051E8E6 /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		53D61BD62079BAD40051E8E6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				53DF02F02084B3340065B70D /* GLUtils.swift in Sources */,
+				53DF02F42084C7460065B70D /* MemUtils.c in Sources */,
+				53D61BE02079BAD40051E8E6 /* Document.swift in Sources */,
+				53D61BDE2079BAD40051E8E6 /* AppDelegate.swift in Sources */,
+				531B955B208300DD00FAA1EA /* RenderContext.swift in Sources */,
+				53230D5320898DD0006CD9D9 /* ColorPicker.swift in Sources */,
+				531B95572082ED5F00FAA1EA /* TestView.swift in Sources */,
+				53CE72D1207F169E003C3A2B /* GLCanvasView.swift in Sources */,
+				53CE72D72081A0D2003C3A2B /* Types.swift in Sources */,
+				53E5A400208856E000380422 /* TypeUtils.swift in Sources */,
+				53CE72D3207F17B7003C3A2B /* Styles.swift in Sources */,
+				53E5A3FE2086ED1100380422 /* Tests.swift in Sources */,
+				53DF02F820858DC50065B70D /* CGUtils.swift in Sources */,
+				5346AEAD2079CFEA00DEC2FE /* Brush.swift in Sources */,
+				531B955D2083392F00FAA1EA /* Matrix.swift in Sources */,
+				531B955A208300DD00FAA1EA /* RenderTexture.swift in Sources */,
+				53CE72D520804D92003C3A2B /* UndoManager.swift in Sources */,
+				53CE72CF207F0DEE003C3A2B /* Utils.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		53D61BE12079BAD40051E8E6 /* Document.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				53D61BE22079BAD40051E8E6 /* Base */,
+			);
+			name = Document.xib;
+			sourceTree = "<group>";
+		};
+		53D61BE62079BAD40051E8E6 /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				53D61BE72079BAD40051E8E6 /* Base */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		53D61BEB2079BAD40051E8E6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		53D61BEC2079BAD40051E8E6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+			};
+			name = Release;
+		};
+		53D61BEE2079BAD40051E8E6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = Blaise/Blaise.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = Blaise/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				PRODUCT_BUNDLE_IDENTIFIER = com.alchemistguild.Blaise;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Blaise/Blaise-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 4.0;
+			};
+			name = Debug;
+		};
+		53D61BEF2079BAD40051E8E6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = Blaise/Blaise.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = Blaise/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				PRODUCT_BUNDLE_IDENTIFIER = com.alchemistguild.Blaise;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Blaise/Blaise-Bridging-Header.h";
+				SWIFT_VERSION = 4.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		53D61BD52079BAD40051E8E6 /* Build configuration list for PBXProject "Blaise" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				53D61BEB2079BAD40051E8E6 /* Debug */,
+				53D61BEC2079BAD40051E8E6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		53D61BED2079BAD40051E8E6 /* Build configuration list for PBXNativeTarget "Blaise" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				53D61BEE2079BAD40051E8E6 /* Debug */,
+				53D61BEF2079BAD40051E8E6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 53D61BD22079BAD40051E8E6 /* Project object */;
+}

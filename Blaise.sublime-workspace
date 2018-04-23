@@ -1,0 +1,1973 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"func",
+				" \t func unknown -> Bool"
+			],
+			[
+				"file",
+				"file_base_name"
+			],
+			[
+				"print",
+				"print_r"
+			],
+			[
+				"Int",
+				"Int64"
+			],
+			[
+				"I",
+				"Int64"
+			],
+			[
+				"for",
+				"for\tfor … do"
+			],
+			[
+				"TPix",
+				"TPixelMatrix"
+			],
+			[
+				"i",
+				"index"
+			],
+			[
+				"TMa",
+				"TMatrixTablePtr"
+			],
+			[
+				"pixel",
+				"pixelFBO"
+			],
+			[
+				"curre",
+				"currentDrawBounds"
+			],
+			[
+				"curen",
+				"currentDrawBounds"
+			],
+			[
+				"texture",
+				"textureID"
+			],
+			[
+				"pixe",
+				"pixelFBO"
+			],
+			[
+				"dra",
+				"drawFboId"
+			],
+			[
+				"TPi",
+				"TPixelMatrix"
+			],
+			[
+				"TMatrx",
+				"TMatrixIndex"
+			],
+			[
+				"fo",
+				"for\tFor Loop"
+			],
+			[
+				"pr",
+				"printf\tprintf …"
+			],
+			[
+				"F",
+				"Flocking"
+			],
+			[
+				"Calc",
+				"CalculateAlignmentVector"
+			],
+			[
+				"prin",
+				"printf\tprintf …"
+			],
+			[
+				"ps",
+				"physics"
+			],
+			[
+				"mouse",
+				"mouseWindowPosition"
+			],
+			[
+				"ren",
+				"renderComponent"
+			],
+			[
+				"fa",
+				"fragColor"
+			],
+			[
+				"Update",
+				"UpdateDisplay"
+			],
+			[
+				"Render",
+				"RendererDisplay"
+			],
+			[
+				"Ren",
+				"Renderer"
+			],
+			[
+				"Compo",
+				"Component"
+			],
+			[
+				"Apply",
+				"ApplyTransform"
+			],
+			[
+				"typ",
+				"typeid"
+			],
+			[
+				"enti",
+				"entity"
+			],
+			[
+				"Rend",
+				"RenderComponent"
+			],
+			[
+				"comp",
+				"components"
+			],
+			[
+				"grid",
+				"gridPos"
+			],
+			[
+				"bloc",
+				"blockBuffer"
+			],
+			[
+				"def",
+				"def\t#ifndef … #define … #endif"
+			],
+			[
+				"re",
+				"retainCount"
+			],
+			[
+				"pri",
+				"private"
+			],
+			[
+				"m_",
+				"m_height"
+			],
+			[
+				"prn",
+				"PrintVec"
+			],
+			[
+				"remov",
+				"removeRows"
+			],
+			[
+				"test",
+				"testShape"
+			],
+			[
+				"matrix",
+				"matrixUnstable"
+			],
+			[
+				"update",
+				"updateMatrixDelay"
+			],
+			[
+				"next",
+				"nextLineDelay"
+			],
+			[
+				"BLCO",
+				"BLOCK_SIZE"
+			],
+			[
+				"back",
+				"backgroundBuffer"
+			],
+			[
+				"vert",
+				"vertexBuffer"
+			],
+			[
+				"BLO",
+				"BLOCK_SIZE"
+			],
+			[
+				"vertex",
+				"vertexBuffer"
+			],
+			[
+				"GLV",
+				"GLVertexBuffer"
+			],
+			[
+				"tex",
+				"texCoord"
+			],
+			[
+				"cube",
+				"cube_faces"
+			],
+			[
+				"GL_TR",
+				"GL_TRIANGLES"
+			],
+			[
+				"GLTex",
+				"GLTexVertex"
+			],
+			[
+				"GLTe",
+				"GLTexVertex"
+			],
+			[
+				"atr",
+				"attributeIndex"
+			],
+			[
+				"GLE",
+				"GLenum"
+			],
+			[
+				"progr",
+				"program"
+			],
+			[
+				"GLU",
+				"GLuint"
+			],
+			[
+				"err",
+				"errorLog"
+			],
+			[
+				"n",
+				"NULL"
+			],
+			[
+				"fra",
+				"fragmentShaderSource"
+			],
+			[
+				"fragme",
+				"fragmentShaderID"
+			],
+			[
+				"sum",
+				"sum_callback"
+			],
+			[
+				"outFl",
+				"outFlags_0"
+			],
+			[
+				"render",
+				"renderDelegate"
+			],
+			[
+				"in",
+				"inherited"
+			],
+			[
+				"TRender",
+				"TMapSortableIsoSpriteRenderer"
+			],
+			[
+				"TMapSort",
+				"TMapSortableIsoSpriteRenderer"
+			],
+			[
+				"make",
+				"MakePartVertex"
+			],
+			[
+				"TSpriteF",
+				"TSpriteFaceRenderer"
+			],
+			[
+				"draw",
+				"drawAllLevels"
+			],
+			[
+				"TMapTileSPrte",
+				"TMapTileSpriteRenderer"
+			],
+			[
+				"TI",
+				"TSpriteIsoFaceRenderer"
+			],
+			[
+				"TGLTe",
+				"TGLTextureID"
+			],
+			[
+				"TGLText",
+				"TGLTexQuadPtr"
+			],
+			[
+				"TGLU",
+				"TGLTextureID"
+			],
+			[
+				"TGlTex",
+				"TGLTexVertexArrayTemplatePtr"
+			],
+			[
+				"GetTileCoord",
+				"GetTileCoordForPosition"
+			],
+			[
+				"GetTile",
+				"GetTileCoord"
+			],
+			[
+				"Test",
+				"TestSortingFlag"
+			],
+			[
+				"main",
+				"mainLayer"
+			],
+			[
+				"debg",
+				"debugModeName"
+			],
+			[
+				"Sort",
+				"SortFrameBufferEnabled"
+			],
+			[
+				"GetWorld",
+				"GetWorldPosition"
+			],
+			[
+				"GetWroldRe",
+				"GetWorldFrame"
+			],
+			[
+				"GetFace",
+				"GetFaceFrame"
+			],
+			[
+				"RemoveS",
+				"RemoveSortingFlags"
+			],
+			[
+				"occ",
+				"occlusionDepth"
+			],
+			[
+				"kVert",
+				"kVertexFlagOcclusionKey"
+			],
+			[
+				"Max",
+				"MaxFlags"
+			],
+			[
+				"sort",
+				"sortLevel"
+			],
+			[
+				"static",
+				"staticTexelDepth"
+			],
+			[
+				"stati",
+				"staticTexelLevel"
+			],
+			[
+				"buff",
+				"buffer_value"
+			],
+			[
+				"tile",
+				"tilecoord"
+			],
+			[
+				"max",
+				"maxTiles"
+			],
+			[
+				"impact",
+				"impactPoint"
+			],
+			[
+				"impa",
+				"impactPoint"
+			],
+			[
+				"Terr",
+				"TerrainMatrix"
+			],
+			[
+				"floor",
+				"floorZ"
+			],
+			[
+				"GetTerrain",
+				"GetTerrainHeightAtPosition"
+			],
+			[
+				"terra",
+				"Terrain"
+			],
+			[
+				"GetTileC",
+				"GetTileCoordForPosition"
+			],
+			[
+				"World",
+				"WorldMousePosition"
+			],
+			[
+				"kTileSor",
+				"kTileSortingRamp"
+			],
+			[
+				"TPO",
+				"TPoint3D"
+			],
+			[
+				"edg",
+				"edgeX"
+			],
+			[
+				"TDebug",
+				"TDebugLogList"
+			],
+			[
+				"TPoint",
+				"TPoint3D"
+			],
+			[
+				"line",
+				"lineIndex"
+			],
+			[
+				"terr",
+				"terrain_collision"
+			],
+			[
+				"terrain",
+				"terrain_collision"
+			],
+			[
+				"c",
+				"comment\tcomment { ... }"
+			],
+			[
+				"TDEbug",
+				"TDebugLogEntry"
+			],
+			[
+				"world",
+				"worldPosition"
+			],
+			[
+				"TDebugLog",
+				"TDebugLogEntryArray"
+			],
+			[
+				"GetTerra",
+				"GetTerrain"
+			],
+			[
+				"WorldT",
+				"WorldTileCoord"
+			],
+			[
+				"kIsoSpritePoly",
+				"kIsoSpritePolyFlat"
+			],
+			[
+				"ca",
+				"canvas"
+			],
+			[
+				"Is",
+				"IsZero"
+			],
+			[
+				"TRec",
+				"TRect3D"
+			],
+			[
+				"Terrain",
+				"TerrainIsRamp"
+			],
+			[
+				"TileIs",
+				"TileIsRamp"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "Blaise/RenderContext.swift",
+			"settings":
+			{
+				"buffer_size": 5198,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/Users/ryanjoseph/Library/Application Support/Sublime Text 3/Packages/User/build_swift.php",
+			"settings":
+			{
+				"buffer_size": 787,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/Users/ryanjoseph/Library/Application Support/Sublime Text 3/Packages/User/Swift.sublime-build",
+			"settings":
+			{
+				"buffer_size": 506,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+		[
+			[
+				[
+					"Packages/C# Compile & Run/CSharpSingleFileBuild.sublime-build",
+					""
+				],
+				[
+					"Packages/C# Compile & Run/CSharpSingleFileBuild.sublime-build",
+					"Run"
+				]
+			],
+			[
+				"Packages/C# Compile & Run/CSharpSingleFileBuild.sublime-build",
+				""
+			]
+		],
+		[
+			[
+				[
+					"Packages/C++/C++ Single File.sublime-build",
+					""
+				],
+				[
+					"Packages/C++/C++ Single File.sublime-build",
+					"Run"
+				]
+			],
+			[
+				"Packages/C++/C++ Single File.sublime-build",
+				"Run"
+			]
+		],
+		[
+			[
+				[
+					"Packages/C++/C++ Single File.sublime-build",
+					""
+				],
+				[
+					"Packages/C++/C++ Single File.sublime-build",
+					"Run"
+				],
+				[
+					"Packages/C++/C++ Single File.sublime-build",
+					"Debug"
+				]
+			],
+			[
+				"Packages/C++/C++ Single File.sublime-build",
+				"Run"
+			]
+		],
+		[
+			[
+				[
+					"Packages/C++/C++ Single File.sublime-build",
+					""
+				],
+				[
+					"Packages/C++/C++ Single File.sublime-build",
+					"Run"
+				],
+				[
+					"Packages/C++/C++ Single File.sublime-build",
+					"Debug"
+				],
+				[
+					"Packages/C++/C++ Single File.sublime-build",
+					"Xcode"
+				]
+			],
+			[
+				"Packages/C++/C++ Single File.sublime-build",
+				"Run"
+			]
+		],
+		[
+			[
+				[
+					"Packages/FPC/fpc.sublime-build",
+					""
+				],
+				[
+					"Packages/FPC/fpc.sublime-build",
+					"Debug"
+				]
+			],
+			[
+				"Packages/FPC/fpc.sublime-build",
+				""
+			]
+		],
+		[
+			[
+				[
+					"Packages/FPC/fpc.sublime-build",
+					""
+				],
+				[
+					"Packages/FPC/fpc.sublime-build",
+					"Debug"
+				],
+				[
+					"Packages/FPC/fpc.sublime-build",
+					"BootDebug"
+				]
+			],
+			[
+				"Packages/FPC/fpc.sublime-build",
+				"Debug"
+			]
+		]
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 75.0,
+		"last_filter": "removeP",
+		"selected_items":
+		[
+			[
+				"removeP",
+				"Package Control: Remove Package"
+			],
+			[
+				"Package Control: ",
+				"Package Control: Enable Package"
+			],
+			[
+				"remov",
+				"Package Control: Remove Package"
+			],
+			[
+				"remove",
+				"Package Control: Remove Package"
+			],
+			[
+				"Package Control: insta",
+				"Package Control: Install Package"
+			],
+			[
+				"Package Control: remove",
+				"Package Control: Remove Package"
+			],
+			[
+				"Package Control: ins",
+				"Package Control: Install Package"
+			],
+			[
+				"resou",
+				"PackageResourceViewer: Open Resource"
+			],
+			[
+				"Package Control: in",
+				"Package Control: Install Package"
+			],
+			[
+				"reso",
+				"PackageResourceViewer: Open Resource"
+			],
+			[
+				"Uppe",
+				"Convert Case: Upper Case"
+			],
+			[
+				"upper",
+				"Convert Case: Upper Case"
+			],
+			[
+				"res",
+				"PackageResourceViewer: Open Resource"
+			],
+			[
+				"c#",
+				"Set Syntax: C#"
+			],
+			[
+				"ja",
+				"Set Syntax: JavaScript"
+			],
+			[
+				"Package Control: e",
+				"Package Control: List Packages"
+			],
+			[
+				"resu",
+				"PackageResourceViewer: Open Resource"
+			],
+			[
+				"c++",
+				"Set Syntax: C++"
+			],
+			[
+				"resour",
+				"PackageResourceViewer: Open Resource"
+			],
+			[
+				"inst",
+				"Package Control: Install Package"
+			],
+			[
+				"resourc",
+				"PackageResourceViewer: Open Resource"
+			],
+			[
+				"resource",
+				"PackageResourceViewer: Open Resource"
+			],
+			[
+				"syntax: fpc",
+				"Set Syntax: FPC"
+			],
+			[
+				"FPC",
+				"Set Syntax: FPC"
+			],
+			[
+				"dis",
+				"Package Control: Disable Package"
+			],
+			[
+				"enabl",
+				"Package Control: Enable Package"
+			],
+			[
+				"ins",
+				"Package Control: Install Package"
+			],
+			[
+				"syb",
+				"Set Syntax: JavaScript (Babel)"
+			],
+			[
+				"pack",
+				"Package Control: Install Package"
+			],
+			[
+				"html",
+				"Snippet: htmlboiler"
+			],
+			[
+				"Package Control: inst",
+				"Package Control: Install Package"
+			],
+			[
+				"enab",
+				"Package Control: Enable Package"
+			],
+			[
+				"instal",
+				"Package Control: Install Package"
+			],
+			[
+				"brows",
+				"Preferences: Browse Packages"
+			],
+			[
+				"term",
+				"Terminal View: Open Bash Terminal"
+			],
+			[
+				"termina",
+				"Terminal View: Open Bash Terminal"
+			],
+			[
+				"Package Control: enabl",
+				"Package Control: Enable Package"
+			],
+			[
+				"Package Control: dis",
+				"Package Control: Disable Package"
+			],
+			[
+				"Package Control: di",
+				"Package Control: Disable Package"
+			],
+			[
+				"find",
+				"Find: In Project"
+			],
+			[
+				"Package Control: IN",
+				"Package Control: Install Package"
+			],
+			[
+				"goto",
+				"Goto Documentation"
+			],
+			[
+				"r",
+				"Rot13 Selection"
+			],
+			[
+				"Package Control: enab",
+				"Package Control: Enable Package"
+			],
+			[
+				"Package Control: d",
+				"Package Control: Disable Package"
+			],
+			[
+				"Package Control: instal",
+				"Package Control: Install Package"
+			],
+			[
+				"Package Control: p",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 410.0
+	},
+	"console":
+	{
+		"height": 253.0,
+		"history":
+		[
+			"ff",
+			"view.run_command(\"toggle_break_point\")",
+			"view.run_command(\"set_mark\")",
+			"add_regions",
+			"view.run_command(\"set_mark\")",
+			"f",
+			"window.run_command(\"find_under_expand\")",
+			"sublime.run_command(\"find_under_expand\")",
+			"view.run_command(\"find_under_expand\")",
+			"rot13",
+			"view.runCommand('rot13')",
+			"rot13",
+			"view.runCommand('rot13')",
+			"whoami",
+			"view.erase_phantoms(\"test\");",
+			"view.run_command(\"example\")",
+			"sdf",
+			"os.system(\"cls\")",
+			"os.system(\"clear\")",
+			"console.clear()",
+			"clear()",
+			"clear",
+			"sublime.version()"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/Users/ryanjoseph/Documents/Xcode/Blaise/Blaise"
+	],
+	"file_history":
+	[
+		"/Users/ryanjoseph/Library/Application Support/Sublime Text 3/Packages/User/swift.sublime-build",
+		"/Users/ryanjoseph/Library/Application Support/Sublime Text 3/Packages/C# Compile & Run/CSharpSingleFileBuild.sublime-build",
+		"/Users/ryanjoseph/Library/Application Support/Sublime Text 3/Packages/C++/C++ Single File.sublime-build",
+		"/Users/ryanjoseph/Library/Application Support/Sublime Text 3/Packages/C#/Build.sublime-syntax",
+		"/Users/ryanjoseph/Desktop/Projects/Games/OpenGL-Sandbox/Units/Base/UGeometry.pas",
+		"/Users/ryanjoseph/Desktop/Projects/Games/OpenGL-Sandbox/Settings/settings-console.todo",
+		"/Developer/Projects/OpenGL-Tests/Sources/Tests/Test_1_VertAttribs.pas",
+		"/Developer/Projects/OpenGL-Tests/Sources/GLUtils.pas",
+		"/Developer/Projects/OpenGL-Tests/Sources/SDL.pas",
+		"/Developer/Projects/OpenGL-Tests/Sources/Main.pas",
+		"/Developer/Projects/OpenGL-Tests/Sources/SDLUtils.pas",
+		"/Developer/Projects/OpenGL-Tests/Sources/Tests/Test_5_Iso.pas",
+		"/Developer/Projects/OpenGL-Tests/Sources/Tests/Test_6_IsoCubeMap.pas",
+		"/Developer/Projects/OpenGL-Tests/Sources/Tests/Test_2_Jumps.pas",
+		"/Developer/Projects/OpenGL-Tests/Sources/Tests/Test_3_Particles.pas",
+		"/Developer/Projects/OpenGL-Tests/Sources/Tests/Legacy/Sandbox_2.pas",
+		"/Developer/Projects/OpenGL-Tests/Sources/Tests/Legacy/Sandbox_3.pas",
+		"/Developer/Projects/OpenGL-Tests/Sources/Tests/Legacy/Sandbox_4.pas",
+		"/Developer/Projects/OpenGL-Tests/Sources/Tests/",
+		"/Users/ryanjoseph/Desktop/Projects/Games/OpenGL-Sandbox/Units/Base/UTypes.pas",
+		"/Developer/Projects/OpenGL-Tests/Sources/Tests/Legacy/Sandbox_1.pas",
+		"/Developer/Projects/OpenGL-Tests/Settings/settings-console.todo",
+		"/Developer/Projects/OpenGL-Tests/Sources/Tests/Main.pas",
+		"/Users/ryanjoseph/Desktop/Projects/Games/OpenGL-Sandbox/Units/Base/UMatrix.pas",
+		"/Developer/Projects/OpenGL-Tests/Sources/Tests/wu.pas",
+		"/Developer/Projects/OpenGL-Tests/Sources/Tests/Test_4_WorldGen.pas",
+		"/Developer/Projects/OpenGL-Tests/Sources/GLTypes.pas",
+		"/Users/ryanjoseph/Library/Application Support/Sublime Text 3/Packages/C++/build_c++.php",
+		"/Developer/Projects/C++/Boids/engine/Game.cpp",
+		"/Developer/Projects/C++/Boids/settings.xml",
+		"/Developer/Projects/C++/Boids/engine/Component.hpp",
+		"/Developer/Projects/C++/Boids/engine/Component.cpp",
+		"/Developer/Projects/C++/Boids/sys/Platform.cpp",
+		"/Developer/Projects/C++/Boids/src/Test.cpp",
+		"/Developer/Projects/C++/Boids/engine/Renderer.cpp",
+		"/Developer/Projects/C++/Boids/main.cpp",
+		"/Developer/Projects/C++/Boids/Boid.cpp",
+		"/Developer/Projects/C++/Boids/Flocking.cpp",
+		"/Developer/Projects/C++/Boids/test.cpp",
+		"/Developer/Projects/C++/Boids/sys/GLUtils.cpp",
+		"/Users/ryanjoseph/Downloads/test.cpp",
+		"/Developer/Projects/C++/Boids/engine/Game.hpp",
+		"/Developer/Projects/C++/Boids/engine/Renderer.hpp",
+		"/Developer/Projects/C++/Boids/engine/Entity.hpp",
+		"/Developer/Projects/C++/Boids/engine/Entity.cpp",
+		"/Developer/Projects/C++/glm/glm/detail/func_matrix.inl",
+		"/Developer/Projects/C++/Boids/sys/GLTypes.hpp",
+		"/Developer/Projects/C++/Boids/shaders/default_frag.glsl",
+		"/Developer/Projects/C++/Boids/shaders/default_vert.glsl",
+		"/Developer/Projects/C++/Boids/sys/Object.cpp",
+		"/Developer/Projects/C++/Boids/sys/Platform.hpp",
+		"/Users/ryanjoseph/Library/Application Support/Sublime Text 3/Packages/C++/Snippets/forv.sublime-snippet",
+		"/Users/ryanjoseph/Library/Application Support/Sublime Text 3/Packages/C++/Snippets/std-vector-(v).sublime-snippet",
+		"/Developer/Projects/C++/SFML-Tests/sys/GLUtils.cpp",
+		"/Developer/Projects/C++/SFML-Tests/sys/Platform.hpp",
+		"/Developer/Projects/C++/SFML-Tests/SMFL-Tests/SFML-Tests/SMFL-Tests/SFML-Tests/SMFL-Tests/SFML-Tests/SMFL-Tests/SFML-Tests/SMFL-Tests/SFML-Tests/SMFL-Tests/SFML-Tests/SMFL-Tests/SFML-Tests/SMFL-Tests/SFML-Tests/SMFL-Tests/SFML-Tests/SMFL-Tests/SFML-Tests/SMFL-Tests/SFML-Tests/SMFL-Tests/SFML-Tests/SMFL-Tests/SFML-Tests/SMFL-Tests/SFML-Tests/SMFL-Tests/SFML-Tests/SMFL-Tests/SFML-Tests/SMFL-Tests/SFML-Tests/SMFL-Tests/SFML-Tests/SMFL-Tests/SFML-Tests/SMFL-Tests/SFML-Tests/SMFL-Tests/SFML-Tests/SMFL-Tests/SFML-Tests/SMFL-Tests/SFML-Tests/SMFL-Tests/SFML-Tests/SMFL-Tests/SFML-Tests/SMFL-Tests/SFML-Tests/SMFL-Tests/SFML-Tests/SMFL-Tests/SFML-Tests/SMFL-Tests/SFML-Tests/SMFL-Tests/SFML-Tests/SMFL-Tests/SFML-Tests/SMFL-Tests/SFML-Tests/SMFL-Tests/SFML-Tests/SMFL-Tests/SFML-Tests/SMFL-Tests/SFML-Tests/SMFL-Tests/SFML-Tests/SMFL-Tests/SFML-Tests/SMFL-Tests/SFML-Tests/SMFL-Tests/SFML-Tests/SMFL-Tests/SFML-Tests/SMFL-Tests/SFML-Tests/SMFL-Tests/SFML-Tests/SMFL-Tests/SFML-Tests/SMFL-Tests/SFML-Tests/sys/GLUtils.cpp",
+		"/Developer/Projects/C++/SFML-Tests/settings.xml",
+		"/Developer/Projects/C++/SFML-Tests/sys/GLTypes.hpp",
+		"/Developer/Projects/C++/SFML-Tests/Game.cpp",
+		"/Developer/Projects/C++/SFML-Tests/Renderer.cpp",
+		"/Developer/Projects/C++/SFML-Tests/Object.cpp",
+		"/Developer/Projects/C++/SFML-Tests/Shape.cpp",
+		"/Developer/Projects/C++/SFML-Tests/sys/Matrix.cpp",
+		"/Developer/Projects/C++/SFML-Tests/Scratch.cpp",
+		"/Users/ryanjoseph/Library/Application Support/Sublime Text 3/Packages/C++/Snippets/#ifndef-#define-#endif.sublime-snippet",
+		"/Developer/Projects/C++/SFML-Tests/sys/Object.cpp",
+		"/Developer/Projects/C++/SFML-Tests/Matrix.cpp",
+		"/Users/ryanjoseph/Library/Application Support/Sublime Text 3/Packages/C++/xcode_c++.php",
+		"/Users/ryanjoseph/Library/Application Support/Sublime Text 3/Packages/C++/Snippets/if-..-(if).sublime-snippet",
+		"/Users/ryanjoseph/Library/Application Support/Sublime Text 3/Packages/C++/Snippets/struct.sublime-snippet",
+		"/Users/ryanjoseph/Library/Application Support/Sublime Text 3/Packages/C++/Snippets/class-..-(class).sublime-snippet",
+		"/Developer/Projects/C++/SFML-Tests/sys/Platform.cpp",
+		"/Developer/Projects/C++/SFML-Tests/Game.hpp",
+		"/Developer/Projects/C++/SFML-Tests/GLUtils.cpp",
+		"/Users/ryanjoseph/Library/Application Support/Sublime Text 3/Packages/C++/Snippets/030-for-int-loop-(fori).sublime-snippet",
+		"/Developer/Projects/C++/SFML-Tests/shaders/default_frag.glsl",
+		"/Developer/Projects/C++/SFML-Tests/shaders/default_vert.glsl",
+		"/Developer/Projects/C++/SFML-Tests/GLTypes.hpp",
+		"/Users/ryanjoseph/Library/Application Support/Sublime Text 3/Packages/C++/C.sublime-syntax",
+		"/Users/ryanjoseph/Library/Application Support/Sublime Text 3/Packages/C++/bookmark.sublime-snippet",
+		"/Users/ryanjoseph/Library/Application Support/Sublime Text 3/Packages/FPC/snippets/bookmark.sublime-snippet",
+		"/System/Library/Frameworks/OpenGL.framework/Headers/gl3.h",
+		"/System/Library/Frameworks/OpenGL.framework/Headers/gl.h",
+		"/Developer/Projects/C++/glm/glm/detail/type_mat4x4.hpp",
+		"/Developer/Projects/C++/glm/glm/gtc/matrix_transform.inl",
+		"/Users/ryanjoseph/Library/Application Support/Sublime Text 3/Packages/User/cplusplus.py",
+		"/Users/ryanjoseph/Library/Application Support/Sublime Text 3/Packages/User/fpc_exec.py",
+		"/Developer/Projects/C++/glm/glm/glm.hpp",
+		"/Developer/Projects/C++/SFML-Tests/Platform.hpp",
+		"/Developer/Projects/C++/SFML-Tests/Platform.cpp",
+		"/Users/ryanjoseph/Downloads/Games16/01 Tetris/main.cpp",
+		"/Developer/Projects/C++/SFML-Tests/src/other.cpp",
+		"/Developer/Projects/C++/SFML-Tests/main.cpp",
+		"/Users/ryanjoseph/Library/Application Support/Sublime Text 3/Packages/FPC/fpc.sublime-build",
+		"/Users/ryanjoseph/Library/Application Support/Sublime Text 3/Packages/FPC/build.php",
+		"/Users/ryanjoseph/Desktop/Projects/Games/OpenGL-Sandbox/Units/SpriteEngine/SCTileLayer.pas",
+		"/Users/ryanjoseph/Desktop/Projects/Games/OpenGL-Sandbox/Units/SpriteEngine/SCAction.pas",
+		"/Users/ryanjoseph/Desktop/Projects/Games/OpenGL-Sandbox/Sources/MapGen_OLD.pas",
+		"/Users/ryanjoseph/Desktop/Projects/Games/OpenGL-Sandbox/Sources/Main.pas",
+		"/Users/ryanjoseph/Desktop/Projects/Games/OpenGL-Sandbox/Console.Debug.ppcx64/MapGen.ppu:MapGen.pas",
+		"/Users/ryanjoseph/Desktop/Projects/Games/OpenGL-Sandbox/Sources/PlayerTypes.inc",
+		"/Users/ryanjoseph/Desktop/Projects/Games/OpenGL-Sandbox/Sources/Canvas.pas",
+		"/Users/ryanjoseph/Desktop/Projects/Games/OpenGL-Sandbox/Sources/PathManager.pas",
+		"/Users/ryanjoseph/Desktop/Projects/Games/OpenGL-Sandbox/Sources/Terrain.pas",
+		"/Users/ryanjoseph/Desktop/Projects/Games/OpenGL-Sandbox/Sources/MapObject.pas",
+		"/Users/ryanjoseph/Desktop/Projects/Games/OpenGL-Sandbox/Sources/MapManager.pas",
+		"/Users/ryanjoseph/Desktop/Projects/Games/OpenGL-Sandbox/Sources/Player.pas",
+		"/Users/ryanjoseph/Desktop/Projects/Games/OpenGL-Sandbox/Units/SpriteEngine/SCBatcher.pas",
+		"/Users/ryanjoseph/Desktop/Projects/Games/OpenGL-Sandbox/Sources/Projectile.pas",
+		"/Users/ryanjoseph/Desktop/Projects/Games/OpenGL-Sandbox/Units/Base/UObject.pas",
+		"/Users/ryanjoseph/Desktop/Projects/Games/OpenGL-Sandbox/Units/SpriteEngine/SCSprite.pas",
+		"/Users/ryanjoseph/Desktop/Projects/Games/OpenGL-Sandbox/Units/SpriteEngine/SCFace.pas",
+		"/Users/ryanjoseph/Desktop/Projects/Games/OpenGL-Sandbox/Units/SpriteEngine/SCDrawing.pas",
+		"/Users/ryanjoseph/Desktop/Projects/Games/OpenGL-Sandbox/Units/SpriteEngine/SCSpriteRenderer.pas",
+		"/Users/ryanjoseph/Desktop/Projects/Games/OpenGL-Sandbox/Sources/todo.todo",
+		"/Users/ryanjoseph/Desktop/Projects/Games/OpenGL-Sandbox/Units/SpriteEngine/SCTileMatrix.pas",
+		"/Users/ryanjoseph/Desktop/Projects/Games/OpenGL-Sandbox/Sources/Globals.pas",
+		"/Users/ryanjoseph/Desktop/Projects/Games/OpenGL-Sandbox/Units/SpriteEngine/SCViewSDL.inc",
+		"/Users/ryanjoseph/Desktop/Projects/Games/OpenGL-Sandbox/Resources/shaders/core/default_fragment.glsl",
+		"/Users/ryanjoseph/Desktop/Projects/Games/OpenGL-Sandbox/Units/SpriteEngine/SCMacros.inc",
+		"/Users/ryanjoseph/Desktop/Projects/Games/OpenGL-Sandbox/Units/SpriteEngine/SCCamera.pas",
+		"/Users/ryanjoseph/Desktop/Projects/Games/OpenGL-Sandbox/Units/SpriteEngine/SCLayer.pas",
+		"/Users/ryanjoseph/Desktop/Projects/Games/OpenGL-Sandbox/Units/SpriteEngine/SCUtils.pas",
+		"/Users/ryanjoseph/Desktop/Projects/Games/OpenGL-Sandbox/Sources/gles20.pas",
+		"/Users/ryanjoseph/Desktop/Projects/Games/OpenGL-Sandbox/Sources/DebugUtils.pas",
+		"/Users/ryanjoseph/Desktop/Projects/Games/OpenGL-Sandbox/Units/Base/UString.pas",
+		"/Users/ryanjoseph/Desktop/Projects/Games/OpenGL-Sandbox/Units/SpriteEngine/SCBitmapFont.pas",
+		"/Users/ryanjoseph/Desktop/Projects/Games/OpenGL-Sandbox/Resources/shaders/core/default_vertex.glsl"
+	],
+	"find":
+	{
+		"height": 27.0
+	},
+	"find_in_files":
+	{
+		"height": 93.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 1,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "Blaise/RenderContext.swift",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 5198,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								216,
+								216
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Swift for F*ing Sublime/Swift.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "/Users/ryanjoseph/Library/Application Support/Sublime Text 3/Packages/User/build_swift.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 787,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								490,
+								490
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 131.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "/Users/ryanjoseph/Library/Application Support/Sublime Text 3/Packages/User/Swift.sublime-build",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 506,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JSON.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 27.0
+	},
+	"input":
+	{
+		"height": 35.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 227.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"output.xdebug":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "Packages/User/Swift.sublime-build",
+	"project": "Blaise.sublime-project",
+	"replace":
+	{
+		"height": 50.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"scdraw",
+				"Units/SpriteEngine/SCDrawing.pas"
+			],
+			[
+				"uarra",
+				"Units/Base/UArray.pas"
+			],
+			[
+				"usytem",
+				"Units/Base/USystem.pas"
+			],
+			[
+				"main",
+				"Sources/Main.pas"
+			],
+			[
+				"ugeom",
+				"Units/Base/UGeometry.pas"
+			],
+			[
+				"glu",
+				"Sources/GLUtils.pas"
+			],
+			[
+				"umatr",
+				"Base/UMatrix.pas"
+			],
+			[
+				"sldu",
+				"Sources/SDLUtils.pas"
+			],
+			[
+				"sdltu",
+				"Sources/SDLUtils.pas"
+			],
+			[
+				"utyp",
+				"Base/UTypes.pas"
+			],
+			[
+				"sdlu",
+				"Sources/SDLUtils.pas"
+			],
+			[
+				"sdl",
+				"Sources/SDL.pas"
+			],
+			[
+				"ugoem",
+				"Base/UGeometry.pas"
+			],
+			[
+				"pla",
+				"sys/Platform.cpp"
+			],
+			[
+				"m",
+				"main.cpp"
+			],
+			[
+				"glyp",
+				"sys/GLTypes.hpp"
+			],
+			[
+				"gl",
+				"sys/GLUtils.cpp"
+			],
+			[
+				"sh",
+				"Shape.cpp"
+			],
+			[
+				"matrix_transform",
+				"/Developer/Projects/C++/glm/glm/gtc/matrix_transform.inl"
+			],
+			[
+				"terrain",
+				"Sources/Terrain.pas"
+			],
+			[
+				"pathmana",
+				"Sources/PathManager.pas"
+			],
+			[
+				"canv",
+				"Sources/Canvas.pas"
+			],
+			[
+				"tilele",
+				"Units/SpriteEngine/SCTileLayer.pas"
+			],
+			[
+				"mapobj",
+				"Sources/MapObject.pas"
+			],
+			[
+				"play",
+				"Sources/Player.pas"
+			],
+			[
+				"map",
+				"Sources/MapObject.pas"
+			],
+			[
+				"scsp",
+				"Units/SpriteEngine/SCSprite.pas"
+			],
+			[
+				"proj",
+				"Sources/Projectile.pas"
+			],
+			[
+				"uobj",
+				"Units/Base/UObject.pas"
+			],
+			[
+				"batch",
+				"Units/SpriteEngine/SCBatcher.pas"
+			],
+			[
+				"scface",
+				"Units/SpriteEngine/SCFace.pas"
+			],
+			[
+				"tilel",
+				"Units/SpriteEngine/SCTileLayer.pas"
+			],
+			[
+				"tilem",
+				"Units/SpriteEngine/SCTileMatrix.pas"
+			],
+			[
+				"mapman",
+				"Sources/MapManager.pas"
+			],
+			[
+				"scv",
+				"Units/SpriteEngine/SCViewSDL.inc"
+			],
+			[
+				"glo",
+				"Sources/Globals.pas"
+			],
+			[
+				"can",
+				"Sources/Canvas.pas"
+			],
+			[
+				"scmacr",
+				"Units/SpriteEngine/SCMacros.inc"
+			],
+			[
+				"sccamera",
+				"Units/SpriteEngine/SCCamera.pas"
+			],
+			[
+				"scbat",
+				"Units/SpriteEngine/SCBatcher.pas"
+			],
+			[
+				"scdrwa",
+				"Units/SpriteEngine/SCDrawing.pas"
+			],
+			[
+				"debug",
+				"Sources/DebugUtils.pas"
+			],
+			[
+				"pathm",
+				"Sources/PathManager.pas"
+			],
+			[
+				"mpaman",
+				"Sources/MapManager.pas"
+			],
+			[
+				"tiles",
+				"Units/SpriteEngine/SCTileLayer.pas"
+			],
+			[
+				"player",
+				"Sources/Player.pas"
+			],
+			[
+				"debu",
+				"Sources/DebugUtils.pas"
+			],
+			[
+				"globl",
+				"Sources/Globals.pas"
+			],
+			[
+				"bitf",
+				"Units/SpriteEngine/SCBitmapFont.pas"
+			],
+			[
+				"udi",
+				"Units/Base/UDictionary.pas"
+			],
+			[
+				"uarray",
+				"Units/Base/UArray.pas"
+			],
+			[
+				"sctypes",
+				"Units/SpriteEngine/SCTypes.pas"
+			],
+			[
+				"scdrwaing",
+				"Units/SpriteEngine/SCDrawing.pas"
+			],
+			[
+				"def",
+				"shaders/core/default_fragment.glsl"
+			],
+			[
+				"asset",
+				"Sources/Assets.pas"
+			],
+			[
+				"assets",
+				"Sources/Assets.pas"
+			],
+			[
+				"fog",
+				"Sources/Fog.pas"
+			],
+			[
+				"tilemat",
+				"Units/SpriteEngine/SCTileMatrix.pas"
+			],
+			[
+				"terr",
+				"Sources/Terrain.pas"
+			],
+			[
+				"worldg",
+				"Units/Shared/WorldGen.pas"
+			],
+			[
+				"tiell",
+				"Units/SpriteEngine/SCTileLayer.pas"
+			],
+			[
+				"scspr",
+				"Units/SpriteEngine/SCSprite.pas"
+			],
+			[
+				"defaut",
+				"shaders/core/default_fragment.glsl"
+			],
+			[
+				"maps",
+				"Sources/Maps.pas"
+			],
+			[
+				"ter",
+				"Sources/Terrain.pas"
+			],
+			[
+				"tile",
+				"Units/SpriteEngine/SCTileLayer.pas"
+			],
+			[
+				"mapm",
+				"Sources/MapManager.pas"
+			],
+			[
+				"glob",
+				"Sources/Globals.pas"
+			],
+			[
+				"scam",
+				"Units/SpriteEngine/SCCamera.pas"
+			],
+			[
+				"camera",
+				"Units/SpriteEngine/SCCamera.pas"
+			],
+			[
+				"scamer",
+				"Units/SpriteEngine/SCCamera.pas"
+			],
+			[
+				"scbatc",
+				"Units/SpriteEngine/SCBatcher.pas"
+			],
+			[
+				"scma",
+				"Units/SpriteEngine/SCMacros.inc"
+			],
+			[
+				"mapma",
+				"Sources/MapManager.pas"
+			],
+			[
+				"scsprite",
+				"Units/SpriteEngine/SCSprite.pas"
+			],
+			[
+				"scmac",
+				"Units/SpriteEngine/SCMacros.inc"
+			],
+			[
+				"usystem",
+				"Units/Base/USystem.pas"
+			],
+			[
+				"world",
+				"Sources/World.pas"
+			],
+			[
+				"sccm",
+				"Units/SpriteEngine/SCCamera.pas"
+			],
+			[
+				"sccam",
+				"Units/SpriteEngine/SCCamera.pas"
+			],
+			[
+				"sdlc",
+				"Units/SpriteEngine/SCViewSDL.inc"
+			],
+			[
+				"sccamer",
+				"Units/SpriteEngine/SCCamera.pas"
+			],
+			[
+				"scm",
+				"Units/SpriteEngine/SCMacros.inc"
+			],
+			[
+				"tilema",
+				"Units/SpriteEngine/SCTileMatrix.pas"
+			],
+			[
+				"scmatr",
+				"Units/SpriteEngine/SCTileMatrix.pas"
+			],
+			[
+				"pl",
+				"Sources/Player.pas"
+			],
+			[
+				"wr",
+				"Sources/World.pas"
+			],
+			[
+				"scb",
+				"Units/SpriteEngine/SCBatcher.pas"
+			],
+			[
+				"scl",
+				"Units/SpriteEngine/SCTileLayer.pas"
+			],
+			[
+				"mapob",
+				"Sources/MapObject.pas"
+			],
+			[
+				"scsdl",
+				"Units/SpriteEngine/SCViewSDL.inc"
+			],
+			[
+				"scca",
+				"Units/SpriteEngine/SCCanvas.pas"
+			],
+			[
+				"todo",
+				"Sources/todo.todo"
+			],
+			[
+				"scbath",
+				"Units/SpriteEngine/SCBatcher.pas"
+			],
+			[
+				"sccanv",
+				"Units/SpriteEngine/SCCanvas.pas"
+			],
+			[
+				"mapo",
+				"Sources/MapObject.pas"
+			],
+			[
+				"sccan",
+				"Units/SpriteEngine/SCCanvas.pas"
+			],
+			[
+				"scmar",
+				"Units/SpriteEngine/SCMacros.inc"
+			],
+			[
+				"scview",
+				"Units/SpriteEngine/SCViewSDL.inc"
+			],
+			[
+				"wrl",
+				"Sources/World.pas"
+			],
+			[
+				"depth",
+				"shaders/core/depth_fragment.glsl"
+			],
+			[
+				"ma",
+				"Sources/Main.pas"
+			],
+			[
+				"fo",
+				"Sources/Fog.pas"
+			],
+			[
+				"terrin",
+				"Sources/Terrain.pas"
+			],
+			[
+				"terri",
+				"Sources/Terrain.pas"
+			],
+			[
+				"scbathc",
+				"Units/SpriteEngine/SCBatcher.pas"
+			],
+			[
+				"terra",
+				"Sources/Terrain.pas"
+			],
+			[
+				"bitmap",
+				"Units/SpriteEngine/SCBitmapFont.pas"
+			],
+			[
+				"scbitfo",
+				"Units/SpriteEngine/SCBitmapFont.pas"
+			],
+			[
+				"tilela",
+				"Units/SpriteEngine/SCTileLayer.pas"
+			],
+			[
+				"utypes",
+				"Units/Base/UTypes.pas"
+			],
+			[
+				"sprite",
+				"Units/SpriteEngine/SCSprite.pas"
+			],
+			[
+				"sccanvas",
+				"Units/SpriteEngine/SCCanvas.pas"
+			],
+			[
+				"scbatch",
+				"Units/SpriteEngine/SCBatcher.pas"
+			],
+			[
+				"macro",
+				"Sources/macros.inc"
+			],
+			[
+				"project",
+				"Sources/Projectile.pas"
+			],
+			[
+				"tilematr",
+				"Units/SpriteEngine/SCTileMatrix.pas"
+			],
+			[
+				"scsprte",
+				"Units/SpriteEngine/SCSprite.pas"
+			],
+			[
+				"batcher",
+				"Units/SpriteEngine/SCBatcher.pas"
+			],
+			[
+				"drawing",
+				"Units/SpriteEngine/SCDrawing.pas"
+			],
+			[
+				"tilelyaer",
+				"Units/SpriteEngine/SCTileLayer.pas"
+			],
+			[
+				"mapgen",
+				"Sources/MapGen.pas"
+			],
+			[
+				"apl",
+				"Sources/UAPlus.pas"
+			],
+			[
+				"gridu",
+				"Sources/GridUtils.pas"
+			],
+			[
+				"noise",
+				"Sources/Noise.pas"
+			],
+			[
+				"uset",
+				"Base/ULinkedList.pas"
+			],
+			[
+				"ubag",
+				"Base/UBag.pas"
+			],
+			[
+				"udic",
+				"Base/UDictionary.pas"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 380.0
+	},
+	"select_symbol":
+	{
+		"height": 97.0,
+		"last_filter": "Print",
+		"selected_items":
+		[
+			[
+				"Print",
+				"PrintVec"
+			],
+			[
+				"Assert",
+				"Assert"
+			],
+			[
+				"GetSortingLevel",
+				"GetSortingLevel"
+			],
+			[
+				"TexQa",
+				"TGLTexQuad"
+			],
+			[
+				"Isometr",
+				"IsometricPointToScreenPoint"
+			],
+			[
+				"TsoMo",
+				"TIsoModel"
+			],
+			[
+				"TISoSP",
+				"TIsoPolySprite"
+			],
+			[
+				"TISoM",
+				"TIsoModel"
+			],
+			[
+				"Finalize",
+				"Finalize"
+			],
+			[
+				"TGLQuad",
+				"TGLTexQuad"
+			],
+			[
+				"HandleDrawFace",
+				"HandleDrawFace"
+			],
+			[
+				"TGLTexQ",
+				"TGLTexQuad"
+			],
+			[
+				"GetDisplayState",
+				"GetDisplayState"
+			],
+			[
+				"Highest",
+				"Highest"
+			],
+			[
+				"GetPrefer",
+				"GetPreferredSystemFrameRate"
+			],
+			[
+				"GetTileSq",
+				"GetTileSquare"
+			],
+			[
+				"GetPRef",
+				"GetPreferredSystemFrameRate"
+			],
+			[
+				"removeOb",
+				"RemoveEveryObserver"
+			],
+			[
+				"Fatal",
+				"Fatal"
+			],
+			[
+				"MIll",
+				"MillisecondsSinceNow"
+			],
+			[
+				"TRange",
+				"TRangeInt"
+			],
+			[
+				"TDamage",
+				"TDamageKinds"
+			],
+			[
+				"MapTileFlag",
+				"TMapTileFlags"
+			],
+			[
+				"Radius",
+				"RadiusForBoundingRect"
+			],
+			[
+				"Ihash",
+				"IHashable"
+			],
+			[
+				"SinceNow",
+				"MillisecondsSinceNow"
+			],
+			[
+				"miliset",
+				"MillisecondsPerUpdate"
+			],
+			[
+				"TSpriteMouseE",
+				"TSpriteMouseEvent"
+			],
+			[
+				"TPlayerCom\n",
+				"TPlayerCommand"
+			],
+			[
+				"TSprite",
+				"TSprite"
+			],
+			[
+				"TSpriteWind",
+				"TSpriteWindow"
+			],
+			[
+				"GRidSPr",
+				"TGridSprite"
+			],
+			[
+				"SDL_MouseMotionEvent",
+				"SDL_MouseMotionEvent"
+			],
+			[
+				"spriteevent",
+				"TSpriteMouseEvent"
+			],
+			[
+				"TSize",
+				"TSize"
+			],
+			[
+				"TDamageSe",
+				"TDamageSpec"
+			],
+			[
+				"TGLTexQuad",
+				"TGLTexQuad"
+			],
+			[
+				"TFlowS",
+				"TFlowStep"
+			],
+			[
+				"TSpriteKeyboardEvent",
+				"TSpriteKeyboardEvent"
+			],
+			[
+				"CurrentDE",
+				"CurrentDebugTarget"
+			],
+			[
+				"CopyPro",
+				"CopyProfile"
+			],
+			[
+				"ScreenPoint",
+				"ScreenPointToIsometricPoint"
+			],
+			[
+				"TCircle",
+				"TCircle"
+			],
+			[
+				"TPlayerM",
+				"TPlayerModes"
+			],
+			[
+				"adde",
+				"AddEnemies"
+			],
+			[
+				"TSpriteSoun",
+				"TSpriteSound"
+			],
+			[
+				"TPointA",
+				"TPointArray"
+			],
+			[
+				"TArray",
+				"TByteArray"
+			],
+			[
+				"TPoint3D",
+				"TPoint3D"
+			],
+			[
+				"TMutable",
+				"TMutableValue"
+			],
+			[
+				"",
+				"Foo"
+			],
+			[
+				"Foo",
+				"Foo"
+			]
+		],
+		"width": 384.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": false,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 220.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
