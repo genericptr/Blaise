@@ -17,14 +17,20 @@ struct RenderContextBrushState {
 	var antialias: Bool = false
 }
 
+// TODO: how do we control pixel depth/size?
+struct RenderContextInfo {
+	var backgroundColor: RGBA8
+	
+}
+
 class RenderContext {
 	var bitmapContext: CGContext!
 	var pixels: PixelMatrix!
 	var texture: RenderTexture!
 	var bounds: CGRect
 	var eraser: Bool = false
-	// var brushLineWidth: Float = 0
 	var brushState: RenderContextBrushState
+	var contextInfo: RenderContextInfo
 
 	var width: UInt = 0
 	var height: UInt = 0
@@ -39,37 +45,22 @@ class RenderContext {
 		return CGSize(width: CGFloat(width), height: CGFloat(height))
 	}
 	
-	func clearAll() {
-		// TODO: use background color
+	func clear() {
 		bitmapContext.clear(CGRect(x: 0, y: 0, width: width.int, height: height.int))
-		// bitmapContext.setFillColor(red: 0, green: 1, blue: 0, alpha: 1)
-		// bitmapContext.fill(CGRect(x: 0, y: 0, width: Int(width), height: Int(height)))
 		bitmapContext.synchronize()
 	}
 	
+	func fillWithBackground() {
+			fill(contextInfo.backgroundColor)
+	}
+
+    
 	func fill(_ color: RGBA8) {
-		// TODO: use background color
 		bitmapContext.saveGState()
 		bitmapContext.setFillColor(color.getColor().cgColor)
 		bitmapContext.fill(CGRect(x: 0, y: 0, width: Int(width), height: Int(height)))
 		bitmapContext.restoreGState()
 		bitmapContext.synchronize()
-	}
-
-	// TODO: temporary, not sure how to handle different brushes
-	func toggleErase() {
-		if eraser {
-			bitmapContext.setBlendMode(.normal)
-			bitmapContext.setShouldAntialias(true)
-			eraser = false
-			print("eraser off")
-		} else {
-			bitmapContext.setBlendMode(.clear)
-			// bitmapContext.setStrokeColor(red: 1, green: 1, blue: 1, alpha: 1)
-			bitmapContext.setShouldAntialias(false)
-			eraser = true
-			print("eraser on")
-		}
 	}
 	
 	func applyBrush(_ brush: Brush) {
@@ -136,50 +127,49 @@ class RenderContext {
 
 	func prepare() {
 		print("prepare opengl context")
+    let bgColor = contextInfo.backgroundColor.getRGBAf()
+//		glClearColor(bgColor.r, bgColor.g, bgColor.b, bgColor.a)
 		glClearColor(1.0, 1.0, 1.0, 1.0)
 		
+
+		// TODO: this blending is wrong for transparent backgrounds
 		glEnable(GLenum(GL_TEXTURE_2D))
 		glEnable(GLenum(GL_BLEND))
 		glBlendFunc(GLenum(GL_SRC_ALPHA), GLenum(GL_ONE_MINUS_SRC_ALPHA));
-		
-		// TODO: this needs to be the visible rect
-		// glViewport(0, 0, GLsizei(width), GLsizei(height))
-		// glMatrixMode(GLenum(GL_PROJECTION))
-		// glLoadIdentity()
-		// glOrtho(0.0, GLdouble(width), GLdouble(height), 0.0, 1.0, -1.0)
-		// glMatrixMode(GLenum(GL_MODELVIEW))
-		// glLoadIdentity()
 	}
 	
-	init(bounds contextBounds: CGRect) {
-		self.bounds = contextBounds
+	init(bounds: CGRect, info: RenderContextInfo) {
+		self.bounds = bounds
+		contextInfo = info
 		
 		let resolution = CGFloat(1.0)//                                                                                                                                                       NSScreen.main!.backingScaleFactor
 
 		width = UInt(self.bounds.width * resolution)
 		height = UInt(self.bounds.height * resolution)
 		brushState = RenderContextBrushState()
-
+		
 		loadBitmap()
 	}
 	
 	func loadTexture(_ cellSize: UInt) {
 		texture = RenderTexture(width: width, height: height, cellDim: CellDim(cellSize, cellSize))
 	}
-
+		
 	func loadBitmap() {
 		
-		let defaultColor = RGBA8.whiteColor()
-		pixels = PixelMatrix(width: width, height: height, defaultValue: defaultColor)
-		let bytesPerComponent = MemoryLayout<RGBA8.PixelType>.size
+		pixels = PixelMatrix(width: width, height: height, defaultValue: contextInfo.backgroundColor)
+		let bytesPerComponent = MemoryLayout<RGBA8.PixelType>.stride
+		let bytesPerPixel = MemoryLayout<RGBA8>.stride
+		let totalBytes = bytesPerPixel * width.int * height.int
+		print("total bytes: \(totalBytes) @ \(width)x\(height)")
 		
 		pixels.table.withUnsafeMutableBytes { pointer in
 			bitmapContext = CGContext(
 				data: pointer.baseAddress,
 				width: Int(width),
 				height: Int(height),
-				bitsPerComponent: bytesPerComponent * 8,
-				bytesPerRow: (bytesPerComponent * 4) * Int(width),
+				bitsPerComponent: 8,
+				bytesPerRow: bytesPerPixel * Int(width),
 				space: CGColorSpaceCreateDeviceRGB(),
 				bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue
 				)!
@@ -191,10 +181,6 @@ class RenderContext {
 //			bitmapContext.fill(CGRect(x: 0, y: Int(height) - 32, width: 32, height: 32))
 //			bitmapContext.synchronize()
 		}
-		
-		//        for i in 0..<10 {
-		//            print(pixels.table[i])
-		//        }
 	}
 
 }

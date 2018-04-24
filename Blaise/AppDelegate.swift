@@ -8,6 +8,16 @@
 
 import Cocoa
 
+/*
+
+- Document
+	- OpenGLView
+		- RenderContext
+		- RenderTexture
+	- Brushes
+
+*/
+
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
 	

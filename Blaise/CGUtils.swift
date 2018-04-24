@@ -8,6 +8,8 @@
 
 import Foundation
 
+// MARK: CGFloat Extensions
+
 extension CGFloat {
 	var int: Int {
 		return Int(self)
@@ -17,14 +19,16 @@ extension CGFloat {
 	}
 }
 
+// MARK: CGPoint Extensions
+
 extension CGPoint {
 	
-	// points
-	static func - (left: CGPoint, right: CGPoint) -> CGPoint {
-		return CGPoint(x: left.x - right.x, y: left.y - right.y)
-	}
+	// self
 	static func + (left: CGPoint, right: CGPoint) -> CGPoint {
 		return CGPoint(x: left.x + right.x, y: left.y + right.y)
+	}
+	static func - (left: CGPoint, right: CGPoint) -> CGPoint {
+		return CGPoint(x: left.x - right.x, y: left.y - right.y)
 	}
 	static func * (left: CGPoint, right: CGPoint) -> CGPoint {
 		return CGPoint(x: left.x * right.x, y: left.y * right.y)
@@ -48,6 +52,14 @@ extension CGPoint {
 	}
 
 	// scalars
+	static func + (left: CGPoint, right: CGFloat) -> CGPoint {
+		return CGPoint(x: left.x + right, y: left.y + right)
+	}
+
+	static func - (left: CGPoint, right: CGFloat) -> CGPoint {
+		return CGPoint(x: left.x - right, y: left.y - right)
+	}
+
 	static func * (left: CGPoint, right: CGFloat) -> CGPoint {
 		return CGPoint(x: left.x * right, y: left.y * right)
 	}
@@ -55,9 +67,84 @@ extension CGPoint {
 	static func / (left: CGPoint, right: CGFloat) -> CGPoint {
 		return CGPoint(x: left.x / right, y: left.y / right)
 	}
+	
+	init(_ x: CGFloat, _ y: CGFloat) {
+		self.x = x
+		self.y = y
+	}
 
 }
 
+// MARK: CGSize
+
+extension CGSize {
+	
+		// self
+		static func + (left: CGSize, right: CGSize) -> CGSize {
+			return CGSize(width: left.width + right.width, height: left.height + right.height)
+		}
+		static func - (left: CGSize, right: CGSize) -> CGSize {
+			return CGSize(width: left.width - right.width, height: left.height - right.height)
+		}
+		static func * (left: CGSize, right: CGSize) -> CGSize {
+			return CGSize(width: left.width * right.width, height: left.height * right.height)
+		}
+		static func / (left: CGSize, right: CGSize) -> CGSize {
+			return CGSize(width: left.width / right.width, height: left.height / right.height)
+		}
+	
+		// assignments
+		static func -= (left: inout CGSize, right: CGSize) {
+			left = left - right
+		}
+		static func += (left: inout CGSize, right: CGSize) {
+			left = left + right
+		}
+		static func *= (left: inout CGSize, right: CGSize) {
+			left = left * right
+		}
+		static func /= (left: inout CGSize, right: CGSize) {
+			left = left / right
+		}
+	
+    // scalars
+		static func + (left: CGSize, right: CGFloat) -> CGSize {
+			return CGSize(width: left.width + right, height: left.height + right)
+		}
+
+		static func - (left: CGSize, right: CGFloat) -> CGSize {
+			return CGSize(width: left.width - right, height: left.height - right)
+		}
+
+    static func * (left: CGSize, right: CGFloat) -> CGSize {
+        return CGSize(width: left.width * right, height: left.height * right)
+    }
+
+    static func / (left: CGSize, right: CGFloat) -> CGSize {
+        return CGSize(width: left.width / right, height: left.height / right)
+    }
+	
+	init(_ width: CGFloat, _ height: CGFloat) {
+		self.width = width
+		self.height = height
+	}
+
+}
+
+// MARK: CGRect Extensions
+
+extension CGRect {
+	
+	var max: CGPoint {
+		return origin + CGPoint(width, height)
+	}
+	
+	init(_ x: CGFloat, _ y: CGFloat, _ width: CGFloat, _ height: CGFloat) {
+		self.origin = CGPoint(x: x, y: y)
+		self.size = CGSize(width: width, height: height)
+	}
+	
+}
 
 // convert implicit arrays to CGTypes
 // example: [100, 100].cgSize()

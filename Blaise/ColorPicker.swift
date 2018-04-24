@@ -10,12 +10,6 @@ import Foundation
 import AppKit
 import CoreGraphics
 
-extension NSColor {
-	func RGBA8Color() -> RGBA8 {
-		return RGBA8(UInt8(redComponent * 255), UInt8(greenComponent * 255), UInt8(blueComponent * 255), UInt8(alphaComponent * 255))
-	}
-}
-
 class ColorPicker {
 	var bitmapContext: CGContext!
 	var pixels: PixelMatrix
@@ -145,33 +139,33 @@ class ColorPickerView: NSView {
 	
 	override func draw(_ dirtyRect: NSRect) {
 		if let image = picker.bitmapContext.makeImage() {
-			let context = NSGraphicsContext.current?.cgContext
+			guard let context = NSGraphicsContext.current?.cgContext else { return }
 			
 			// context settings
-			context?.setShouldAntialias(true)
-			context?.interpolationQuality = .none
+			context.setShouldAntialias(true)
+			context.interpolationQuality = .none
 
 			// draw color background
 			let clipRect = backgroundRect
-			context?.addEllipse(in: clipRect)
-			context?.clip()
-			context?.draw(image, in: backgroundRect)
-			context?.resetClip()
+			context.addEllipse(in: clipRect)
+			context.clip()
+			context.draw(image, in: backgroundRect)
+			context.resetClip()
 			
-			context?.interpolationQuality = .default
+			context.interpolationQuality = .default
 			
 			// draw selection color ring
 			if borderInset > 0 {
-				context?.setStrokeColor(gray: 0, alpha: 1)
-				context?.setLineWidth(borderInset)
-				context?.addEllipse(in: backgroundRect.insetBy(dx: -borderInset/2, dy: -borderInset/2))
-				context?.strokePath()
+				context.setStrokeColor(gray: 0, alpha: 1)
+				context.setLineWidth(borderInset)
+				context.addEllipse(in: backgroundRect.insetBy(dx: -borderInset/2, dy: -borderInset/2))
+				context.strokePath()
 			}
 			
 			// draw cursor
-			context?.setShouldAntialias(false)
-			context?.setStrokeColor(gray: 0, alpha: 1)
-			context?.setLineWidth(0.5)
+			context.setShouldAntialias(false)
+			context.setStrokeColor(gray: 0, alpha: 1)
+			context.setLineWidth(0.5)
 
 			let radius: CGFloat = 8
 			let cursorRect = CGRect(x: cursorLocation.x - radius, y: cursorLocation.y - radius, width: radius * 2, height: radius * 2)
@@ -179,11 +173,11 @@ class ColorPickerView: NSView {
 			
 			var pointA = CGPoint(x: cursorRect.midX, y: cursorRect.minY)
 			var pointB = CGPoint(x: cursorRect.midX, y: cursorRect.maxY)
-			context?.strokeLineSegments(between: [pointA, pointB])
+			context.strokeLineSegments(between: [pointA, pointB])
 			
 			pointA = CGPoint(x: cursorRect.minX, y: cursorRect.midY)
 			pointB = CGPoint(x: cursorRect.maxX, y: cursorRect.midY)
-			context?.strokeLineSegments(between: [pointA, pointB])
+			context.strokeLineSegments(between: [pointA, pointB])
 		}
 	}
 	

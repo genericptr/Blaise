@@ -17,13 +17,13 @@ class RenderTexture {
 	var cellSize: CellDim
 	var gridSize: CellDim
 	var buffers: [PixelMatrix] = []
-
+    
 	let imageFormat = GL_RGBA
 	let imageType = GL_UNSIGNED_BYTE
 	
 	var defaultColor: RGBA8 {
 		// return RGBA8.whiteColor()
-		return RGBA8(0, 0, 0, 0)
+		return RGBA8.clearColor()
 	}
 	
 	func reloadRegion(_ region: Box, source: PixelMatrix)  {
@@ -65,8 +65,9 @@ class RenderTexture {
 		// for y in start.y..<end.y {
 		// 	for x in start.x..<end.x {
 		// 		let pixel = source[x.uint, y.uint]
-		// 		if pixel.a < 1 {
-		// 			source.setValue(x: x.uint, y: y.uint, value: RGBA8(255, 0, 0, 255))
+		// 		if pixel.a > 0 {
+		// 			// source.setValue(x: x.uint, y: y.uint, value: RGBA8(0, 0, 255, 255))
+		// 			print(pixel)
 		// 		}
 		// 	}
 		// }
@@ -105,13 +106,16 @@ class RenderTexture {
 	}
 	
 	func reloadTexture(x: UInt, y: UInt, data: UnsafeRawPointer!) {
-		
-		// Consider using format GL_BGRA and type GL_UNSIGNED_INT_8_8_8_8_REV for a
-		// faster transfer; yes, it's more data but it will more closely match the
-		// driver's internal representation and the driver will be more likely to do
-		// a direct transfer to the GPU rather than having to do any internal format
-		// conversions of it's own
-		
+				
+    // https://developer.apple.com/library/content/documentation/GraphicsImaging/Conceptual/OpenGL-MacProgGuide/opengl_texturedata/opengl_texturedata.html
+    // The best format and data type combinations to use for texture data are:
+
+    // GL_BGRA, GL_UNSIGNED_INT_8_8_8_8_REV
+    // GL_BGRA, GL_UNSIGNED_SHORT_1_5_5_5_REV)
+    // GL_YCBCR_422_APPLE, GL_UNSIGNED_SHORT_8_8_REV_APPLE
+    // The combination GL_RGBA and GL_UNSIGNED_BYTE needs to be swizzled by many cards when the data is loaded, so it's not recommended.
+        
+        
 		var texture = textures[x, y]
 		if texture == 0 {
 			texture = loadTexture(width: cellSize.width, height: cellSize.height, data: data)
@@ -134,6 +138,10 @@ class RenderTexture {
 			print("loaded texture \(texture)")
 		}
 		
+		// TODO: we can use PBO is map the table buffer and when glTexSubImage2D is called
+		// we pass null for last pointer and use the data from currently bound PBO instead
+    // https://developer.apple.com/library/content/documentation/GraphicsImaging/Conceptual/OpenGL-MacProgGuide/opengl_texturedata/opengl_texturedata.html
+
 		bindTexture(texture, 0)
 		glTexImage2D(GLenum(GL_TEXTURE_2D), 0, GLint(imageFormat), GLsizei(width), GLsizei(height), 0, GLenum(imageFormat), GLenum(imageType), data)
 		
@@ -146,9 +154,9 @@ class RenderTexture {
 		return texture
 	}
 	
-	init(width: UInt, height: UInt, cellDim: CellDim) {
+	init(width: UInt, height: UInt, cellDim: CellDim) {        
 		cellSize = cellDim
-		
+        
 		// round up grid size
 		var gridW = width / cellSize.w
 		if width % cellSize.w > 0 {
@@ -194,21 +202,21 @@ extension RenderTexture {
 		glTranslatef(GLfloat(x.float * width), GLfloat(y.float * height), 0)
 		
 		// TODO: we need to fill background for eraser mode or alpha mode
-		glDisable(GLenum(GL_TEXTURE_2D))
-		let bgColor = RGBA<GLfloat>(1.0, 1.0, 1.0, 1.0)
-		glBegin(GLenum(GL_QUADS))
-			glColor4f(bgColor.r, bgColor.g, bgColor.b, bgColor.a)
-			glVertex2f(0.0, 0.0)
-		
-			glColor4f(bgColor.r, bgColor.g, bgColor.b, bgColor.a)
-			glVertex2f(GLfloat(width), 0.0)
-		
-			glColor4f(bgColor.r, bgColor.g, bgColor.b, bgColor.a)
-			glVertex2f(GLfloat(width), GLfloat(height))
-		
-			glColor4f(bgColor.r, bgColor.g, bgColor.b, bgColor.a)
-			glVertex2f(0.0, GLfloat(height))
-		glEnd()
+		// glDisable(GLenum(GL_TEXTURE_2D))
+		// let bgColor = RGBAf(1, 1, 1, 1)
+		// glBegin(GLenum(GL_QUADS))
+		// 		glColor4f(bgColor.r, bgColor.g, bgColor.b, bgColor.a)
+		// 		glVertex2f(0.0, 0.0)
+
+		// 		glColor4f(bgColor.r, bgColor.g, bgColor.b, bgColor.a)
+		// 		glVertex2f(GLfloat(width), 0.0)
+
+		// 		glColor4f(bgColor.r, bgColor.g, bgColor.b, bgColor.a)
+		// 		glVertex2f(GLfloat(width), GLfloat(height))
+
+		// 		glColor4f(bgColor.r, bgColor.g, bgColor.b, bgColor.a)
+		// 		glVertex2f(0.0, GLfloat(height))
+		// glEnd()
 		
 		glEnable(GLenum(GL_TEXTURE_2D))
 		glBegin(GLenum(GL_QUADS))

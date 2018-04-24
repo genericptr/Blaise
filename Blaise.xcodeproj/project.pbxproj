@@ -7,12 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		53019267208D9318003C38AB /* GLCanvasViewEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53019266208D9318003C38AB /* GLCanvasViewEvents.swift */; };
 		531B95572082ED5F00FAA1EA /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 531B95562082ED5F00FAA1EA /* TestView.swift */; };
 		531B955A208300DD00FAA1EA /* RenderTexture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 531B9558208300DD00FAA1EA /* RenderTexture.swift */; };
 		531B955B208300DD00FAA1EA /* RenderContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 531B9559208300DD00FAA1EA /* RenderContext.swift */; };
 		531B955D2083392F00FAA1EA /* Matrix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 531B955C2083392F00FAA1EA /* Matrix.swift */; };
 		53230D5320898DD0006CD9D9 /* ColorPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53230D5220898DD0006CD9D9 /* ColorPicker.swift */; };
 		5346AEAD2079CFEA00DEC2FE /* Brush.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5346AEAC2079CFEA00DEC2FE /* Brush.swift */; };
+		536E24C3208DE45E008B78A3 /* NewDocumentWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 536E24C1208DE45E008B78A3 /* NewDocumentWindow.swift */; };
+		536E24C4208DE45E008B78A3 /* NewDocumentWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 536E24C2208DE45E008B78A3 /* NewDocumentWindow.xib */; };
+		536E24C6208ED6DC008B78A3 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 536E24C5208ED6DC008B78A3 /* Colors.swift */; };
+		536E24C9208ED750008B78A3 /* ColorGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 536E24C8208ED750008B78A3 /* ColorGrid.swift */; };
 		53CE72CF207F0DEE003C3A2B /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53CE72CE207F0DEE003C3A2B /* Utils.swift */; };
 		53CE72D1207F169E003C3A2B /* GLCanvasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53CE72D0207F169E003C3A2B /* GLCanvasView.swift */; };
 		53CE72D3207F17B7003C3A2B /* Styles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53CE72D2207F17B7003C3A2B /* Styles.swift */; };
@@ -31,12 +36,17 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		53019266208D9318003C38AB /* GLCanvasViewEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GLCanvasViewEvents.swift; sourceTree = "<group>"; };
 		531B95562082ED5F00FAA1EA /* TestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestView.swift; sourceTree = "<group>"; };
 		531B9558208300DD00FAA1EA /* RenderTexture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenderTexture.swift; sourceTree = "<group>"; };
 		531B9559208300DD00FAA1EA /* RenderContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenderContext.swift; sourceTree = "<group>"; };
 		531B955C2083392F00FAA1EA /* Matrix.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Matrix.swift; sourceTree = "<group>"; };
 		53230D5220898DD0006CD9D9 /* ColorPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPicker.swift; sourceTree = "<group>"; };
 		5346AEAC2079CFEA00DEC2FE /* Brush.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Brush.swift; sourceTree = "<group>"; };
+		536E24C1208DE45E008B78A3 /* NewDocumentWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewDocumentWindow.swift; sourceTree = "<group>"; };
+		536E24C2208DE45E008B78A3 /* NewDocumentWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewDocumentWindow.xib; sourceTree = "<group>"; };
+		536E24C5208ED6DC008B78A3 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
+		536E24C8208ED750008B78A3 /* ColorGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorGrid.swift; sourceTree = "<group>"; };
 		53CE72CE207F0DEE003C3A2B /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		53CE72D0207F169E003C3A2B /* GLCanvasView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GLCanvasView.swift; sourceTree = "<group>"; };
 		53CE72D2207F17B7003C3A2B /* Styles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Styles.swift; sourceTree = "<group>"; };
@@ -70,6 +80,38 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		53019268208D936D003C38AB /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				531B955C2083392F00FAA1EA /* Matrix.swift */,
+				53CE72D62081A0D2003C3A2B /* Types.swift */,
+				53E5A3FF208856E000380422 /* TypeUtils.swift */,
+				53CE72CE207F0DEE003C3A2B /* Utils.swift */,
+				53DF02F720858DC50065B70D /* CGUtils.swift */,
+				53DF02EF2084B3340065B70D /* GLUtils.swift */,
+			);
+			name = Utilities;
+			sourceTree = "<group>";
+		};
+		53019269208D9389003C38AB /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				53E5A3FD2086ED1100380422 /* Tests.swift */,
+				531B95562082ED5F00FAA1EA /* TestView.swift */,
+			);
+			name = Tests;
+			sourceTree = "<group>";
+		};
+		536E24C7208ED6F7008B78A3 /* Colors */ = {
+			isa = PBXGroup;
+			children = (
+				53230D5220898DD0006CD9D9 /* ColorPicker.swift */,
+				536E24C8208ED750008B78A3 /* ColorGrid.swift */,
+				536E24C5208ED6DC008B78A3 /* Colors.swift */,
+			);
+			name = Colors;
+			sourceTree = "<group>";
+		};
 		53D61BD12079BAD40051E8E6 = {
 			isa = PBXGroup;
 			children = (
@@ -91,21 +133,17 @@
 			children = (
 				53D61BDD2079BAD40051E8E6 /* AppDelegate.swift */,
 				53D61BDF2079BAD40051E8E6 /* Document.swift */,
+				536E24C1208DE45E008B78A3 /* NewDocumentWindow.swift */,
 				53CE72D0207F169E003C3A2B /* GLCanvasView.swift */,
+				53019266208D9318003C38AB /* GLCanvasViewEvents.swift */,
 				531B9559208300DD00FAA1EA /* RenderContext.swift */,
 				531B9558208300DD00FAA1EA /* RenderTexture.swift */,
 				53CE72D420804D92003C3A2B /* UndoManager.swift */,
-				53230D5220898DD0006CD9D9 /* ColorPicker.swift */,
 				53CE72D2207F17B7003C3A2B /* Styles.swift */,
 				5346AEAC2079CFEA00DEC2FE /* Brush.swift */,
-				531B955C2083392F00FAA1EA /* Matrix.swift */,
-				53CE72D62081A0D2003C3A2B /* Types.swift */,
-				53CE72CE207F0DEE003C3A2B /* Utils.swift */,
-				53DF02F720858DC50065B70D /* CGUtils.swift */,
-				53DF02EF2084B3340065B70D /* GLUtils.swift */,
-				53E5A3FF208856E000380422 /* TypeUtils.swift */,
-				53E5A3FD2086ED1100380422 /* Tests.swift */,
-				531B95562082ED5F00FAA1EA /* TestView.swift */,
+				536E24C7208ED6F7008B78A3 /* Colors */,
+				53019268208D936D003C38AB /* Utilities */,
+				53019269208D9389003C38AB /* Tests */,
 				53DF02F520858C900065B70D /* C */,
 				53DF02F620858CDB0065B70D /* Resources */,
 			);
@@ -127,6 +165,7 @@
 			children = (
 				53D61BE12079BAD40051E8E6 /* Document.xib */,
 				53D61BE62079BAD40051E8E6 /* MainMenu.xib */,
+				536E24C2208DE45E008B78A3 /* NewDocumentWindow.xib */,
 				53D61BE42079BAD40051E8E6 /* Assets.xcassets */,
 				53D61BE92079BAD40051E8E6 /* Info.plist */,
 				53D61BEA2079BAD40051E8E6 /* Blaise.entitlements */,
@@ -197,6 +236,7 @@
 				53D61BE52079BAD40051E8E6 /* Assets.xcassets in Resources */,
 				53D61BE32079BAD40051E8E6 /* Document.xib in Resources */,
 				53D61BE82079BAD40051E8E6 /* MainMenu.xib in Resources */,
+				536E24C4208DE45E008B78A3 /* NewDocumentWindow.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -216,11 +256,15 @@
 				531B95572082ED5F00FAA1EA /* TestView.swift in Sources */,
 				53CE72D1207F169E003C3A2B /* GLCanvasView.swift in Sources */,
 				53CE72D72081A0D2003C3A2B /* Types.swift in Sources */,
+				53019267208D9318003C38AB /* GLCanvasViewEvents.swift in Sources */,
+				536E24C6208ED6DC008B78A3 /* Colors.swift in Sources */,
 				53E5A400208856E000380422 /* TypeUtils.swift in Sources */,
 				53CE72D3207F17B7003C3A2B /* Styles.swift in Sources */,
 				53E5A3FE2086ED1100380422 /* Tests.swift in Sources */,
 				53DF02F820858DC50065B70D /* CGUtils.swift in Sources */,
 				5346AEAD2079CFEA00DEC2FE /* Brush.swift in Sources */,
+				536E24C3208DE45E008B78A3 /* NewDocumentWindow.swift in Sources */,
+				536E24C9208ED750008B78A3 /* ColorGrid.swift in Sources */,
 				531B955D2083392F00FAA1EA /* Matrix.swift in Sources */,
 				531B955A208300DD00FAA1EA /* RenderTexture.swift in Sources */,
 				53CE72D520804D92003C3A2B /* UndoManager.swift in Sources */,

@@ -13,7 +13,7 @@ import AppKit
 class Brush {
 	var size: Float = 4.0
 	var pressure: Float = 1.0
-	var color: RGBA8 = RGBA8(255, 0, 0, 255)
+	var color: RGBA8 = RGBA8(228, 183, 62, 255)
 	var antialias = true
 	var pressureSensitive = true
 

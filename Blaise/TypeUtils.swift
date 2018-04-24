@@ -27,6 +27,10 @@ extension UInt {
 	var float: Float {
 		return Float(self)
 	}
+	var double: Double {
+		return Double(self)
+	}
+
 	var string: String {
 		return String(self)
 	}
@@ -42,4 +46,10 @@ extension Int {
 	var string: String {
 		return String(self)
 	}
+}
+
+extension NSObject {
+    func show() {
+        Swift.print(self)
+    }
 }

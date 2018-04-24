@@ -9,63 +9,7 @@
 import Foundation
 import AppKit
 
-struct RGBA<T> {
-	typealias PixelType = T
-	var r, g, b, a: PixelType
-	
-	static func == <T: Equatable> (left: RGBA<T>, right: RGBA<T>) -> Bool {
-		return (left.r == right.g) && (left.g == right.g) && (left.b == right.b) && (left.a == right.a)
-	}
-
-	// TODO: why doesn't this
-//    func compare <T: Equatable> (r: T, g: T, b: T, a: T) -> Bool {
-//        return (self.r == r && self.g == g && self.b == b && self.a == a)
-//    }
-
-	init(r: T, g: T, b: T, a: T) {
-		self.r = r
-		self.g = g
-		self.b = b
-		self.a = a
-	}
-
-	init(_ r: T, _ g: T, _ b: T, _ a: T) {
-		self.r = r
-		self.g = g
-		self.b = b
-		self.a = a
-	}
-}
-typealias RGBA8 = RGBA<UInt8>
-typealias RGBAf = RGBA<Float>
-
-extension RGBA where T == UInt8  {
-	func isWhite() -> Bool {
-		return (r == 255 && g == 255 && b == 255 && a == 255)
-	}
-	
-//    static func == (left: RGBA8, right: RGBA8) -> Bool {
-//        return (left.r == right.g) && (left.g == right.g) && (left.b == right.b) && (left.a == right.a)
-//    }
-	
-	func getRGBAf() -> RGBAf {
-		return RGBAf(r: Float(r) / 255.0, g: Float(g) / 255.0, b: Float(b) / 255.0, a: Float(a) / 255.0)
-	}
-
-	func getColor() -> NSColor {
-		return NSColor(calibratedRed: CGFloat(r) / 255.0, green: CGFloat(g) / 255.0, blue: CGFloat(b) / 255.0, alpha: CGFloat(a) / 255.0)
-	}
-	
-	static func whiteColor() -> RGBA8 {
-		return RGBA8(r: 255, g: 255, b: 255, a: 255)
-	}
-	static func blackColor() -> RGBA8 {
-		return RGBA8(r: 0, g: 0, b: 0, a: 255)
-	}
-}
-
-typealias PixelMatrix = Matrix<RGBA8>
-
+// TODO: deprecated for "spans" vec2 extension
 struct CellDim {
 	var width, height: UInt
 	
@@ -107,16 +51,17 @@ struct Vec2<T: Numeric> {
 }
 
 extension Vec2 where T: Comparable {
-	func clamp(_ min: T, _ max: T) -> Vec2 {
-		var newVec = self
-		
-		if newVec.x < min { newVec.x = max }
-		if newVec.x > max { newVec.x = max }
-		if newVec.y < min { newVec.y = max }
-		if newVec.y > max { newVec.y = max }
-		
-		return newVec
-	}
+	
+//	func clamp(_ min: T, _ max: T) -> Vec2 {
+//		var newVec = self
+//
+//		if newVec.x < min { newVec.x = min }
+//		if newVec.x > max { newVec.x = max }
+//		if newVec.y < min { newVec.y = min }
+//		if newVec.y > max { newVec.y = max }
+//
+//		return newVec
+//	}
 
 	func clamp(_ min: Vec2, _ max: Vec2) -> Vec2 {
 		var newVec = self
@@ -145,6 +90,32 @@ extension Vec2 where T: FloatingPoint {
 
 typealias V2 = Vec2<Float>
 typealias CellPos = Vec2<Int>
+
+// Spans
+typealias Span = Vec2<UInt>
+
+extension Vec2 where T == UInt {
+
+	var w: UInt {
+		get { return x }
+	}
+	var h: UInt {
+		get { return y }
+	}
+	
+	var width: UInt {
+		get { return x }
+		set { x = newValue }
+	}
+	
+	var height: UInt {
+		get { return x }
+		set { x = newValue }
+	}
+
+}
+
+
 
 // CoreGraphics Utils
 func CGPointToCellPos (_ point: CGPoint) -> CellPos {

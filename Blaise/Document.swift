@@ -13,6 +13,7 @@ class DocumentWindowConroller: NSWindowController, NSWindowDelegate {
 	func windowDidBecomeKey(_ notification: Notification) {
 		if let canvasView: GLCanvasView = document?.canvasView {
 			canvasView.makeContextCurrent()
+            window?.invalidateCursorRects(for: canvasView)
 		}
 		
 	}
@@ -83,21 +84,30 @@ class Document: NSDocument {
 	
 	@IBAction func zoomIn(_ sender: Any) {
 		Swift.print("zoom in")
+        var mousePoint = scrollView.window!.mouseLocationOutsideOfEventStream
+        mousePoint = canvasView.convert(mousePoint, from: nil)
+        
 		let factor = scrollView.magnification
-		scrollView.setMagnification(factor + 0.25, centeredAt: NSPoint())
+		scrollView.setMagnification(factor + 0.25, centeredAt: mousePoint)
 	}
 
 	@IBAction func zoomOut(_ sender: Any) {
 		Swift.print("zoom out")
+        var mousePoint = scrollView.window!.mouseLocationOutsideOfEventStream
+        mousePoint = canvasView.convert(mousePoint, from: nil)
+
 		let factor = scrollView.magnification
-		scrollView.setMagnification(factor - 0.25, centeredAt: NSPoint())
+		scrollView.setMagnification(factor - 0.25, centeredAt: mousePoint)
 	}
 
 	@IBAction func zoomToActualSize(_ sender: Any) {
 		Swift.print("zoom actual size")
-		scrollView.setMagnification(1.0, centeredAt: NSPoint())
-	}
+        var mousePoint = scrollView.window!.mouseLocationOutsideOfEventStream
+        mousePoint = canvasView.convert(mousePoint, from: nil)
 
+		scrollView.setMagnification(1.0, centeredAt: mousePoint)
+	}
+    
 	override class var autosavesInPlace: Bool {
 		return false
 	}

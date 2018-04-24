@@ -21,6 +21,10 @@ class Matrix<T> {
 		return getValue(x: x, y: y)
 	}
 	
+	subscript (cell: CellPos) -> T {
+		return getValue(x: cell.x.uint, y: cell.y.uint)
+	}
+
 	func indexOf(x: UInt, y: UInt) -> Int {
 		return Int(x + (y * width))
 	}

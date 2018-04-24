@@ -9,10 +9,6 @@
 import Foundation
 
 struct CanvasStyle {
-	static let PrimaryColor = 0;
-	static let SecondaryColor = 1;
-
 	var accumulate: Bool = false
-	var backgroundColor: RGBA8
-	var foregroundColor: [RGBA8] = []
+	var backgroundColor: RGBA8 = RGBA8(0, 0, 0, 0)
 }
