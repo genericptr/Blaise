@@ -10,6 +10,10 @@ import Foundation
 import AppKit
 import CoreGraphics
 
+protocol ColorPickerViewDelegate {
+	func colorPickerChanged(_ color: RGBA8)
+}
+
 class ColorPicker {
 	var bitmapContext: CGContext!
 	var pixels: PixelMatrix
@@ -59,7 +63,7 @@ class ColorPicker {
 				data: pointer.baseAddress,
 				width: Int(width),
 				height: Int(height),
-				bitsPerComponent: bytesPerComponent * 8,
+				bitsPerComponent: 8,
 				bytesPerRow: (bytesPerComponent * 4) * Int(width),
 				space: CGColorSpaceCreateDeviceRGB(),
 				bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue
@@ -72,13 +76,9 @@ class ColorPicker {
 	}
 }
 
-protocol ColorPickerViewDelegate {
-	func colorPickerChanged(_ color: RGBA8)
-}
-
 class ColorPickerView: NSView {
 	var picker: ColorPicker!
-	var delegate: ColorPickerViewDelegate?
+	weak var delegate: AnyObject?
 	var cursorLocation: CGPoint = CGPoint()
 	var backgroundRect: CGRect = CGRect()
 
@@ -116,10 +116,9 @@ class ColorPickerView: NSView {
 		pickerPoint = FlipY(point: pickerPoint, bounds: bounds)
 		print(pickerPoint)
 		let color = picker.colorAtPoint(pickerPoint)
-//		print(color)
 		
-		if let delegate = delegate {
-			delegate.colorPickerChanged(color)
+		if let delegate: ColorPickerViewDelegate = delegate as? ColorPickerViewDelegate {
+				delegate.colorPickerChanged(color)
 		}
 		cursorLocation = newPos
 		setNeedsDisplay(bounds)
@@ -133,7 +132,7 @@ class ColorPickerView: NSView {
 	}
 	
 	override func mouseDragged(with event: NSEvent) {
-		var mouseLocation = convert(event.locationInWindow, from: nil)
+		let mouseLocation = convert(event.locationInWindow, from: nil)
 		moveTo(mouseLocation)
 	}
 	
@@ -181,20 +180,25 @@ class ColorPickerView: NSView {
 		}
 	}
 	
-	init(frame frameRect: NSRect, pickerSize: UInt) {
-
-		super.init(frame: frameRect)
-
+	func setup(_ pickerSize: UInt) {
 		backgroundRect = bounds.insetBy(dx: borderInset, dy: borderInset)
-
+		
 		picker = ColorPicker(size: pickerSize)
 		picker.reload()
-
-		var defaultPos = CGPoint(x: CGFloat(frame.width / 2), y: CGFloat(frame.height / 2))
+		
+		let defaultPos = CGPoint(x: CGFloat(frame.width / 2), y: CGFloat(frame.height / 2))
 		moveTo(defaultPos)
 	}
 	
+	init(frame frameRect: NSRect, pickerSize: UInt) {
+		super.init(frame: frameRect)
+		
+		setup(pickerSize)
+	}
+	
 	required init?(coder decoder: NSCoder) {
-		fatalError("init(coder:) has not been implemented")
+		super.init(coder: decoder)
+		
+		setup(bounds.width.uint)
 	}
 }

@@ -69,6 +69,8 @@ class Document: NSDocument {
 	
 	@IBOutlet weak var scrollView: NSScrollView!
 	
+	var brushPalette: BrushPaletteView?
+	
 	override init() {
 		super.init()
 		// Add your subclass-specific initialization here.
@@ -119,14 +121,20 @@ class Document: NSDocument {
 	
 	override func windowControllerDidLoadNib(_ windowController: NSWindowController) {
 		guard let window = windowController.window else { return }
-			
-		Swift.print(window)
 		
 		// TOOD: set this based on new document window
-		canvasView.setFrameSize([1200, 800].cgSize)
+		canvasView.setFrameSize([400, 400].cgSize)
 		
 		scrollView.verticalScrollElasticity = .none
 		scrollView.horizontalScrollElasticity = .none
+		
+//		scrollView.setMagnification(4.0, centeredAt: CGPoint())
+
+//		brushPalette = BrushPaletteView.init(nibName: NSNib.Name(rawValue: "BrushPaletteView"), bundle: nil)
+//		if let brushPalette = brushPalette  {
+//			scrollView.addSubview(brushPalette.view)
+//			brushPalette.canvas = canvasView
+//		}
 	}
 	
 	override func data(ofType typeName: String) throws -> Data {

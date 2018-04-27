@@ -10,15 +10,30 @@ import Foundation
 import CoreGraphics
 import AppKit
 
-class Brush {
-	var size: Float = 4.0
-	var pressure: Float = 1.0
-	var color: RGBA8 = RGBA8(228, 183, 62, 255)
-	var antialias = true
-	var pressureSensitive = true
+enum BrushStates: Int {
+	case size, antialias
+}
 
+struct BrushState {
+	var states: [BrushStates]
+	var size: Float
+	var antialias: Bool
+}
+
+class Brush {
+	var size: Float = 8.0
+	var pressure: Float = 1.0
+	var color: RGBA8 = RGBA8.blackColor()
+	var antialias = false
+	var pressureEnabled = true
+	var accumulate = false
+	
 	func brushSize() -> Float {
-		return size * pressure
+		if pressureEnabled {
+			return size * pressure
+		} else {
+			return size
+		}
 	}
 
 	func getColor() -> CGColor {
@@ -28,6 +43,8 @@ class Brush {
 	func apply(_ context: CGContext) {
 	}
 }
+
+// MARK: PaintBrush
 
 class PaintBrush: Brush {
 	override func apply(_ context: CGContext) {
@@ -39,6 +56,8 @@ class PaintBrush: Brush {
 		context.setLineWidth(CGFloat(brushSize()))
 	}
 }
+
+// MARK: Eraser
 
 class Eraser: Brush {
 	override func apply(_ context: CGContext) {

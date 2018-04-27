@@ -15,17 +15,20 @@ protocol ColorGridViewDelegate {
 }
 
 class ColorGridView: NSView {
+	
+	// TODO: kill this confusing mess and just overlay the grid ON TOP after all drawing is complete
 	let cellMargin: CGFloat = 1.0
 	let cellMagnificationFactor: CGFloat = 0.15
 	let invalidCell = CellPos(-1, -1)
 
-	var gridSize: Span
-	var cellSize: CGSize
-	var colorMatrix: PixelMatrix
+	var gridSize: Span = Span(0, 0)
+	var cellSize: CGSize = CGSize()
+	var selectedCell: CellPos = CellPos(0, 0)
+	var hoverCell: CellPos = CellPos(0, 0)
+	var colorMatrix: PixelMatrix!
 	var trackingArea: NSTrackingArea?
-	var selectedCell: CellPos
-	var hoverCell: CellPos
-	weak var delegate: Any<ColorGridViewDelegate>
+
+	weak var delegate: AnyObject?
 	
 	func viewPointToGridPoint (_ viewPoint: CGPoint) -> CellPos {
 		var point = viewPoint
@@ -72,8 +75,14 @@ class ColorGridView: NSView {
 		
 		super.updateTrackingAreas()
 		
-		trackingArea = NSTrackingArea(rect: bounds, options: [.mouseMoved, .activeInKeyWindow], owner: self, userInfo: nil)
+		trackingArea = NSTrackingArea(rect: bounds, options: [.mouseMoved, .mouseEnteredAndExited, .activeInKeyWindow], owner: self, userInfo: nil)
 		addTrackingArea(trackingArea!)
+	}
+	
+	override func mouseExited(with event: NSEvent) {
+		hoverCell = CellPos(-1, -1)
+		print("exited")
+		setNeedsDisplay(bounds)
 	}
 	
 	override func mouseDown(with event: NSEvent) {
@@ -81,7 +90,10 @@ class ColorGridView: NSView {
 		
 		selectedCell = viewPointToGridPoint(p)
 		
-		
+        if let delegate: ColorGridViewDelegate = delegate as? ColorGridViewDelegate {
+            let color = colorMatrix[selectedCell]
+            delegate.colorGridChanged(color)
+        }
 	}
 	
 	override func mouseMoved(with event: NSEvent) {
@@ -160,19 +172,14 @@ class ColorGridView: NSView {
 
 	}
 	
-	// TODO: scale to fit grid/cell size
-	init(frame frameRect: NSRect, gridSize: Span) {
-		
+	func setup(_ frameRect: CGRect) {
 		selectedCell = invalidCell
 		hoverCell = invalidCell
 		cellSize = (frameRect.size - (cellMargin * 12)) / CGSize(CGFloat(gridSize.w), CGFloat(gridSize.h))
-//		cellSize.width = floor(cellSize.width)
-//		cellSize.height = floor(cellSize.height)
+		//		cellSize.width = floor(cellSize.width)
+		//		cellSize.height = floor(cellSize.height)
 		
-		self.gridSize = gridSize
 		colorMatrix = PixelMatrix(width: gridSize.w, height: gridSize.h, defaultValue: RGBA8.clearColor())
-		
-		// TODO: make the view a wrapper for a color swatch matrix which we can fill with apple colors also
 		
 		let colorRange = gridSize.w
 		
@@ -200,14 +207,22 @@ class ColorGridView: NSView {
 				colorMatrix.setValue(x, y, color.RGBA8Color())
 			}
 		}
-		
+
+	}
+	
+	init(frame frameRect: NSRect, gridSize: Span) {
+		self.gridSize = gridSize
 
 		super.init(frame: frameRect)
+		
+		setup(frame)
 	}
 	
 	required init?(coder decoder: NSCoder) {
-		fatalError("init(coder:) has not been implemented")
+		super.init(coder: decoder)
+		
+		gridSize = Span(12, 12 + 1)
+		setup(frame)
 	}
-
 	
 }

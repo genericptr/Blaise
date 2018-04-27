@@ -36,11 +36,11 @@ struct Vec2<T: Numeric> {
 	
 	// operators
 	static func ==(left: Vec2, right: Vec2) -> Bool {
-		return (left.x == right.y) && (left.y == right.y)
+		return (left.x == right.x) && (left.y == right.y)
 	}
 	
 	static func !=(left: Vec2, right: Vec2) -> Bool {
-		return (left.x != right.y) || (left.y != right.y)
+		return (left.x != right.x) || (left.y != right.y)
 	}
 	
 	static func * (left: Vec2, right: T) -> Vec2 {
@@ -52,26 +52,19 @@ struct Vec2<T: Numeric> {
 
 extension Vec2 where T: Comparable {
 	
-//	func clamp(_ min: T, _ max: T) -> Vec2 {
-//		var newVec = self
-//
-//		if newVec.x < min { newVec.x = min }
-//		if newVec.x > max { newVec.x = max }
-//		if newVec.y < min { newVec.y = min }
-//		if newVec.y > max { newVec.y = max }
-//
-//		return newVec
-//	}
-
-	func clamp(_ min: Vec2, _ max: Vec2) -> Vec2 {
+	func clamp(_ minX: T, _ minY: T, _ maxX: T, _ maxY: T) -> Vec2 {
 		var newVec = self
 		
-		if newVec.x < min.x { newVec.x = min.x }
-		if newVec.y < min.y { newVec.y = min.y }
-		if newVec.x > max.x { newVec.x = max.x }
-		if newVec.y > max.y { newVec.y = max.y }
+		if newVec.x < minX { newVec.x = minX }
+		if newVec.y < minY { newVec.y = minY }
+		if newVec.x > maxX { newVec.x = maxX }
+		if newVec.y > maxY { newVec.y = maxY }
 		
 		return newVec
+	}
+
+	func clamp(_ min: Vec2, _ max: Vec2) -> Vec2 {
+		return clamp(min.x, min.y, max.x, max.y)
 	}
 
 }
@@ -90,6 +83,7 @@ extension Vec2 where T: FloatingPoint {
 
 typealias V2 = Vec2<Float>
 typealias CellPos = Vec2<Int>
+typealias V2i = Vec2<Int>
 
 // Spans
 typealias Span = Vec2<UInt>

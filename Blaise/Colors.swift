@@ -9,18 +9,44 @@
 import Foundation
 import AppKit
 
-struct RGBA<T> {
+struct RGBA<T: Numeric> {
 	typealias PixelType = T
 	var r, g, b, a: PixelType
 	
-	static func == <T: Equatable> (left: RGBA<T>, right: RGBA<T>) -> Bool {
-		return (left.r == right.g) && (left.g == right.g) && (left.b == right.b) && (left.a == right.a)
+	static func == (left: RGBA, right: RGBA) -> Bool {
+		return (left.r == right.r) && (left.g == right.g) && (left.b == right.b) && (left.a == right.a)
 	}
 	
-	// TODO: why doesn't this
-	//    func compare <T: Equatable> (r: T, g: T, b: T, a: T) -> Bool {
-	//        return (self.r == r && self.g == g && self.b == b && self.a == a)
-	//    }
+	static func != (left: RGBA, right: RGBA) -> Bool {
+		return (left.r != right.r) || (left.g != right.g) || (left.b != right.b) || (left.a != right.a)
+	}
+
+	
+	// values
+	static func * (left: RGBA, right: RGBA) -> RGBA {
+		return RGBA(left.r * right.r, left.g * right.g, left.b * right.b, left.a * right.a)
+	}
+
+	static func + (left: RGBA, right: RGBA) -> RGBA {
+		return RGBA(left.r + right.r, left.g + right.g, left.b + right.b, left.a + right.a)
+	}
+	
+	static func - (left: RGBA, right: RGBA) -> RGBA {
+		return RGBA(left.r - right.r, left.g - right.g, left.b - right.b, left.a - right.a)
+	}
+	
+	// scalars
+	static func * (left: RGBA, right: T) -> RGBA {
+		return RGBA(left.r * right, left.g * right, left.b * right, left.a * right)
+	}
+	
+	static func + (left: RGBA, right: T) -> RGBA {
+		return RGBA(left.r + right, left.g + right, left.b + right, left.a + right)
+	}
+	
+	static func - (left: RGBA, right: T) -> RGBA {
+		return RGBA(left.r - right, left.g - right, left.b - right, left.a - right)
+	}
 	
 	init(white: T, alpha: T) {
 		self.r = white
@@ -46,14 +72,19 @@ struct RGBA<T> {
 typealias RGBA8 = RGBA<UInt8>
 typealias RGBAf = RGBA<Float>
 
+func Clamp(value: RGBAf, min: Float, max: Float) -> RGBAf {
+	var newValue = value
+	newValue.r = Clamp(value: newValue.r, min: min, max: max)
+	newValue.g = Clamp(value: newValue.g, min: min, max: max)
+	newValue.b = Clamp(value: newValue.b, min: min, max: max)
+	newValue.a = Clamp(value: newValue.a, min: min, max: max)
+	return newValue
+}
+
 extension RGBA where T == UInt8  {
 	func isWhite() -> Bool {
 		return (r == 255 && g == 255 && b == 255 && a == 255)
 	}
-	
-	//    static func == (left: RGBA8, right: RGBA8) -> Bool {
-	//        return (left.r == right.g) && (left.g == right.g) && (left.b == right.b) && (left.a == right.a)
-	//    }
 	
 	func getRGBAf() -> RGBAf {
 		return RGBAf(r: Float(r) / 255.0, g: Float(g) / 255.0, b: Float(b) / 255.0, a: Float(a) / 255.0)
@@ -73,6 +104,14 @@ extension RGBA where T == UInt8  {
 	}
 	static func clearColor() -> RGBA8 {
 		return RGBA8(r: 0, g: 0, b: 0, a: 0)
+	}
+	
+}
+
+extension RGBA where T == Float  {
+	
+	func getRGBA8() -> RGBA8 {
+		return RGBA8(UInt8(r * 255), UInt8(g * 255), UInt8(b * 255), UInt8(a * 255))
 	}
 	
 }

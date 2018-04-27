@@ -157,9 +157,15 @@ extension Array where Element == Int {
 	}
 }
 
+// MARK: functions
+
 func Normalize(_ point: CGPoint) -> CGPoint {
 	let length = CGFloat(Magnitude(point))
 	return CGPoint(x: point.x / length, y: point.y / length)
+}
+
+func Clamp(value: CGFloat, min: CGFloat, max: CGFloat) -> CGFloat {
+	return value < min ? min: value > max ? max: value
 }
 
 func Clamp(point: CGPoint, rect: CGRect) -> CGPoint {
@@ -185,38 +191,15 @@ func FlipY (point: CGPoint, bounds: CGRect) -> CGPoint {
 	return newPoint
 }
 
+func Trunc (_ point: CGPoint) -> CGPoint {
+	var newPoint = point
+	newPoint.x = trunc(newPoint.x)
+	newPoint.y = trunc(newPoint.y)
+	return newPoint
+}
+
 @discardableResult func CGImageWriteToDisk(_ image: CGImage, to destinationURL: URL) -> Bool {
 	guard let destination = CGImageDestinationCreateWithURL(destinationURL as CFURL, kUTTypePNG, 1, nil) else { return false }
 	CGImageDestinationAddImage(destination, image, nil)
 	return CGImageDestinationFinalize(destination)
-}
-
-class BitmapContext {
-	var context: CGContext!
-	var pixels: PixelMatrix
-	var bounds: CGRect {
-		return CGRect(x: 0, y: 0, width: pixels.width.int, height: pixels.height.int)
-	}
-	
-	func makeImage() -> CGImage? {
-		return context.makeImage()
-	}
-
-	init(width: UInt, height: UInt) {
-		let defaultColor = RGBA8.whiteColor()
-		pixels = PixelMatrix(width: width, height: height, defaultValue: defaultColor)
-		let bytesPerComponent = MemoryLayout<RGBA8.PixelType>.size
-		
-		pixels.table.withUnsafeMutableBytes { pointer in
-			context = CGContext(
-				data: pointer.baseAddress,
-				width: Int(width),
-				height: Int(height),
-				bitsPerComponent: bytesPerComponent * 8,
-				bytesPerRow: (bytesPerComponent * 4) * Int(width),
-				space: CGColorSpaceCreateDeviceRGB(),
-				bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue
-				)!
-		}
-	}
 }

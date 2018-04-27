@@ -4,6 +4,98 @@
 		"selected_items":
 		[
 			[
+				"cur",
+				"cursorContext"
+			],
+			[
+				"scrol",
+				"scrollView"
+			],
+			[
+				"drag",
+				"dragScrolling"
+			],
+			[
+				"changed",
+				"changedColor"
+			],
+			[
+				"Pixe",
+				"PixelMatrix"
+			],
+			[
+				"mouseDow",
+				"mouseDownLocation"
+			],
+			[
+				"Numer",
+				"SignedNumber"
+			],
+			[
+				"Render",
+				"RenderContextBrushState"
+			],
+			[
+				"brush",
+				"brushState"
+			],
+			[
+				"line",
+				"lineWidth"
+			],
+			[
+				"update",
+				"updateBrush"
+			],
+			[
+				"picker",
+				"pickerPoint"
+			],
+			[
+				"background",
+				"backgroundRect"
+			],
+			[
+				"pick",
+				"pickerPoint"
+			],
+			[
+				"curre",
+				"currentLocation"
+			],
+			[
+				"color",
+				"colorAtPoint"
+			],
+			[
+				"Color",
+				"colorPicker"
+			],
+			[
+				"RGBA",
+				"RGBA8"
+			],
+			[
+				"RGB",
+				"RGBA8"
+			],
+			[
+				"GlEn",
+				"GLenum"
+			],
+			[
+				"Gle",
+				"GLenum"
+			],
+			[
+				"set",
+				"setValue"
+			],
+			[
+				"exit",
+				"exit_code"
+			],
+			[
 				"func",
 				" \t func unknown -> Bool"
 			],
@@ -42,10 +134,6 @@
 			[
 				"pixel",
 				"pixelFBO"
-			],
-			[
-				"curre",
-				"currentDrawBounds"
 			],
 			[
 				"curen",
@@ -110,10 +198,6 @@
 			[
 				"Update",
 				"UpdateDisplay"
-			],
-			[
-				"Render",
-				"RendererDisplay"
 			],
 			[
 				"Ren",
@@ -182,10 +266,6 @@
 			[
 				"matrix",
 				"matrixUnstable"
-			],
-			[
-				"update",
-				"updateMatrixDelay"
 			],
 			[
 				"next",
@@ -434,114 +514,53 @@
 			[
 				"World",
 				"WorldMousePosition"
-			],
-			[
-				"kTileSor",
-				"kTileSortingRamp"
-			],
-			[
-				"TPO",
-				"TPoint3D"
-			],
-			[
-				"edg",
-				"edgeX"
-			],
-			[
-				"TDebug",
-				"TDebugLogList"
-			],
-			[
-				"TPoint",
-				"TPoint3D"
-			],
-			[
-				"line",
-				"lineIndex"
-			],
-			[
-				"terr",
-				"terrain_collision"
-			],
-			[
-				"terrain",
-				"terrain_collision"
-			],
-			[
-				"c",
-				"comment\tcomment { ... }"
-			],
-			[
-				"TDEbug",
-				"TDebugLogEntry"
-			],
-			[
-				"world",
-				"worldPosition"
-			],
-			[
-				"TDebugLog",
-				"TDebugLogEntryArray"
-			],
-			[
-				"GetTerra",
-				"GetTerrain"
-			],
-			[
-				"WorldT",
-				"WorldTileCoord"
-			],
-			[
-				"kIsoSpritePoly",
-				"kIsoSpritePolyFlat"
-			],
-			[
-				"ca",
-				"canvas"
-			],
-			[
-				"Is",
-				"IsZero"
-			],
-			[
-				"TRec",
-				"TRect3D"
-			],
-			[
-				"Terrain",
-				"TerrainIsRamp"
-			],
-			[
-				"TileIs",
-				"TileIsRamp"
 			]
 		]
 	},
 	"buffers":
 	[
 		{
+			"file": "Blaise/GLCanvasView.swift",
+			"settings":
+			{
+				"buffer_size": 8656,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Blaise/GLCanvasViewEvents.swift",
+			"settings":
+			{
+				"buffer_size": 5518,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
 			"file": "Blaise/RenderContext.swift",
 			"settings":
 			{
-				"buffer_size": 5198,
+				"buffer_size": 5411,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "/Users/ryanjoseph/Library/Application Support/Sublime Text 3/Packages/User/build_swift.php",
+			"file": "Blaise/RenderTexture.swift",
 			"settings":
 			{
-				"buffer_size": 787,
+				"buffer_size": 7527,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "/Users/ryanjoseph/Library/Application Support/Sublime Text 3/Packages/User/Swift.sublime-build",
+			"file": "Blaise/Brush.swift",
 			"settings":
 			{
-				"buffer_size": 506,
+				"buffer_size": 1030,
+				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
 		}
@@ -666,9 +685,65 @@
 	"command_palette":
 	{
 		"height": 75.0,
-		"last_filter": "removeP",
+		"last_filter": "swift",
 		"selected_items":
 		[
+			[
+				"swift",
+				"Set Syntax: Swift"
+			],
+			[
+				"conver",
+				"Indentation: Convert to Tabs"
+			],
+			[
+				"convert",
+				"Indentation: Convert to Tabs"
+			],
+			[
+				"remove",
+				"Package Control: Remove Package"
+			],
+			[
+				"extr",
+				"PackageResourceViewer: Extract Package"
+			],
+			[
+				"open",
+				"PackageResourceViewer: Open Resource"
+			],
+			[
+				"dis",
+				"Package Control: Disable Package"
+			],
+			[
+				"extract",
+				"PackageResourceViewer: Extract Package"
+			],
+			[
+				"res",
+				"PackageResourceViewer: Open Resource"
+			],
+			[
+				"reso",
+				"PackageResourceViewer: Open Resource"
+			],
+			[
+				"ena",
+				"Package Control: Enable Package"
+			],
+			[
+				"resou",
+				"PackageResourceViewer: Open Resource"
+			],
+			[
+				"inst",
+				"Package Control: Install Package"
+			],
+			[
+				"enab",
+				"Package Control: Enable Package"
+			],
 			[
 				"removeP",
 				"Package Control: Remove Package"
@@ -679,10 +754,6 @@
 			],
 			[
 				"remov",
-				"Package Control: Remove Package"
-			],
-			[
-				"remove",
 				"Package Control: Remove Package"
 			],
 			[
@@ -698,16 +769,8 @@
 				"Package Control: Install Package"
 			],
 			[
-				"resou",
-				"PackageResourceViewer: Open Resource"
-			],
-			[
 				"Package Control: in",
 				"Package Control: Install Package"
-			],
-			[
-				"reso",
-				"PackageResourceViewer: Open Resource"
 			],
 			[
 				"Uppe",
@@ -716,10 +779,6 @@
 			[
 				"upper",
 				"Convert Case: Upper Case"
-			],
-			[
-				"res",
-				"PackageResourceViewer: Open Resource"
 			],
 			[
 				"c#",
@@ -746,10 +805,6 @@
 				"PackageResourceViewer: Open Resource"
 			],
 			[
-				"inst",
-				"Package Control: Install Package"
-			],
-			[
 				"resourc",
 				"PackageResourceViewer: Open Resource"
 			],
@@ -764,10 +819,6 @@
 			[
 				"FPC",
 				"Set Syntax: FPC"
-			],
-			[
-				"dis",
-				"Package Control: Disable Package"
 			],
 			[
 				"enabl",
@@ -792,10 +843,6 @@
 			[
 				"Package Control: inst",
 				"Package Control: Install Package"
-			],
-			[
-				"enab",
-				"Package Control: Enable Package"
 			],
 			[
 				"instal",
@@ -858,7 +905,7 @@
 				"Package Control: Install Package"
 			]
 		],
-		"width": 410.0
+		"width": 442.0
 	},
 	"console":
 	{
@@ -905,6 +952,35 @@
 	],
 	"file_history":
 	[
+		"/Users/ryanjoseph/Desktop/Projects/Games/OpenGL-Sandbox/OpenGl-Sandbox.sublime-project",
+		"/Users/ryanjoseph/Documents/Xcode/Blaise/Blaise/Styles.swift",
+		"/Users/ryanjoseph/Documents/Xcode/Blaise/Blaise/GLCanvasViewEvents.swift",
+		"/Users/ryanjoseph/Documents/Xcode/Blaise/Blaise/AppDelegate.swift",
+		"/Users/ryanjoseph/Documents/Xcode/Blaise/Blaise/Types.swift",
+		"/Users/ryanjoseph/Documents/Xcode/Blaise/Blaise/CGUtils.swift",
+		"/Users/ryanjoseph/Documents/Xcode/Blaise/Blaise/Document.swift",
+		"/Users/ryanjoseph/Documents/Xcode/Blaise/Blaise/RenderTexture.swift",
+		"/Users/ryanjoseph/Documents/Xcode/Blaise/Blaise/RenderContext.swift",
+		"/Users/ryanjoseph/Documents/Xcode/Blaise/Blaise/TypeUtils.swift",
+		"/Users/ryanjoseph/Documents/Xcode/Blaise/Blaise/ColorPicker.swift",
+		"/Users/ryanjoseph/Documents/Xcode/Blaise/Blaise/Info.plist",
+		"/Users/ryanjoseph/Library/Application Support/Sublime Text 3/Packages/User/build_swift.php",
+		"/Users/ryanjoseph/Library/Application Support/Sublime Text 3/Packages/User/Swift.sublime-build",
+		"/Users/ryanjoseph/Library/Application Support/Sublime Text 3/Packages/FPC/fpc.sublime-build",
+		"/Users/ryanjoseph/Documents/Xcode/Blaise/Blaise/Utils.swift",
+		"/Users/ryanjoseph/Documents/Xcode/Blaise/Blaise/Matrix.swift",
+		"/Users/ryanjoseph/Documents/Xcode/Blaise/Blaise/GLUtils.swift",
+		"/Users/ryanjoseph/Documents/Xcode/Blaise/Blaise/UndoManager.swift",
+		"/Users/ryanjoseph/Documents/Xcode/Blaise/Blaise/TestView.swift",
+		"/Users/ryanjoseph/Documents/Xcode/Blaise/Blaise/Tests.swift",
+		"/Users/ryanjoseph/Documents/Xcode/Blaise/Blaise/Brush.swift",
+		"/Users/ryanjoseph/Library/Application Support/Sublime Text 3/Packages/Swift for F*ing Sublime/Swift.sublime-syntax",
+		"/Users/ryanjoseph/Library/Application Support/Sublime Text 3/Packages/Swift/Snippets/Array.sublime-snippet",
+		"/Users/ryanjoseph/Library/Application Support/Sublime Text 3/Packages/Swift/Syntaxes/Swift.tmLanguage",
+		"/Users/ryanjoseph/Library/Application Support/Sublime Text 3/Packages/Swift/Syntaxes/Swift.JSON-tmLanguage",
+		"/Users/ryanjoseph/Library/Application Support/Sublime Text 3/Packages/Swift/Syntaxes/Swift.YAML-tmLanguage",
+		"/Users/ryanjoseph/Library/Application Support/Sublime Text 3/Packages/Swift Completion/Swift Completions/f.sublime-completions",
+		"/Users/ryanjoseph/Documents/Xcode/Blaise/Blaise/GLCanvasView.swift",
 		"/Users/ryanjoseph/Library/Application Support/Sublime Text 3/Packages/User/swift.sublime-build",
 		"/Users/ryanjoseph/Library/Application Support/Sublime Text 3/Packages/C# Compile & Run/CSharpSingleFileBuild.sublime-build",
 		"/Users/ryanjoseph/Library/Application Support/Sublime Text 3/Packages/C++/C++ Single File.sublime-build",
@@ -998,41 +1074,12 @@
 		"/Users/ryanjoseph/Downloads/Games16/01 Tetris/main.cpp",
 		"/Developer/Projects/C++/SFML-Tests/src/other.cpp",
 		"/Developer/Projects/C++/SFML-Tests/main.cpp",
-		"/Users/ryanjoseph/Library/Application Support/Sublime Text 3/Packages/FPC/fpc.sublime-build",
 		"/Users/ryanjoseph/Library/Application Support/Sublime Text 3/Packages/FPC/build.php",
 		"/Users/ryanjoseph/Desktop/Projects/Games/OpenGL-Sandbox/Units/SpriteEngine/SCTileLayer.pas",
 		"/Users/ryanjoseph/Desktop/Projects/Games/OpenGL-Sandbox/Units/SpriteEngine/SCAction.pas",
 		"/Users/ryanjoseph/Desktop/Projects/Games/OpenGL-Sandbox/Sources/MapGen_OLD.pas",
 		"/Users/ryanjoseph/Desktop/Projects/Games/OpenGL-Sandbox/Sources/Main.pas",
-		"/Users/ryanjoseph/Desktop/Projects/Games/OpenGL-Sandbox/Console.Debug.ppcx64/MapGen.ppu:MapGen.pas",
-		"/Users/ryanjoseph/Desktop/Projects/Games/OpenGL-Sandbox/Sources/PlayerTypes.inc",
-		"/Users/ryanjoseph/Desktop/Projects/Games/OpenGL-Sandbox/Sources/Canvas.pas",
-		"/Users/ryanjoseph/Desktop/Projects/Games/OpenGL-Sandbox/Sources/PathManager.pas",
-		"/Users/ryanjoseph/Desktop/Projects/Games/OpenGL-Sandbox/Sources/Terrain.pas",
-		"/Users/ryanjoseph/Desktop/Projects/Games/OpenGL-Sandbox/Sources/MapObject.pas",
-		"/Users/ryanjoseph/Desktop/Projects/Games/OpenGL-Sandbox/Sources/MapManager.pas",
-		"/Users/ryanjoseph/Desktop/Projects/Games/OpenGL-Sandbox/Sources/Player.pas",
-		"/Users/ryanjoseph/Desktop/Projects/Games/OpenGL-Sandbox/Units/SpriteEngine/SCBatcher.pas",
-		"/Users/ryanjoseph/Desktop/Projects/Games/OpenGL-Sandbox/Sources/Projectile.pas",
-		"/Users/ryanjoseph/Desktop/Projects/Games/OpenGL-Sandbox/Units/Base/UObject.pas",
-		"/Users/ryanjoseph/Desktop/Projects/Games/OpenGL-Sandbox/Units/SpriteEngine/SCSprite.pas",
-		"/Users/ryanjoseph/Desktop/Projects/Games/OpenGL-Sandbox/Units/SpriteEngine/SCFace.pas",
-		"/Users/ryanjoseph/Desktop/Projects/Games/OpenGL-Sandbox/Units/SpriteEngine/SCDrawing.pas",
-		"/Users/ryanjoseph/Desktop/Projects/Games/OpenGL-Sandbox/Units/SpriteEngine/SCSpriteRenderer.pas",
-		"/Users/ryanjoseph/Desktop/Projects/Games/OpenGL-Sandbox/Sources/todo.todo",
-		"/Users/ryanjoseph/Desktop/Projects/Games/OpenGL-Sandbox/Units/SpriteEngine/SCTileMatrix.pas",
-		"/Users/ryanjoseph/Desktop/Projects/Games/OpenGL-Sandbox/Sources/Globals.pas",
-		"/Users/ryanjoseph/Desktop/Projects/Games/OpenGL-Sandbox/Units/SpriteEngine/SCViewSDL.inc",
-		"/Users/ryanjoseph/Desktop/Projects/Games/OpenGL-Sandbox/Resources/shaders/core/default_fragment.glsl",
-		"/Users/ryanjoseph/Desktop/Projects/Games/OpenGL-Sandbox/Units/SpriteEngine/SCMacros.inc",
-		"/Users/ryanjoseph/Desktop/Projects/Games/OpenGL-Sandbox/Units/SpriteEngine/SCCamera.pas",
-		"/Users/ryanjoseph/Desktop/Projects/Games/OpenGL-Sandbox/Units/SpriteEngine/SCLayer.pas",
-		"/Users/ryanjoseph/Desktop/Projects/Games/OpenGL-Sandbox/Units/SpriteEngine/SCUtils.pas",
-		"/Users/ryanjoseph/Desktop/Projects/Games/OpenGL-Sandbox/Sources/gles20.pas",
-		"/Users/ryanjoseph/Desktop/Projects/Games/OpenGL-Sandbox/Sources/DebugUtils.pas",
-		"/Users/ryanjoseph/Desktop/Projects/Games/OpenGL-Sandbox/Units/Base/UString.pas",
-		"/Users/ryanjoseph/Desktop/Projects/Games/OpenGL-Sandbox/Units/SpriteEngine/SCBitmapFont.pas",
-		"/Users/ryanjoseph/Desktop/Projects/Games/OpenGL-Sandbox/Resources/shaders/core/default_vertex.glsl"
+		"/Users/ryanjoseph/Desktop/Projects/Games/OpenGL-Sandbox/Console.Debug.ppcx64/MapGen.ppu:MapGen.pas"
 	],
 	"find":
 	{
@@ -1043,6 +1090,7 @@
 		"height": 93.0,
 		"where_history":
 		[
+			""
 		]
 	},
 	"find_state":
@@ -1050,6 +1098,51 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"backgroundColor",
+			"blackColor",
+			"backgroundColor",
+			"blackColor()",
+			"finalizeAction",
+			"currentCursor",
+			"brushCursor",
+			"flushLastAction",
+			"reloadRegion",
+			"reloadCell",
+			"glClearColor",
+			"reloadTexture",
+			"brushCursor",
+			"cursor",
+			"resize",
+			".clamp",
+			"addLine",
+			"glViewport",
+			"where ",
+			"Numeric",
+			"Numer",
+			"flip",
+			"isFlipped",
+			"nil",
+			"dirtyPoints",
+			"eraser",
+			"CGImageWriteToDisk",
+			"setShouldAntialias",
+			"applyBrush",
+			"brushLineWidth",
+			"applyBrush",
+			"colorAtPoint",
+			"Magnitude",
+			"Normalize",
+			"static ",
+			"static oper",
+			"currentLocation",
+			"drawCell",
+			"glBindTexture",
+			"defaultColor",
+			"eraseMode",
+			"enableErase",
+			"isWhite()",
+			"clearAll",
+			"fileTypes"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -1057,6 +1150,8 @@
 		"regex": false,
 		"replace_history":
 		[
+			"stroke",
+			"cursorLocation"
 		],
 		"reverse": false,
 		"show_context": true,
@@ -1072,70 +1167,11 @@
 			[
 				{
 					"buffer": 0,
-					"file": "Blaise/RenderContext.swift",
+					"file": "Blaise/GLCanvasView.swift",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 5198,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								216,
-								216
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Swift for F*ing Sublime/Swift.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "/Users/ryanjoseph/Library/Application Support/Sublime Text 3/Packages/User/build_swift.php",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 787,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								490,
-								490
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/PHP/PHP.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 131.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "/Users/ryanjoseph/Library/Application Support/Sublime Text 3/Packages/User/Swift.sublime-build",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 506,
+						"buffer_size": 8656,
 						"regions":
 						{
 						},
@@ -1148,13 +1184,130 @@
 						],
 						"settings":
 						{
-							"syntax": "Packages/JavaScript/JSON.sublime-syntax"
+							"syntax": "Packages/Swift for F*ing Sublime/Swift.sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "Blaise/GLCanvasViewEvents.swift",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 5518,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Swift for F*ing Sublime/Swift.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 2515.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "Blaise/RenderContext.swift",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 5411,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Swift for F*ing Sublime/Swift.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "Blaise/RenderTexture.swift",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 7527,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								6859,
+								6859
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Swift for F*ing Sublime/Swift.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 3217.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "Blaise/Brush.swift",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1030,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Swift for F*ing Sublime/Swift.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
 					"type": "text"
 				}
 			]
@@ -1216,6 +1369,34 @@
 		"last_filter": "",
 		"selected_items":
 		[
+			[
+				"render",
+				"RenderTexture.swift"
+			],
+			[
+				"renderc",
+				"RenderContext.swift"
+			],
+			[
+				"doc",
+				"Document.swift"
+			],
+			[
+				"cgut",
+				"CGUtils.swift"
+			],
+			[
+				"typeu",
+				"TypeUtils.swift"
+			],
+			[
+				"cgu",
+				"CGUtils.swift"
+			],
+			[
+				"cguti",
+				"CGUtils.swift"
+			],
 			[
 				"scdraw",
 				"Units/SpriteEngine/SCDrawing.pas"
@@ -1699,34 +1880,6 @@
 			[
 				"tilelyaer",
 				"Units/SpriteEngine/SCTileLayer.pas"
-			],
-			[
-				"mapgen",
-				"Sources/MapGen.pas"
-			],
-			[
-				"apl",
-				"Sources/UAPlus.pas"
-			],
-			[
-				"gridu",
-				"Sources/GridUtils.pas"
-			],
-			[
-				"noise",
-				"Sources/Noise.pas"
-			],
-			[
-				"uset",
-				"Base/ULinkedList.pas"
-			],
-			[
-				"ubag",
-				"Base/UBag.pas"
-			],
-			[
-				"udic",
-				"Base/UDictionary.pas"
 			]
 		],
 		"width": 0.0
@@ -1742,10 +1895,34 @@
 	},
 	"select_symbol":
 	{
-		"height": 97.0,
-		"last_filter": "Print",
+		"height": 53.0,
+		"last_filter": "BOx",
 		"selected_items":
 		[
+			[
+				"BOx",
+				"struct Box"
+			],
+			[
+				"BOX",
+				"struct Box"
+			],
+			[
+				"RGBA",
+				"struct RGBA"
+			],
+			[
+				"draw",
+				"draw"
+			],
+			[
+				"RGB",
+				"struct RGBA"
+			],
+			[
+				"ena",
+				"enableErase"
+			],
 			[
 				"Print",
 				"PrintVec"
@@ -1955,7 +2132,7 @@
 				"Foo"
 			]
 		],
-		"width": 384.0
+		"width": 410.0
 	},
 	"selected_group": 0,
 	"settings":

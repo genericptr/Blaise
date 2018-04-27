@@ -16,19 +16,22 @@ struct CanvasViewCursor {
     var brushCursor: NSCursor?
 }
 
-class GLCanvasView: NSOpenGLView, ColorPickerViewDelegate {
+class GLCanvasView: NSOpenGLView {
 	let renderContextCellSize = 64
 	
-	var mouseDownLocation: CGPoint = CGPoint(x: 0, y: 0)
+	var mouseDownLocation: CGPoint = CGPoint(-1, -1)
 	var renderContext: RenderContext!
 	var tempContext: RenderContext!
 	var backBuffer: PixelMatrix!
 	var currentBrush: Brush!
-	var changedPoints: [CellPos] = []
+	var currentActionPoints: [CellPos] = []
 	var cursor: CanvasViewCursor = CanvasViewCursor()
 	var style: CanvasStyle = CanvasStyle()
-    
+	var viewPort: CGRect = CGRect()
+	
 	var lockedAxis: Int = -1
+	var debugTracePoint = CGPoint(0, 0)
+	var lastDebugTracePoint = CGPoint(0, 0)
 	
 	func copyRenderContextData() -> Data? {
 		guard let image = renderContext.bitmapContext.makeImage() else { return nil }
@@ -50,10 +53,14 @@ class GLCanvasView: NSOpenGLView, ColorPickerViewDelegate {
     func addLine(from: CGPoint, to: CGPoint) {
         renderContext.addLine(from: from, to: to)
         tempContext.addLine(from: from, to: to)
-        
-        var cellPos = CellPos(to.x.int, to.y.int)
-        cellPos = cellPos.clamp(CellPos(0, 0), CellPos(tempContext.width.int - 1, tempContext.height.int - 1))
-        changedPoints.append(cellPos)
+
+			var cellPos = CellPos(to.x.int, to.y.int)
+			
+				// flip to matrix coords
+				cellPos.y = tempContext.height.int - cellPos.y
+
+//        cellPos = cellPos.clamp(CellPos(0, 0), CellPos(tempContext.width.int - 1, tempContext.height.int - 1))
+        currentActionPoints.append(cellPos)
         
         //        pushChange()
     }
@@ -76,14 +83,50 @@ class GLCanvasView: NSOpenGLView, ColorPickerViewDelegate {
 		}
 	}
 	
+	func finalizeAction_2() {
+		let action = UndoableAction(name: "Stroke")
+		var region = UnionPoints(currentActionPoints)
+		
+		for x in region.min.x.uint...region.max.x.uint {
+			for y in region.min.y.uint...region.max.y.uint {
+				let changedColor = tempContext.pixels[x, y]
+				if changedColor.a > 0 {
+					let oldColor = backBuffer[x, y]
+					let newColor = renderContext.pixels[x, y]
+					
+					action.addPixel(x: x, y: y, newColor: newColor, oldColor: oldColor)
+					
+					backBuffer.setValue(x: x, y: y, value: newColor)
+				}
+			}
+		}
+		
+		UndoManager.shared.addAction(action)
+		tempContext.clear()
+		renderContext.finishAction()
+		currentActionPoints.removeAll(keepingCapacity: true)
+	}
+
 	func finalizeAction() {
 		let action = UndoableAction(name: "Stroke")
-		let region = UnionPoints(changedPoints)
+		var region = UnionPoints(currentActionPoints)
+
+		// TODO: do we need the temp buffer now if we know what points
+		// where plotted in the render context?
+		
+		// inset the region for the brush size plus some threshold for potential overflow
+		// so we capture all the pixels
+		let overflowThreshold: Float = 1.25
+		let brushRadius = Int(Float(tempContext.brushState.lineWidth / 2) * overflowThreshold)
+		region.min.x -= brushRadius
+		region.min.y -= brushRadius
+		region.max.x += brushRadius
+		region.max.y += brushRadius
+		region = region.clamp(Box(0, 0, tempContext.width.int - 1, tempContext.height.int - 1))
 
 		for x in region.min.x.uint...region.max.x.uint {
 			for y in region.min.y.uint...region.max.y.uint {
 				let changedColor = tempContext.pixels[x, y]
-				
 				if changedColor.a > 0 {
 					let oldColor = backBuffer[x, y]
 					let newColor = renderContext.pixels[x, y]
@@ -96,9 +139,9 @@ class GLCanvasView: NSOpenGLView, ColorPickerViewDelegate {
 		}
 		
 		UndoManager.shared.addAction(action)
-
 		tempContext.clear()
-//        display()
+		renderContext.finishAction()
+		currentActionPoints.removeAll(keepingCapacity: true)
 	}
 	
 	func displayCellsInRegion(_ region: Box) {
@@ -111,147 +154,160 @@ class GLCanvasView: NSOpenGLView, ColorPickerViewDelegate {
 	func updateBrush() {
 		tempContext.applyBrush(currentBrush)
 		renderContext.applyBrush(currentBrush)
-		
-        updateBrushCursor()
+		updateBrushCursor()
 	}
 	
 	func updateBrushCursor() {
         
-        // get scale factor from scroll view
-        var scaleFactor: CGFloat = 1.0
-        if let scrollView = enclosingScrollView {
-            scaleFactor = scrollView.magnification
-        }
+		// get scale factor from scroll view
+		var scaleFactor: CGFloat = 1.0
+		if let scrollView = enclosingScrollView {
+				scaleFactor = scrollView.magnification
+		}
 
-        let cornerInset: CGFloat = 3
-        let minSize: UInt = 5
-        let lineWidth: CGFloat = 1.0
-        let centerPointRadius: CGFloat = 1.0
+		let cornerInset: CGFloat = 3
+		let minSize: UInt = 5
+		let lineWidth: CGFloat = 1.0
+		let centerPointRadius: CGFloat = 1.0
 
-        // force a non-even size to center on point
-        var width: UInt = UInt((4 + cornerInset) * scaleFactor)
-        if width % 2 == 0 { width += 1}
-        if width < minSize { width = minSize }
+		// force a non-even size to center on point
+		var width: UInt = UInt((4 + cornerInset) * scaleFactor)
+		if width % 2 == 0 { width += 1}
+		if width < minSize { width = minSize }
 
-        var height: UInt = UInt((4 + cornerInset) * scaleFactor)
-        if height % 2 == 0 { height += 1 }
-        if height < minSize { height = minSize }
-        
-        let cursorContext = BitmapContext(width: width, height: height)
-        if let context = cursorContext.context {
+		var height: UInt = UInt((4 + cornerInset) * scaleFactor)
+		if height % 2 == 0 { height += 1 }
+		if height < minSize { height = minSize }
+		
+		let cursorContext = BitmapContext(width: width, height: height)
+		if let context = cursorContext.context {
 					
 			let borderInset: CGFloat = 0.0
 			let contentRect = cursorContext.bounds.insetBy(dx: borderInset, dy: borderInset)
 
-            context.setShouldAntialias(true)
-            context.interpolationQuality = .none
-            context.clear(cursorContext.bounds)
+			context.setShouldAntialias(true)
+			context.interpolationQuality = .none
+			context.clear(cursorContext.bounds)
 
-            // TODO: do like PS and make 2 cursors which changed based on pixel brightness
-            // context.setStrokeColor(gray: 1, alpha: 1)
-            // context.setFillColor(gray: 1, alpha: 1)
-            // context.fill(CGRect(x: contentRect.width / 2, y: contentRect.height / 2, width: centerPointRadius, height: centerPointRadius))
-            // context.setLineWidth(lineWidth*3)
-            // context.strokeEllipse(in: contentRect)
+			// TODO: do like PS and make 2 cursors which changed based on pixel brightness
+			// context.setStrokeColor(gray: 1, alpha: 1)
+			// context.setFillColor(gray: 1, alpha: 1)
+			// context.fill(CGRect(x: contentRect.width / 2, y: contentRect.height / 2, width: centerPointRadius, height: centerPointRadius))
+			// context.setLineWidth(lineWidth*3)
+			// context.strokeEllipse(in: contentRect)
 
-            context.setStrokeColor(gray: 0, alpha: 1)
-            context.setFillColor(gray: 0, alpha: 1)
-            context.fill(CGRect(x: contentRect.width / 2, y: contentRect.height / 2, width: centerPointRadius, height: centerPointRadius))
-            context.setLineWidth(lineWidth)
-            context.strokeEllipse(in: contentRect)
+			context.setStrokeColor(gray: 0, alpha: 1)
+			context.setFillColor(gray: 0, alpha: 1)
+			context.fill(CGRect(x: contentRect.width / 2, y: contentRect.height / 2, width: centerPointRadius, height: centerPointRadius))
+			context.setLineWidth(lineWidth)
+			context.strokeEllipse(in: contentRect)
 
-            if let image = cursorContext.makeImage() {
+			if let image = cursorContext.makeImage() {
 
-            	// TODO: retina cursors don't work
-            	// https://stackoverflow.com/questions/19245387/nscursor-using-high-resolution-cursors-with-cursor-zoom-or-retina/28246196#28246196
-                // TODO: only update is brush size changed
-                
-                let cursorImage = NSImage.init(cgImage: image, size: cursorContext.bounds.size)
-                cursor.brushCursor = NSCursor(image: cursorImage, hotSpot: NSPoint(x: CGFloat(width / 2), y: CGFloat(height / 2)))
+				// TODO: retina cursors don't work
+				// https://stackoverflow.com/questions/19245387/nscursor-using-high-resolution-cursors-with-cursor-zoom-or-retina/28246196#28246196
+					// TODO: only update is brush size changed
+				
+					let cursorImage = NSImage.init(cgImage: image, size: cursorContext.bounds.size)
+					cursor.brushCursor = NSCursor(image: cursorImage, hotSpot: NSPoint(x: CGFloat(width / 2), y: CGFloat(height / 2)))
 //                print("update brush cursor")
-                cursor.brushCursor?.set()
-            }
-        }
+					cursor.brushCursor?.set()
+			}
+		}
 	}
 
-	func colorPickerChanged(_ color: RGBA8) {
+	@objc func fireDebugTracer() {
+		addLine(from: lastDebugTracePoint, to: debugTracePoint)
+		let region = renderContext.flushLastAction()
+		displayCellsInRegion(region)
 
-		currentBrush.color = color
-		updateBrush()
+		lastDebugTracePoint = debugTracePoint
+		
+		debugTracePoint.x += 4
+		if debugTracePoint.x > CGFloat(renderContext.width) {
+			debugTracePoint.x = 0
+			debugTracePoint.y += 4
+			lastDebugTracePoint = debugTracePoint
+		}
+		if debugTracePoint.y > CGFloat(renderContext.height) {
+			debugTracePoint.y = 0
+			lastDebugTracePoint = debugTracePoint
+		}
 	}
-    
-  func createRenderContext() {
-      currentBrush = PaintBrush()
-		
-			let contextInfo = RenderContextInfo(backgroundColor: RGBA8.clearColor())
-		
-			renderContext = RenderContext(bounds: self.bounds, info: contextInfo)
-      renderContext.loadTexture(UInt(renderContextCellSize))
-      renderContext.prepare()
-      renderContext.applyBrush(currentBrush)
-      renderContext.fillWithBackground()
-      
-			tempContext = RenderContext(bounds: self.bounds, info: contextInfo)
-      tempContext.applyBrush(currentBrush)
-      tempContext.clear()
-      
-      // NOTE: testing to flush first cell by default
-      // renderContext.flushPoints([CellPos(0, 0)])
-      
-      print("load pixel mat \(bounds)")
-      backBuffer = PixelMatrix(width: renderContext.width, height: renderContext.height, defaultValue: RGBA8.whiteColor())
-      
-      //let colorPicker = ColorPicker(width: 64, height: 64)
-      //colorPicker.reload()
-      //exit(1)
-  }
+	
+	func createRenderContext() {
+		let contextInfo = RenderContextInfo(backgroundColor: RGBA8.whiteColor())
 
-  // MARK: NSOpenGLView
-  func flush() {
-      // NOTE: for single buffered context use glFlush!
-      //        self.context().flushBuffer()
-      glFlush()
-  }
-  
-  func context() -> NSOpenGLContext {
-      return self.openGLContext!;
-  }
-  
-  func makeContextCurrent() {
-      let context = self.context()
-      context.makeCurrentContext()
-      
-      if (renderContext == nil) {
-          createRenderContext()
-      }
-  }
+		renderContext = RenderContext(bounds: self.bounds, info: contextInfo)
+		renderContext.loadTexture(UInt(renderContextCellSize))
+		renderContext.prepare()
+		renderContext.applyBrush(currentBrush)
+		renderContext.fillWithBackground()
 
-  override func display() {
-      makeContextCurrent()
-      
-      glClear(GLbitfield(GL_COLOR_BUFFER_BIT))
-      renderContext.draw(region: Box(top: 0, left: 0, right: Box.PointType(bounds.width), bottom: Box.PointType(bounds.height)))
-      flush()
-  }
-  
-  override func reshape() {
-      // print("reshape \(self.visibleRect)")
-      makeContextCurrent()
-      
-      // Update the viewport
-      let width = frame.width
-      let height = frame.height
-      let x = 0
-      let y = 0
-      glViewport(GLint(x), GLint(y), GLsizei(width), GLsizei(height))
-      glMatrixMode(GLenum(GL_PROJECTION))
-      glLoadIdentity()
-      glOrtho(0.0, GLdouble(width), GLdouble(height), 0.0, 1.0, -1.0)
-      glMatrixMode(GLenum(GL_MODELVIEW))
-      glLoadIdentity()
-      
-      display()
-  }
+		tempContext = RenderContext(bounds: self.bounds, info: contextInfo)
+		tempContext.applyBrush(currentBrush)
+		tempContext.clear()
+
+		// NOTE: testing to flush first cell by default
+		// renderContext.flushPoints([CellPos(0, 0)])
+
+		print("load pixel mat \(bounds)")
+		backBuffer = PixelMatrix(width: renderContext.width, height: renderContext.height, defaultValue: RGBA8.whiteColor())
+
+//		Timer.scheduledTimer(timeInterval: 0.005, target: self, selector: #selector(fireDebugTracer), userInfo: nil, repeats: true)
+	}
+
+	// MARK: NSOpenGLView
+
+	func flush() {
+		// NOTE: for single buffered context use glFlush!
+		// self.context().flushBuffer()
+		glFlush()
+	}
+
+	func context() -> NSOpenGLContext {
+		return self.openGLContext!;
+	}
+
+	func makeContextCurrent() {
+		let context = self.context()
+		context.makeCurrentContext()
+
+		if (renderContext == nil) {
+				createRenderContext()
+		}
+	}
+
+	override func display() {
+		makeContextCurrent()
+
+		glClear(GLbitfield(GL_COLOR_BUFFER_BIT))
+		renderContext.draw(region: Box(top: 0, left: 0, right: Box.PointType(bounds.width), bottom: Box.PointType(bounds.height)))
+		flush()
+	}
+
+	override func reshape() {
+		makeContextCurrent()
+
+		// Update the viewport
+		if viewPort != bounds {
+			print("reshape \(self.frame)")
+
+			let width = frame.width
+			let height = frame.height
+			let x = 0
+			let y = 0
+			glViewport(GLint(x), GLint(y), GLsizei(width), GLsizei(height))
+			glMatrixMode(GLenum(GL_PROJECTION))
+			glLoadIdentity()
+			glOrtho(0.0, GLdouble(width), GLdouble(height), 0.0, 1.0, -1.0)
+			glMatrixMode(GLenum(GL_MODELVIEW))
+			glLoadIdentity()
+			viewPort = bounds
+		}
+		
+		display()
+	}
     
 	func createOpenGLContext() {
 		
@@ -268,20 +324,28 @@ class GLCanvasView: NSOpenGLView, ColorPickerViewDelegate {
 		
 		self.openGLContext = context
 		self.openGLContext?.makeCurrentContext()
+		
 
 		PrintOpenGLInfo()
 	}
 
+	func setup() {
+		createOpenGLContext()
+		
+		// TODO: where do we load brushes from?
+		currentBrush = PaintBrush()
+	}
+	
 	override init(frame frameRect: NSRect) {
 		super.init(frame: frameRect)
 		
-		createOpenGLContext()
+		setup()
 	}
 	
 	required init?(coder decoder: NSCoder) {
 		super.init(coder: decoder)
 		
-		createOpenGLContext()
+		setup()
 	}
 
 }

@@ -12,6 +12,14 @@ func Clamp(value: Int, min: Int, max: Int) -> Int {
 	return value < min ? min: value > max ? max: value
 }
 
+func Clamp(value: Float, min: Float, max: Float) -> Float {
+	return value < min ? min: value > max ? max: value
+}
+
+func Clamp(value: Double, min: Double, max: Double) -> Double {
+	return value < min ? min: value > max ? max: value
+}
+
 func Magnitude (_ p: CGPoint) -> Float {
 	return Float(sqrt(pow(p.x, 2) + pow(p.y, 2)))
 }

@@ -10,7 +10,6 @@ import Foundation
 import AppKit
 
 extension GLCanvasView {
-	
 	override var acceptsFirstResponder: Bool {
 		return true
 	}
@@ -20,12 +19,21 @@ extension GLCanvasView {
 	}
 	
 	override func tabletPoint(with event: NSEvent) {
-		if currentBrush.pressure != event.pressure {
-			print(event.pressure)
+		
+//		if currentBrush.pressure != event.pressure {
+//			print(event.pressure)
+//		}
+		let currentLocation = convert(event.locationInWindow, from: nil)
+
+		var distance: Float = MAXFLOAT
+		if !currentBrush.accumulate {
+			distance = Distance(mouseDownLocation, currentLocation)
+		}
+		if distance > 0.4 {
+			currentBrush.pressure = event.pressure
+			updateBrush()
 		}
 		
-		currentBrush.pressure = event.pressure
-		updateBrush()
 	}
 
 	override func resetCursorRects() {
@@ -34,30 +42,6 @@ extension GLCanvasView {
 		if let brushCursor = cursor.brushCursor {
 			addCursorRect(visibleRect, cursor: brushCursor)
 		}
-	}
-	
-	override func viewDidMoveToWindow() {
-		
-		// TODO: scale up bitmap to view size and select bit map size at int
-		// let pickerSize = 64
-		// let colorPickerView = ColorPickerView(frame: CGRect(x: 0, y: 0, width: pickerSize, height: pickerSize), pickerSize: pickerSize.uint)
-		// colorPickerView.delegate = self
-		// addSubview(colorPickerView)
-		
-		let colorGridView = ColorGridView(frame: CGRect(x: 0, y: bounds.height - 150, width: 120, height: 120), gridSize: Span(12, 12 + 1))
-//		 colorGridView.delegate = self
-		 addSubview(colorGridView)
-
-		let dropShadow = NSShadow()
-		dropShadow.shadowColor = NSColor.init(white: 0, alpha: 0.8)
-		dropShadow.shadowOffset = NSMakeSize(0, -4.0)
-		dropShadow.shadowBlurRadius = 4.0
-		
-		wantsLayer = true
-		shadow = dropShadow
-		
-		layer?.minificationFilter = kCAFilterNearest
-		layer?.magnificationFilter = kCAFilterNearest
 	}
 	
 	override func resize(withOldSuperviewSize oldSize: NSSize) {
@@ -110,7 +94,7 @@ extension GLCanvasView {
 	
 	override func mouseDown(with event: NSEvent) {
 		window?.makeFirstResponder(self)
-		print("mouse down")
+		print("canvas mouse down")
 		mouseDownLocation = convert(event.locationInWindow, from: nil)
 
 		if !cursor.dragScrolling {
@@ -120,8 +104,7 @@ extension GLCanvasView {
 				updateBrush()
 			}
 			
-			changedPoints.removeAll()
-			
+			renderContext.startAction()
 			addLine(from: mouseDownLocation, to: mouseDownLocation)
 			let region = renderContext.flushLastAction()
 			displayCellsInRegion(region)
@@ -132,6 +115,13 @@ extension GLCanvasView {
 	
 	override func mouseDragged(with event: NSEvent) {
 		
+		// invalid mouse location
+		if mouseDownLocation == CGPoint(-1, -1) {
+				print("invalid mouse drag")
+				super.mouseDragged(with: event)
+				return
+		}
+				
 		//        if lockedAxis == 0 {
 		//            if event.modifierFlags.contains(.shift) {
 		//        }
@@ -151,7 +141,7 @@ extension GLCanvasView {
 				scrollableBounds.size.width = scrollableBounds.width - oldRect.width
 				
 				var newPoint = Clamp(point: oldRect.origin + delta, rect: scrollableBounds)
-			   
+				 
 				// if  scrollable bounds is negative we can't scroll
 				if scrollableBounds.size.width < 0 {
 					newPoint.x = oldRect.origin.x
@@ -166,8 +156,7 @@ extension GLCanvasView {
 				scrollView.reflectScrolledClipView(scrollView.contentView)
 			}
 		} else {
-			let distance = Distance(mouseDownLocation, currentLocation)
-			if distance > 0.4 {
+			if (Trunc(mouseDownLocation) != Trunc(currentLocation)) || currentBrush.accumulate {
 				addLine(from: mouseDownLocation, to: currentLocation)
 				
 				let region = renderContext.flushLastAction()
@@ -181,10 +170,41 @@ extension GLCanvasView {
 	
 	override func mouseUp(with event: NSEvent) {
 		
-		if changedPoints.count > 0 {
+		if currentActionPoints.count > 0 {
 			finalizeAction()
+			print("canvas mouse up")
 		}
 		lockedAxis = -1
-		print("mouse up")
+		mouseDownLocation = CGPoint(-1, -1)
 	}
+	
+	override func viewDidMoveToWindow() {
+		
+		// TODO: scale up bitmap to view size and select bit map size at int
+		// let pickerSize = 64
+		// let colorPickerView = ColorPickerView(frame: CGRect(x: 0, y: 0, width: pickerSize, height: pickerSize), pickerSize: pickerSize.uint)
+		// colorPickerView.delegate = self
+		// addSubview(colorPickerView)
+		
+//		let colorGridView = ColorGridView(frame: CGRect(x: 0, y: bounds.height - 150, width: 120, height: 120), gridSize: Span(12, 12 + 1))
+//		colorGridView.delegate = self
+//		addSubview(colorGridView)
+		
+//		let brushPalette = BrushPaletteView.init(nibName: NSNib.Name(rawValue: "BrushPaletteView"), bundle: nil)
+//		addSubview(brushPalette.view)
+//		brushPalette.canvas = self
+		
+		let dropShadow = NSShadow()
+		dropShadow.shadowColor = NSColor.init(white: 0, alpha: 0.8)
+		dropShadow.shadowOffset = NSMakeSize(0, -4.0)
+		dropShadow.shadowBlurRadius = 4.0
+		
+		wantsLayer = true
+		shadow = dropShadow
+		
+		layer?.minificationFilter = kCAFilterNearest
+		layer?.magnificationFilter = kCAFilterNearest
+	}
+
+	
 }

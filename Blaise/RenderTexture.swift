@@ -29,7 +29,7 @@ class RenderTexture {
 	func reloadRegion(_ region: Box, source: PixelMatrix)  {
 		var cellRegion = region / cellSize
 		cellRegion = cellRegion.clamp(Box(0, 0, gridSize.width.int, gridSize.height.int))
-		
+
 		for x in cellRegion.min.x...cellRegion.max.x {
 			for y in cellRegion.min.y...cellRegion.max.y {
 				reloadCell(x: UInt(x), y: UInt(y), translateToCellCoords: false, source: source)
