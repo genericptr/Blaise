@@ -21,10 +21,7 @@ class GLCanvasView: NSOpenGLView {
 	
 	var mouseDownLocation: CGPoint = CGPoint(-1, -1)
 	var renderContext: RenderContext!
-	var tempContext: RenderContext!
-	var backBuffer: PixelMatrix!
 	var currentBrush: Brush!
-	var currentActionPoints: [CellPos] = []
 	var cursor: CanvasViewCursor = CanvasViewCursor()
 	var style: CanvasStyle = CanvasStyle()
 	var viewPort: CGRect = CGRect()
@@ -51,18 +48,8 @@ class GLCanvasView: NSOpenGLView {
     }
     
     func addLine(from: CGPoint, to: CGPoint) {
-        renderContext.addLine(from: from, to: to)
-        tempContext.addLine(from: from, to: to)
-
-			var cellPos = CellPos(to.x.int, to.y.int)
-			
-				// flip to matrix coords
-				cellPos.y = tempContext.height.int - cellPos.y
-
-//        cellPos = cellPos.clamp(CellPos(0, 0), CellPos(tempContext.width.int - 1, tempContext.height.int - 1))
-        currentActionPoints.append(cellPos)
-        
-        //        pushChange()
+			// TODO: convert to V2i and translate to matrix coords
+			renderContext.addLine(from: from, to: to)
     }
     		
 	func undo() {
@@ -73,8 +60,6 @@ class GLCanvasView: NSOpenGLView {
 			
 			for p in action.pixels {
 				renderContext.pixels.setValue(x: p.x, y: p.y, value: p.oldColor)
-				backBuffer.setValue(x: p.x, y: p.y, value: p.oldColor)
-				
 				changedPoints.append(p.getPoint())
 			}
 			
@@ -83,65 +68,18 @@ class GLCanvasView: NSOpenGLView {
 		}
 	}
 	
-	func finalizeAction_2() {
-		let action = UndoableAction(name: "Stroke")
-		var region = UnionPoints(currentActionPoints)
-		
-		for x in region.min.x.uint...region.max.x.uint {
-			for y in region.min.y.uint...region.max.y.uint {
-				let changedColor = tempContext.pixels[x, y]
-				if changedColor.a > 0 {
-					let oldColor = backBuffer[x, y]
-					let newColor = renderContext.pixels[x, y]
-					
-					action.addPixel(x: x, y: y, newColor: newColor, oldColor: oldColor)
-					
-					backBuffer.setValue(x: x, y: y, value: newColor)
-				}
-			}
-		}
-		
-		UndoManager.shared.addAction(action)
-		tempContext.clear()
-		renderContext.finishAction()
-		currentActionPoints.removeAll(keepingCapacity: true)
-	}
-
 	func finalizeAction() {
 		let action = UndoableAction(name: "Stroke")
-		var region = UnionPoints(currentActionPoints)
-
-		// TODO: do we need the temp buffer now if we know what points
-		// where plotted in the render context?
 		
-		// inset the region for the brush size plus some threshold for potential overflow
-		// so we capture all the pixels
-		let overflowThreshold: Float = 1.25
-		let brushRadius = Int(Float(tempContext.brushState.lineWidth / 2) * overflowThreshold)
-		region.min.x -= brushRadius
-		region.min.y -= brushRadius
-		region.max.x += brushRadius
-		region.max.y += brushRadius
-		region = region.clamp(Box(0, 0, tempContext.width.int - 1, tempContext.height.int - 1))
-
-		for x in region.min.x.uint...region.max.x.uint {
-			for y in region.min.y.uint...region.max.y.uint {
-				let changedColor = tempContext.pixels[x, y]
-				if changedColor.a > 0 {
-					let oldColor = backBuffer[x, y]
-					let newColor = renderContext.pixels[x, y]
-
-					action.addPixel(x: x, y: y, newColor: newColor, oldColor: oldColor)
-					
-					backBuffer.setValue(x: x, y: y, value: newColor)
-				}
-			}
+		for p in renderContext.lastAction.changedPixels {
+			let x = p.x.uint
+			let y = p.y.uint
+			let pixel = renderContext.lastAction.buffer[x, y]
+			action.addPixel(x: x, y: y, newColor: pixel.newColor, oldColor: pixel.oldColor)
 		}
 		
 		UndoManager.shared.addAction(action)
-		tempContext.clear()
 		renderContext.finishAction()
-		currentActionPoints.removeAll(keepingCapacity: true)
 	}
 	
 	func displayCellsInRegion(_ region: Box) {
@@ -152,7 +90,6 @@ class GLCanvasView: NSOpenGLView {
 	}
 	
 	func updateBrush() {
-		tempContext.applyBrush(currentBrush)
 		renderContext.applyBrush(currentBrush)
 		updateBrushCursor()
 	}
@@ -218,7 +155,7 @@ class GLCanvasView: NSOpenGLView {
 
 	@objc func fireDebugTracer() {
 		addLine(from: lastDebugTracePoint, to: debugTracePoint)
-		let region = renderContext.flushLastAction()
+		let region = renderContext.flushOperation()
 		displayCellsInRegion(region)
 
 		lastDebugTracePoint = debugTracePoint
@@ -243,16 +180,6 @@ class GLCanvasView: NSOpenGLView {
 		renderContext.prepare()
 		renderContext.applyBrush(currentBrush)
 		renderContext.fillWithBackground()
-
-		tempContext = RenderContext(bounds: self.bounds, info: contextInfo)
-		tempContext.applyBrush(currentBrush)
-		tempContext.clear()
-
-		// NOTE: testing to flush first cell by default
-		// renderContext.flushPoints([CellPos(0, 0)])
-
-		print("load pixel mat \(bounds)")
-		backBuffer = PixelMatrix(width: renderContext.width, height: renderContext.height, defaultValue: RGBA8.whiteColor())
 
 //		Timer.scheduledTimer(timeInterval: 0.005, target: self, selector: #selector(fireDebugTracer), userInfo: nil, repeats: true)
 	}

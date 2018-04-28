@@ -12,3 +12,7 @@
 void BlockMove (void* dest, int destOffset, const void* src, int srcOffset, size_t count) {
     memmove(dest + destOffset, src + srcOffset, count);
 }
+
+void BlockZero (void* dest, int value, size_t count) {
+	memset(dest, value, count);
+}

@@ -18,7 +18,12 @@ class Matrix<T> {
 	var elementStride: Int { return MemoryLayout<T>.stride }
 	
 	subscript (x: UInt, y: UInt) -> T {
-		return getValue(x: x, y: y)
+		get {
+			return getValue(x: x, y: y)
+		}
+		set {
+			setValue(x: x, y: y, value: newValue)
+		}
 	}
 	
 	subscript (cell: CellPos) -> T {
@@ -32,10 +37,10 @@ class Matrix<T> {
 	
 	func fill(_ with: T) {
 		// NOTE: allocate new memory or iterate?
-		table = Array(repeating: with, count: table.count)
-//        for i in 0..<table.count {
-//            table[i] = with
-//        }
+//		table = Array(repeating: with, count: table.count)
+		for i in 0..<table.count {
+				table[i] = with
+		}
 	}
 	
 	@inline(__always) func isValid(_ x: UInt, _ y: UInt) -> Bool {

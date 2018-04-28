@@ -12,101 +12,62 @@ import AppKit
 import OpenGL
 import GLUT
 
-func PlotLine2(pt0: V2, pt1: V2, plot: (_ x: Int, _ y: Int) -> Void) {
-	let dx = abs(pt1.x - pt0.x)
-	let dy = abs(pt1.y - pt0.y)
-	
-	var x: Int = Int(pt0.x)
-	var y: Int = Int(pt0.y)
-	
-	let dt_dx: Float = 1.0 / dx
-	let dt_dy: Float = 1.0 / dy
-	
-	var n: Int = 1
-	var x_inc, y_inc: Int
-	var t_next_y, t_next_x: Float
-
-	
-	if (dx == 0) {
-		x_inc = 0
-		t_next_x = dt_dx // infinity
-	} else if (pt1.x > pt0.x) {
-		x_inc = 1
-		n += Int(pt1.x) - x
-		t_next_x = Float(pt0.x + 1 - pt0.x) * dt_dx
-	} else {
-		x_inc = -1
-		n += x - Int(pt1.x)
-		t_next_x = Float(pt0.x - pt0.x) * dt_dx
-	}
-	
-	
-	if (dy == 0) {
-		y_inc = 0
-		t_next_y = dt_dy // infinity
-	} else if (pt1.y > pt0.y) {
-		y_inc = 1;
-		n += Int(pt1.y) - y;
-		t_next_y = Float(pt0.y + 1 - pt0.y) * dt_dy;
-	} else {
-		y_inc = -1
-		n += y - Int(pt1.y)
-		t_next_y = Float(pt0.y - pt0.y) * dt_dy
-	}
-	
-	while n > 0 {
-		
-		plot(x, y)
-		
-		if (t_next_x <= t_next_y) { // t_next_x is smallest
-			x += x_inc
-			t_next_x += dt_dx
-		} else if (t_next_y <= t_next_x) { // t_next_y is smallest
-			y += y_inc
-			t_next_y += dt_dy
-		}
-		n -= 1
-	}
-
-}
-
-func PlotLine(x0: Int, y0: Int, x1: Int, y1: Int, plot: (_ x: Int, _ y: Int) -> Void) {
-	
-	let dx: Int = abs(x1-x0)
-	let sx = x0<x1 ? 1 : -1
-	let dy: Int = abs(y1-y0)
-	let sy = y0<y1 ? 1 : -1
-	var err: Int = (dx>dy ? dx : -dy)/2
-	var e2: Int
-	var x: Int = x0
-	var y: Int = y0
-	
-	while true {
-		plot(x,y)
-		if (x==x1 && y==y1) {
-			break
-		}
-		e2 = err
-		if (e2 > -dx) {
-			err -= dy
-			x += sx
-		}
-		if (e2 < dy) {
-			err += dx
-			y += sy
-		}
-	}
-}
-
 struct RenderContextBrushState {
 	var lineWidth: Float = 0
 	var antialias: Bool = false
 }
 
-// TODO: how do we control pixel depth/size?
 struct RenderContextInfo {
 	var backgroundColor: RGBA8
+}
+
+// TODO: refactor this and move to it's own unit. the name doesnt really make sense
+
+struct ActionPixel {
+	var oldColor: RGBA8
+	var newColor: RGBA8
+	var empty: Bool
 	
+	init(newColor: RGBA8, oldColor: RGBA8, empty: Bool) {
+		self.newColor = newColor
+		self.oldColor = oldColor
+		self.empty = empty
+	}
+	
+	init() {
+		empty = true
+		newColor = RGBA8(0, 0, 0, 0)
+		oldColor = RGBA8(0, 0, 0, 0)
+	}
+}
+
+class RenderLastAction {
+	var buffer: Matrix<ActionPixel>
+	var changedPixels: [CellPos]
+	var region: Box
+		
+	func clear() {
+		for p in changedPixels {
+			buffer[p.x.uint, p.y.uint] = ActionPixel()
+		}
+		changedPixels.removeAll(keepingCapacity: true)
+		region = Box.infinite()
+	}
+	
+	func setPixel(_ x: UInt, _ y: UInt, newColor: RGBA8, oldColor: RGBA8) {
+		if buffer[x, y].empty {
+			buffer[x, y] = ActionPixel(newColor: newColor, oldColor: oldColor, empty: false)
+			changedPixels.append(CellPos(x.int, y.int))
+		} else {
+			buffer[x, y].newColor = newColor
+		}
+	}
+	
+	init(width: UInt, height: UInt) {
+		region = Box.infinite()
+		changedPixels = []
+		buffer = Matrix<ActionPixel>(width: width, height: height, defaultValue: ActionPixel())
+	}
 }
 
 class RenderContext {
@@ -117,13 +78,11 @@ class RenderContext {
 	var eraser: Bool = false
 	var brushState: RenderContextBrushState
 	var contextInfo: RenderContextInfo
-	var lastActionPoints: [CellPos]
-	
 	var width: UInt = 0
 	var height: UInt = 0
-	
-	var dirtyPoints: [CellPos] = []
-	
+	var lastAction: RenderLastAction!
+	var lastOperationRegion: Box
+
 	func getDimensions() -> CellDim {
 		return CellDim(width, height)
 	}
@@ -137,20 +96,16 @@ class RenderContext {
 	}
 	
 	func finishAction() {
+		lastAction.clear()
 		print("end action")
 	}
 	
 	func clear() {
-		bitmapContext.clear(CGRect(x: 0, y: 0, width: width.int, height: height.int))
-		bitmapContext.synchronize()
+		pixels.fill(RGBA8.clearColor())
 	}
 	
 	func fill(_ color: RGBA8) {
-		bitmapContext.saveGState()
-		bitmapContext.setFillColor(color.getColor().cgColor)
-		bitmapContext.fill(CGRect(x: 0, y: 0, width: Int(width), height: Int(height)))
-		bitmapContext.restoreGState()
-		bitmapContext.synchronize()
+		pixels.fill(color)
 	}
 	
 	func fillWithBackground() {
@@ -170,17 +125,23 @@ class RenderContext {
 		return blend.getRGBA8()
 	}
 	
-	func addPixel(_ x: UInt, _ y: UInt, _ color: RGBA8) {
+	func plotPixel(_ x: UInt, _ y: UInt, _ color: RGBA8) {
+		
+		lastAction.setPixel(x, y, newColor: color, oldColor: pixels[x, y])
+		lastOperationRegion.union(x.int, y.int)
+
 		pixels.setValue(x, y, color)
-		lastActionPoints.append(CellPos(x, y))
+		
+		// TODO: write directly to texture buffer and mark texture as dirty
+		// so we don't overdraw
+		// in fact we can ommit the entire region loop if we keep a dict
+		// of changed textures
+		texture.setPixel(x: x, y: y, source: pixels)
+
 	}
 	
 	func drawPoint(_ point: V2i) {
-		
-		// TODO: if we move to bitmap based make all the render context functions
-		// taked origin 0,0 matrix coords
 		var origin = point
-//		origin.y = height.int - origin.y
 		
 		let px = origin.x.uint
 		let py = origin.y.uint
@@ -189,17 +150,12 @@ class RenderContext {
 		let dest = pixels[px, py]
 		let blend = blendColors(src: color, dest: dest)
 		
-		pixels.setValue(px, py, blend)
+		plotPixel(px, py, blend)
+		
+		lastAction.region.union(origin)
 	}
 	
-	func drawLine(from pointA: CGPoint, to pointB: CGPoint) {
-		
-		var startPoint = V2i(Int(pointA.x), Int(pointA.y))
-		startPoint.y = height.int - startPoint.y
-		
-		var endPoint = V2i(Int(pointB.x), Int(pointB.y))
-		endPoint.y = height.int - endPoint.y
-		
+	func drawLine(from startPoint: V2i, to endPoint: V2i) {
 		if startPoint != endPoint {
 			PlotLine(x0: startPoint.x, y0: startPoint.y, x1: endPoint.x, y1: endPoint.y, plot: {
 				drawPoint(V2i($0, $1))
@@ -236,21 +192,16 @@ class RenderContext {
 
 					let dest = pixels[px, py]
 					let blend = blendColors(src: color, dest: dest)
-					pixels.setValue(px, py, blend)
+					plotPixel(px, py, blend)
 				}
 			}
 		}
 		
+		lastAction.region.union(Box(minX: origin.x - r, minY: origin.y - r, maxX: origin.x + r, maxY: origin.y + r))
+		
 	}
 	
-	func strokeLine(from pointA: CGPoint, to pointB: CGPoint) {
-		
-		var startPoint = V2i(Int(pointA.x), Int(pointA.y))
-		startPoint.y = height.int - startPoint.y
-		
-		var endPoint = V2i(Int(pointB.x), Int(pointB.y))
-		endPoint.y = height.int - endPoint.y
-		
+	func strokeLine(from startPoint: V2i, to endPoint: V2i) {
 		if startPoint != endPoint {
 			PlotLine(x0: startPoint.x, y0: startPoint.y, x1: endPoint.x, y1: endPoint.y, plot: {
 				drawCircle(V2i($0, $1))
@@ -262,57 +213,32 @@ class RenderContext {
 
 	
 	func addLine(from pointA: CGPoint, to pointB: CGPoint) {
+		// TODO: once we're finished move this to canvas view
+		// so we only take integral numbers in matrix coords
+		// to the render context
+		var startPoint = V2i(Int(pointA.x), Int(pointA.y))
+		startPoint.y = height.int - startPoint.y
 		
-//		bitmapContext.move(to: pointA)
-//		bitmapContext.addLine(to: pointB)
-//		bitmapContext.strokePath()
-		
-		// TOOD: we don't need to scan the canvas for undo changes
-		// since we ploted the points ourself!
-		
-		strokeLine(from: pointA, to: pointB)
+		var endPoint = V2i(Int(pointB.x), Int(pointB.y))
+		endPoint.y = height.int - endPoint.y
+
+		strokeLine(from: startPoint, to: endPoint)
 //		drawCircle(pointA)
-		
-		
-		if texture != nil {
-			// flip back to matrix coordiantes from context coordiantes
-			var matrixPoint = FlipY(point: pointA, bounds: pixels.bounds)
-			var cellPos = CGPointToCellPos(matrixPoint)
-			cellPos = cellPos.clamp(CellPos(0, 0), CellPos(width.int - 1, height.int - 1))
-			dirtyPoints.append(cellPos)
-			
-			matrixPoint = FlipY(point: pointB, bounds: pixels.bounds)
-			cellPos = CGPointToCellPos(matrixPoint)
-			cellPos = cellPos.clamp(CellPos(0, 0), CellPos(width.int - 1, height.int - 1))
-			dirtyPoints.append(cellPos)
-		}
 	}
 	
-	func flushLastAction_2() -> Box {
-		var box = UnionPoints(lastActionPoints)
-		
+	func flushOperation() -> Box {
+		let box = lastOperationRegion
+		// TODO: we can now write directly to the texture buffer instead of
+		// copying from the render buffer
 		texture.reloadRegion(box, source: pixels)
-		
-		lastActionPoints.removeAll(keepingCapacity: true)
+		lastOperationRegion = Box.infinite()
 		return box
 	}
-
+	
 	func flushPoints(_ points: [CellPos]) -> Box {
 		var box = UnionPoints(points)
-		
-		// inset for brush size
-		box = box.inset(x: -Int(brushState.lineWidth * 2), y: -Int(brushState.lineWidth * 2))
-		box = box.clamp(Box(0, 0, width.int - 1, height.int - 1))
-		
-//		bitmapContext.flush()
 		texture.reloadRegion(box, source: pixels)
-		
-		dirtyPoints.removeAll(keepingCapacity: true)
 		return box
-	}
-
-	func flushLastAction() -> Box {
-		return flushPoints(dirtyPoints)
 	}
 	
 	func draw(region: Box) {
@@ -350,6 +276,7 @@ class RenderContext {
 	init(bounds: CGRect, info: RenderContextInfo) {
 		self.bounds = bounds
 		contextInfo = info
+		lastOperationRegion = Box.infinite()
 		
 		let resolution = CGFloat(1.0)//                                                                                                                                                       NSScreen.main!.backingScaleFactor
 
@@ -366,6 +293,7 @@ class RenderContext {
 		
 	func loadBitmap() {
 		
+		lastAction = RenderLastAction(width: width, height: height)
 		pixels = PixelMatrix(width: width, height: height, defaultValue: contextInfo.backgroundColor)
 		let bytesPerPixel = MemoryLayout<RGBA8>.stride
 		let totalBytes = bytesPerPixel * width.int * height.int

@@ -73,17 +73,23 @@ extension Vec2 where T: SignedInteger {
 	static func / (left: Vec2, right: T) -> Vec2 {
 		return Vec2(left.x / right, left.y / right)
 	}
+	static func / (left: Vec2, right: Vec2) -> Vec2 {
+		return Vec2(left.x / right.x, left.y / right.y)
+	}
 }
 
 extension Vec2 where T: FloatingPoint {
 	static func / (left: Vec2, right: T) -> Vec2 {
 		return Vec2(left.x / right, left.y / right)
 	}
+	static func / (left: Vec2, right: Vec2) -> Vec2 {
+		return Vec2(left.x / right.x, left.y / right.y)
+	}
 }
 
 typealias V2 = Vec2<Float>
-typealias CellPos = Vec2<Int>
 typealias V2i = Vec2<Int>
+typealias CellPos = V2i
 
 // Spans
 typealias Span = Vec2<UInt>
@@ -132,6 +138,11 @@ struct Box {
 		max = CellPos(right, bottom)
 	}
 	
+	init(minX: PointType, minY: PointType, maxX: PointType, maxY: PointType) {
+		min = CellPos(minX, minY)
+		max = CellPos(maxX, maxY)
+	}
+
 	init(_ minX: PointType, _ minY: PointType, _ maxX: PointType, _ maxY: PointType) {
 		min = CellPos(minX, minY)
 		max = CellPos(maxX, maxY)
@@ -172,6 +183,24 @@ struct Box {
 		return newBox
 	}
 	
+	mutating func union(_ box: Box) {
+		if box.min.x < min.x { min.x = box.min.x }
+		if box.min.y < min.y { min.y = box.min.y }
+		if box.max.x > max.x { max.x = box.max.x }
+		if box.max.y > max.y { max.y = box.max.y }
+	}
+	
+	mutating func union(_ point: CellPos) {
+		union(point.x, point.y)
+	}
+	
+	mutating func union(_ x: Int, _ y: Int) {
+		if x < min.x { min.x = x }
+		if y < min.y { min.y = y }
+		if x > max.x { max.x = x }
+		if y > max.y { max.y = y }
+	}
+
 	subscript (i: UInt) -> PointType {
 		switch i {
 		case 0:

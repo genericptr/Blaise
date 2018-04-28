@@ -8,6 +8,31 @@
 
 import Foundation
 
+func TestStructForLoop() {
+	let r = 10000
+	let a = Array(repeating: RGBA8.blackColor(), count: 1000000)
+	
+	var startTime = CFAbsoluteTimeGetCurrent()
+	for _ in 0..<r*r {
+		for i in 0..<a.count {
+			var c = a[i]
+			c.a = 0
+		}
+	}
+	var endTime = CFAbsoluteTimeGetCurrent()
+	print("index:  \(endTime - startTime)")
+	
+	startTime = CFAbsoluteTimeGetCurrent()
+	for _ in 0..<r*r {
+		for p in a {
+			var c = p
+			c.a = 0
+		}
+	}
+	endTime = CFAbsoluteTimeGetCurrent()
+	print("copy iterator: \(endTime - startTime)")
+}
+
 func TestMemmove() {
 	var src: [UInt32] = Array(repeating: 1, count: 1000)
 	var dest: [UInt32] = Array(repeating: 0, count: 1000)

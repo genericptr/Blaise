@@ -12,49 +12,48 @@ import OpenGL
 typealias TextureCellMatrix = Matrix<GLuint>
 var ActiveBoundTextures: [GLuint] = Array(repeating: 0, count: 8)
 
+struct RenderTextureBuffer {
+	var pixels: PixelMatrix!
+	var dirty: Bool = false
+	var textureID: GLuint = 0
+}
+
 class RenderTexture {
-	var textures: TextureCellMatrix!
+	
+	// TODO: we have a matrix and an array of buffers?
+//	var textures: TextureCellMatrix!
+//	var buffers: [PixelMatrix] = []
+	var textures: Matrix<RenderTextureBuffer>
 	var cellSize: CellDim
 	var gridSize: CellDim
-	var buffers: [PixelMatrix] = []
-    
+
 	let imageFormat = GL_RGBA
 	let imageType = GL_UNSIGNED_BYTE
 	
-	var defaultColor: RGBA8 {
-		// return RGBA8.whiteColor()
+	private var defaultColor: RGBA8 {
 		return RGBA8.clearColor()
 	}
 	
-	func reloadRegion(_ region: Box, source: PixelMatrix)  {
-		var cellRegion = region / cellSize
-		cellRegion = cellRegion.clamp(Box(0, 0, gridSize.width.int, gridSize.height.int))
-
-		for x in cellRegion.min.x...cellRegion.max.x {
-			for y in cellRegion.min.y...cellRegion.max.y {
-				reloadCell(x: UInt(x), y: UInt(y), translateToCellCoords: false, source: source)
-			}
-		}
+	private func bufferAt(x: UInt, y: UInt) -> PixelMatrix {
+		let cellIndex = x + (y * gridSize.w)
+		return buffers[cellIndex.int]
 	}
 	
-	// reload cell is matrix coords with source matrix which matches the size
-	// of the texture
-	func reloadCell(x: UInt, y: UInt, translateToCellCoords: Bool, source: PixelMatrix)  {
+	func setPixel(x: UInt, y: UInt, source: PixelMatrix) {
 		
-		var cell = CellPos(0, 0)
+		let cell = V2i(x.int, y.int) / V2i(cellSize.w.int, cellSize.h.int)
+		let buffer = bufferAt(x: cell.x.uint, y: cell.y.uint)
+		let bufferRel = V2i(x.int - (cell.x * cellSize.w.int), y.int - (cell.y * cellSize.h.int))
 		
-		if translateToCellCoords {
-			cell.x = x.int / cellSize.w.int
-			cell.y = y.int / cellSize.h.int
-		} else {
-			cell.x = x.int
-			cell.y = y.int
-		}
+		buffer[bufferRel.x.uint, bufferRel.y.uint] = source[x, y]
+	}
+	
+	func reloadCell(x: UInt, y: UInt, source: PixelMatrix)  {
+		
+		var cell = CellPos(x.int, y.int)
+		
 		let cellIndex: Int = cell.x + (cell.y * gridSize.w.int)
-//        print("reload \(cellX),\(cellY)")
-		
 		let start = CellPos(cell.x * cellSize.w.int, cell.y * cellSize.h.int)
-		
 		let end = CellPos(Clamp(value: start.x + cellSize.w.int, min: 0, max: source.width.int),
 						  Clamp(value: start.y + cellSize.h.int, min: 0, max: source.height.int))
 		
@@ -62,15 +61,14 @@ class RenderTexture {
 		let elemSize = source.elementStride
 		let cellRows = Int(cellSize.w)
 
-		// for y in start.y..<end.y {
-		// 	for x in start.x..<end.x {
-		// 		let pixel = source[x.uint, y.uint]
-		// 		if pixel.a > 0 {
-		// 			// source.setValue(x: x.uint, y: y.uint, value: RGBA8(0, 0, 255, 255))
-		// 			print(pixel)
-		// 		}
-		// 	}
-		// }
+//		 for y in start.y..<end.y {
+//		 	for x in start.x..<end.x {
+//		 		let pixel = source[x.uint, y.uint]
+//		 		if pixel.a > 0 {
+//		 			print(pixel)
+//		 		}
+//		 	}
+//		 }
 
 		for y in start.y..<end.y {
 			let bufferRel = CellPos(0, y - (cell.y * cellSize.h.int))
@@ -83,19 +81,22 @@ class RenderTexture {
 			let byteCount = Int32(elemSize * cellRows)
 			BlockMove(&buffer.table, destOffset, &source.table, srcOffset, byteCount)
 		}
-		reloadTexture(x: cell.x.uint, y: cell.y.uint, data: &buffer.table)
 		
-//        for y in startY..<endY {
-//            for x in startX..<endX {
-//                let pixel = source.getValue(x: x, y: y)
-//                let bufferRelX = x - (cellX * cellSize.w)
-//                let bufferRelY = y - (cellY * cellSize.h)
-//                buffer.setValue(x: bufferRelX, y: bufferRelY, value: pixel)
-//            }
-//        }
-//        reloadTexture(x: cellX, y: cellY, data: &buffer.table)
+		reloadTexture(x: cell.x.uint, y: cell.y.uint, data: &buffer.table)
 
 	}
+	
+	func reloadRegion(_ region: Box, source: PixelMatrix)  {
+		var cellRegion = region / cellSize
+		cellRegion = cellRegion.clamp(Box(0, 0, gridSize.width.int, gridSize.height.int))
+		
+		for x in cellRegion.min.x...cellRegion.max.x {
+			for y in cellRegion.min.y...cellRegion.max.y {
+				reloadCell(x: UInt(x), y: UInt(y), source: source)
+			}
+		}
+	}
+	
 	
 	func bindTexture(_ textureID: GLuint, _ textureUnit: Int) {
 		if ActiveBoundTextures[textureUnit] != textureID {

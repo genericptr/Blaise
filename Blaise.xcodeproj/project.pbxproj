@@ -15,6 +15,7 @@
 		53230D5320898DD0006CD9D9 /* ColorPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53230D5220898DD0006CD9D9 /* ColorPicker.swift */; };
 		5346AEAD2079CFEA00DEC2FE /* Brush.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5346AEAC2079CFEA00DEC2FE /* Brush.swift */; };
 		534907512091C2D00041E000 /* BitmapContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 534907502091C2D00041E000 /* BitmapContext.swift */; };
+		5349075320941C070041E000 /* Geometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5349075220941C070041E000 /* Geometry.swift */; };
 		535FA8E82090315300F5B8B8 /* BrushPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 535FA8E72090315300F5B8B8 /* BrushPreview.swift */; };
 		535FA8EA209043BA00F5B8B8 /* BrushPalette.swift in Sources */ = {isa = PBXBuildFile; fileRef = 535FA8E9209043B900F5B8B8 /* BrushPalette.swift */; };
 		536E24C3208DE45E008B78A3 /* NewDocumentWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 536E24C1208DE45E008B78A3 /* NewDocumentWindow.swift */; };
@@ -48,6 +49,7 @@
 		53230D5220898DD0006CD9D9 /* ColorPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPicker.swift; sourceTree = "<group>"; };
 		5346AEAC2079CFEA00DEC2FE /* Brush.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Brush.swift; sourceTree = "<group>"; };
 		534907502091C2D00041E000 /* BitmapContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BitmapContext.swift; sourceTree = "<group>"; };
+		5349075220941C070041E000 /* Geometry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Geometry.swift; sourceTree = "<group>"; };
 		535FA8E72090315300F5B8B8 /* BrushPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrushPreview.swift; sourceTree = "<group>"; };
 		535FA8E9209043B900F5B8B8 /* BrushPalette.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrushPalette.swift; sourceTree = "<group>"; };
 		536E24C1208DE45E008B78A3 /* NewDocumentWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewDocumentWindow.swift; sourceTree = "<group>"; };
@@ -92,6 +94,7 @@
 			isa = PBXGroup;
 			children = (
 				531B955C2083392F00FAA1EA /* Matrix.swift */,
+				5349075220941C070041E000 /* Geometry.swift */,
 				53CE72D62081A0D2003C3A2B /* Types.swift */,
 				53E5A3FF208856E000380422 /* TypeUtils.swift */,
 				53CE72CE207F0DEE003C3A2B /* Utils.swift */,
@@ -277,6 +280,7 @@
 				53DF02F820858DC50065B70D /* CGUtils.swift in Sources */,
 				534907512091C2D00041E000 /* BitmapContext.swift in Sources */,
 				535FA8E82090315300F5B8B8 /* BrushPreview.swift in Sources */,
+				5349075320941C070041E000 /* Geometry.swift in Sources */,
 				5346AEAD2079CFEA00DEC2FE /* Brush.swift in Sources */,
 				536E24C3208DE45E008B78A3 /* NewDocumentWindow.swift in Sources */,
 				536E24C9208ED750008B78A3 /* ColorGrid.swift in Sources */,

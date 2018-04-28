@@ -106,7 +106,7 @@ extension GLCanvasView {
 			
 			renderContext.startAction()
 			addLine(from: mouseDownLocation, to: mouseDownLocation)
-			let region = renderContext.flushLastAction()
+			let region = renderContext.flushOperation()
 			displayCellsInRegion(region)
 		}
 
@@ -159,7 +159,7 @@ extension GLCanvasView {
 			if (Trunc(mouseDownLocation) != Trunc(currentLocation)) || currentBrush.accumulate {
 				addLine(from: mouseDownLocation, to: currentLocation)
 				
-				let region = renderContext.flushLastAction()
+				let region = renderContext.flushOperation()
 				displayCellsInRegion(region)
 				
 				mouseDownLocation = currentLocation
@@ -170,7 +170,8 @@ extension GLCanvasView {
 	
 	override func mouseUp(with event: NSEvent) {
 		
-		if currentActionPoints.count > 0 {
+		// TODO: make renderContext.isLastActionSet()
+		if renderContext.lastAction.changedPixels.count > 0 {
 			finalizeAction()
 			print("canvas mouse up")
 		}
@@ -179,21 +180,7 @@ extension GLCanvasView {
 	}
 	
 	override func viewDidMoveToWindow() {
-		
-		// TODO: scale up bitmap to view size and select bit map size at int
-		// let pickerSize = 64
-		// let colorPickerView = ColorPickerView(frame: CGRect(x: 0, y: 0, width: pickerSize, height: pickerSize), pickerSize: pickerSize.uint)
-		// colorPickerView.delegate = self
-		// addSubview(colorPickerView)
-		
-//		let colorGridView = ColorGridView(frame: CGRect(x: 0, y: bounds.height - 150, width: 120, height: 120), gridSize: Span(12, 12 + 1))
-//		colorGridView.delegate = self
-//		addSubview(colorGridView)
-		
-//		let brushPalette = BrushPaletteView.init(nibName: NSNib.Name(rawValue: "BrushPaletteView"), bundle: nil)
-//		addSubview(brushPalette.view)
-//		brushPalette.canvas = self
-		
+				
 		let dropShadow = NSShadow()
 		dropShadow.shadowColor = NSColor.init(white: 0, alpha: 0.8)
 		dropShadow.shadowOffset = NSMakeSize(0, -4.0)
