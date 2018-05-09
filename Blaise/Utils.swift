@@ -8,6 +8,15 @@
 
 import Foundation
 
+func Clamp<T:Comparable>(value: T, min: T, max: T) -> T {
+	return value < min ? min: value > max ? max: value
+}
+
+/*
+func Clamp(value: UInt8, min: UInt8, max: UInt8) -> UInt8 {
+	return value < min ? min: value > max ? max: value
+}
+
 func Clamp(value: Int, min: Int, max: Int) -> Int {
 	return value < min ? min: value > max ? max: value
 }
@@ -19,11 +28,25 @@ func Clamp(value: Float, min: Float, max: Float) -> Float {
 func Clamp(value: Double, min: Double, max: Double) -> Double {
 	return value < min ? min: value > max ? max: value
 }
+*/
 
-func Magnitude (_ p: CGPoint) -> Float {
-	return Float(sqrt(pow(p.x, 2) + pow(p.y, 2)))
+func Lerp (t: Float, a: Float, b: Float) -> Float {
+	return (a * (1 - t)) + (b * t)
 }
 
-func Distance (_ fromPoint: CGPoint, _ toPoint: CGPoint) -> Float {
-	return Magnitude(CGPoint(x: fromPoint.x - toPoint.x, y: fromPoint.y - toPoint.y))
+func Map(percent: Float, min: Float, max: Float) -> Float {
+	return min + ((max - min) * percent)
+}
+
+func Map(value: Float, min: Float, max: Float) -> Float {
+	return (max - min) / value
+}
+
+func Magnitude (_ x: Float, _ y: Float) -> Float {
+	return Float(sqrt(pow(x, 2) + pow(y, 2)))
+}
+
+func Fatal(_ message: String = "Fatal") {
+	print(message)
+	exit(-1)
 }

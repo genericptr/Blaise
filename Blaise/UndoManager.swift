@@ -17,10 +17,14 @@ struct UndoablePixel {
 	}
 }
 
-class UndoableAction {
+class UndoableAction: MemoryUsage {
 	var pixels: [UndoablePixel] = []
 	var name: String
 	
+	func calculateTotalMemoryUsage(bytes: inout UInt64) {
+		bytes += UInt64(pixels.count * MemoryLayout<UndoablePixel>.stride)
+	}
+
 	func addPixel(x: UInt, y: UInt, newColor: RGBA8, oldColor: RGBA8) {
 		let newPixel = UndoablePixel(x: x, y: y, newColor: newColor, oldColor: oldColor)
 		pixels.append(newPixel)
@@ -31,8 +35,14 @@ class UndoableAction {
 	}
 }
 
-class UndoManager {
+class UndoManager: MemoryUsage {
 	var stack: [UndoableAction] = []
+	
+	func calculateTotalMemoryUsage(bytes: inout UInt64) {
+		for action in stack {
+			action.calculateTotalMemoryUsage(bytes: &bytes)
+		}
+	}
 	
 	static var shared: UndoManager {
 		get {

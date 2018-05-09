@@ -1,5 +1,5 @@
 //
-//  CanvasView.swift
+//  GLCanvasView.swift
 //  Blaise
 //
 //  Created by Ryan Joseph on 4/8/18.
@@ -9,234 +9,18 @@
 import Foundation
 import AppKit
 import CoreGraphics
-import GLKit
+import OpenGL
 
-struct CanvasViewCursor {
-    var dragScrolling: Bool = false
-    var brushCursor: NSCursor?
-}
+// NOTE: we need GLUT for deprecated non-core functions
+import GLUT
 
 class GLCanvasView: NSOpenGLView {
-	let renderContextCellSize = 64
 	
-	var mouseDownLocation: CGPoint = CGPoint(-1, -1)
-	var renderContext: RenderContext!
-	var currentBrush: Brush!
-	var cursor: CanvasViewCursor = CanvasViewCursor()
-	var style: CanvasStyle = CanvasStyle()
-	var viewPort: CGRect = CGRect()
-	
-	var lockedAxis: Int = -1
-	var debugTracePoint = CGPoint(0, 0)
-	var lastDebugTracePoint = CGPoint(0, 0)
-	
-	func copyRenderContextData() -> Data? {
-		guard let image = renderContext.bitmapContext.makeImage() else { return nil }
-		
-		let outImage = NSImage.init(cgImage: image, size: renderContext.getSize())
-		if let data = outImage.tiffRepresentation {
-			return data
-		} else {
-			return nil
-		}
+	override func resize(withOldSuperviewSize oldSize: NSSize) {
+		// override to prevent flickering inside NSScrollView
 	}
 	
-    func pushChange() {
-        if let document = window?.windowController?.document {
-            document.updateChangeCount(.changeDone)
-        }
-    }
-    
-    func addLine(from: CGPoint, to: CGPoint) {
-			// TODO: convert to V2i and translate to matrix coords
-			renderContext.addLine(from: from, to: to)
-    }
-    		
-	func undo() {
-		if let action = UndoManager.shared.pop() {
-			print("undo last action")
-			
-			var changedPoints: [CellPos] = []
-			
-			for p in action.pixels {
-				renderContext.pixels.setValue(x: p.x, y: p.y, value: p.oldColor)
-				changedPoints.append(p.getPoint())
-			}
-			
-			let region = renderContext.flushPoints(changedPoints)
-			displayCellsInRegion(region)
-		}
-	}
-	
-	func finalizeAction() {
-		let action = UndoableAction(name: "Stroke")
-		
-		for p in renderContext.lastAction.changedPixels {
-			let x = p.x.uint
-			let y = p.y.uint
-			let pixel = renderContext.lastAction.buffer[x, y]
-			action.addPixel(x: x, y: y, newColor: pixel.newColor, oldColor: pixel.oldColor)
-		}
-		
-		UndoManager.shared.addAction(action)
-		renderContext.finishAction()
-	}
-	
-	func displayCellsInRegion(_ region: Box) {
-		makeContextCurrent()
-
-		renderContext.draw(region: region)
-		flush()
-	}
-	
-	func updateBrush() {
-		renderContext.applyBrush(currentBrush)
-		updateBrushCursor()
-	}
-	
-	func updateBrushCursor() {
-        
-		// get scale factor from scroll view
-		var scaleFactor: CGFloat = 1.0
-		if let scrollView = enclosingScrollView {
-				scaleFactor = scrollView.magnification
-		}
-
-		let cornerInset: CGFloat = 3
-		let minSize: UInt = 5
-		let lineWidth: CGFloat = 1.0
-		let centerPointRadius: CGFloat = 1.0
-
-		// force a non-even size to center on point
-		var width: UInt = UInt((4 + cornerInset) * scaleFactor)
-		if width % 2 == 0 { width += 1}
-		if width < minSize { width = minSize }
-
-		var height: UInt = UInt((4 + cornerInset) * scaleFactor)
-		if height % 2 == 0 { height += 1 }
-		if height < minSize { height = minSize }
-		
-		let cursorContext = BitmapContext(width: width, height: height)
-		if let context = cursorContext.context {
-					
-			let borderInset: CGFloat = 0.0
-			let contentRect = cursorContext.bounds.insetBy(dx: borderInset, dy: borderInset)
-
-			context.setShouldAntialias(true)
-			context.interpolationQuality = .none
-			context.clear(cursorContext.bounds)
-
-			// TODO: do like PS and make 2 cursors which changed based on pixel brightness
-			// context.setStrokeColor(gray: 1, alpha: 1)
-			// context.setFillColor(gray: 1, alpha: 1)
-			// context.fill(CGRect(x: contentRect.width / 2, y: contentRect.height / 2, width: centerPointRadius, height: centerPointRadius))
-			// context.setLineWidth(lineWidth*3)
-			// context.strokeEllipse(in: contentRect)
-
-			context.setStrokeColor(gray: 0, alpha: 1)
-			context.setFillColor(gray: 0, alpha: 1)
-			context.fill(CGRect(x: contentRect.width / 2, y: contentRect.height / 2, width: centerPointRadius, height: centerPointRadius))
-			context.setLineWidth(lineWidth)
-			context.strokeEllipse(in: contentRect)
-
-			if let image = cursorContext.makeImage() {
-
-				// TODO: retina cursors don't work
-				// https://stackoverflow.com/questions/19245387/nscursor-using-high-resolution-cursors-with-cursor-zoom-or-retina/28246196#28246196
-					// TODO: only update is brush size changed
-				
-					let cursorImage = NSImage.init(cgImage: image, size: cursorContext.bounds.size)
-					cursor.brushCursor = NSCursor(image: cursorImage, hotSpot: NSPoint(x: CGFloat(width / 2), y: CGFloat(height / 2)))
-//                print("update brush cursor")
-					cursor.brushCursor?.set()
-			}
-		}
-	}
-
-	@objc func fireDebugTracer() {
-		addLine(from: lastDebugTracePoint, to: debugTracePoint)
-		let region = renderContext.flushOperation()
-		displayCellsInRegion(region)
-
-		lastDebugTracePoint = debugTracePoint
-		
-		debugTracePoint.x += 4
-		if debugTracePoint.x > CGFloat(renderContext.width) {
-			debugTracePoint.x = 0
-			debugTracePoint.y += 4
-			lastDebugTracePoint = debugTracePoint
-		}
-		if debugTracePoint.y > CGFloat(renderContext.height) {
-			debugTracePoint.y = 0
-			lastDebugTracePoint = debugTracePoint
-		}
-	}
-	
-	func createRenderContext() {
-		let contextInfo = RenderContextInfo(backgroundColor: RGBA8.whiteColor())
-
-		renderContext = RenderContext(bounds: self.bounds, info: contextInfo)
-		renderContext.loadTexture(UInt(renderContextCellSize))
-		renderContext.prepare()
-		renderContext.applyBrush(currentBrush)
-		renderContext.fillWithBackground()
-
-//		Timer.scheduledTimer(timeInterval: 0.005, target: self, selector: #selector(fireDebugTracer), userInfo: nil, repeats: true)
-	}
-
-	// MARK: NSOpenGLView
-
-	func flush() {
-		// NOTE: for single buffered context use glFlush!
-		// self.context().flushBuffer()
-		glFlush()
-	}
-
-	func context() -> NSOpenGLContext {
-		return self.openGLContext!;
-	}
-
-	func makeContextCurrent() {
-		let context = self.context()
-		context.makeCurrentContext()
-
-		if (renderContext == nil) {
-				createRenderContext()
-		}
-	}
-
-	override func display() {
-		makeContextCurrent()
-
-		glClear(GLbitfield(GL_COLOR_BUFFER_BIT))
-		renderContext.draw(region: Box(top: 0, left: 0, right: Box.PointType(bounds.width), bottom: Box.PointType(bounds.height)))
-		flush()
-	}
-
-	override func reshape() {
-		makeContextCurrent()
-
-		// Update the viewport
-		if viewPort != bounds {
-			print("reshape \(self.frame)")
-
-			let width = frame.width
-			let height = frame.height
-			let x = 0
-			let y = 0
-			glViewport(GLint(x), GLint(y), GLsizei(width), GLsizei(height))
-			glMatrixMode(GLenum(GL_PROJECTION))
-			glLoadIdentity()
-			glOrtho(0.0, GLdouble(width), GLdouble(height), 0.0, 1.0, -1.0)
-			glMatrixMode(GLenum(GL_MODELVIEW))
-			glLoadIdentity()
-			viewPort = bounds
-		}
-		
-		display()
-	}
-    
-	func createOpenGLContext() {
+	private func createOpenGLContext() {
 		
 		let attr = [
 			NSOpenGLPixelFormatAttribute(NSOpenGLPFAOpenGLProfile),
@@ -252,15 +36,37 @@ class GLCanvasView: NSOpenGLView {
 		self.openGLContext = context
 		self.openGLContext?.makeCurrentContext()
 		
-
 		PrintOpenGLInfo()
+	}
+	
+	func flush() {
+		glFlush()
+	}
+	
+	func context() -> NSOpenGLContext {
+		return self.openGLContext!;
+	}
+	
+	func makeContextCurrent() {
+		let context = self.context()
+		context.makeCurrentContext()
+	}
+	
+	func draw() {
 	}
 
 	func setup() {
 		createOpenGLContext()
-		
-		// TODO: where do we load brushes from?
-		currentBrush = PaintBrush()
+	}
+
+	override func display() {
+		makeContextCurrent()
+		draw()
+		flush()
+	}
+	
+	override init?(frame frameRect: NSRect, pixelFormat format: NSOpenGLPixelFormat?) {
+		super.init(frame: frameRect, pixelFormat: format)
 	}
 	
 	override init(frame frameRect: NSRect) {
@@ -274,5 +80,5 @@ class GLCanvasView: NSOpenGLView {
 		
 		setup()
 	}
-
+	
 }

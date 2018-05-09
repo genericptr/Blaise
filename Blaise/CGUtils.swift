@@ -68,7 +68,29 @@ extension CGPoint {
 		return CGPoint(x: left.x / right, y: left.y / right)
 	}
 	
+	static func -= (left: inout CGPoint, right: CGFloat) {
+		left = left - right
+	}
+	static func += (left: inout CGPoint, right: CGFloat) {
+		left = left + right
+	}
+	static func *= (left: inout CGPoint, right: CGFloat) {
+		left = left * right
+	}
+	static func /= (left: inout CGPoint, right: CGFloat) {
+		left = left / right
+	}
+	
+	func distance(_ to: CGPoint) -> CGFloat {
+		return Distance(self, to)
+	}
+	
+	func floor() -> CGPoint {
+		return Floor(self)
+	}
+		
 	init(_ x: CGFloat, _ y: CGFloat) {
+		self.init() // imported from c, must call
 		self.x = x
 		self.y = y
 	}
@@ -78,53 +100,54 @@ extension CGPoint {
 // MARK: CGSize
 
 extension CGSize {
-	
-		// self
-		static func + (left: CGSize, right: CGSize) -> CGSize {
-			return CGSize(width: left.width + right.width, height: left.height + right.height)
-		}
-		static func - (left: CGSize, right: CGSize) -> CGSize {
-			return CGSize(width: left.width - right.width, height: left.height - right.height)
-		}
-		static func * (left: CGSize, right: CGSize) -> CGSize {
-			return CGSize(width: left.width * right.width, height: left.height * right.height)
-		}
-		static func / (left: CGSize, right: CGSize) -> CGSize {
-			return CGSize(width: left.width / right.width, height: left.height / right.height)
-		}
-	
-		// assignments
-		static func -= (left: inout CGSize, right: CGSize) {
-			left = left - right
-		}
-		static func += (left: inout CGSize, right: CGSize) {
-			left = left + right
-		}
-		static func *= (left: inout CGSize, right: CGSize) {
-			left = left * right
-		}
-		static func /= (left: inout CGSize, right: CGSize) {
-			left = left / right
-		}
-	
-    // scalars
-		static func + (left: CGSize, right: CGFloat) -> CGSize {
-			return CGSize(width: left.width + right, height: left.height + right)
-		}
 
-		static func - (left: CGSize, right: CGFloat) -> CGSize {
-			return CGSize(width: left.width - right, height: left.height - right)
-		}
+	// self
+	static func + (left: CGSize, right: CGSize) -> CGSize {
+		return CGSize(width: left.width + right.width, height: left.height + right.height)
+	}
+	static func - (left: CGSize, right: CGSize) -> CGSize {
+		return CGSize(width: left.width - right.width, height: left.height - right.height)
+	}
+	static func * (left: CGSize, right: CGSize) -> CGSize {
+		return CGSize(width: left.width * right.width, height: left.height * right.height)
+	}
+	static func / (left: CGSize, right: CGSize) -> CGSize {
+		return CGSize(width: left.width / right.width, height: left.height / right.height)
+	}
 
-    static func * (left: CGSize, right: CGFloat) -> CGSize {
-        return CGSize(width: left.width * right, height: left.height * right)
-    }
+	// assignments
+	static func -= (left: inout CGSize, right: CGSize) {
+		left = left - right
+	}
+	static func += (left: inout CGSize, right: CGSize) {
+		left = left + right
+	}
+	static func *= (left: inout CGSize, right: CGSize) {
+		left = left * right
+	}
+	static func /= (left: inout CGSize, right: CGSize) {
+		left = left / right
+	}
 
-    static func / (left: CGSize, right: CGFloat) -> CGSize {
-        return CGSize(width: left.width / right, height: left.height / right)
-    }
+	// scalars
+	static func + (left: CGSize, right: CGFloat) -> CGSize {
+		return CGSize(width: left.width + right, height: left.height + right)
+	}
+
+	static func - (left: CGSize, right: CGFloat) -> CGSize {
+		return CGSize(width: left.width - right, height: left.height - right)
+	}
+
+	static func * (left: CGSize, right: CGFloat) -> CGSize {
+			return CGSize(width: left.width * right, height: left.height * right)
+	}
+
+	static func / (left: CGSize, right: CGFloat) -> CGSize {
+			return CGSize(width: left.width / right, height: left.height / right)
+	}
 	
 	init(_ width: CGFloat, _ height: CGFloat) {
+		self.init() // imported from c, must call
 		self.width = width
 		self.height = height
 	}
@@ -140,6 +163,7 @@ extension CGRect {
 	}
 	
 	init(_ x: CGFloat, _ y: CGFloat, _ width: CGFloat, _ height: CGFloat) {
+		self.init() // imported from c, must call
 		self.origin = CGPoint(x: x, y: y)
 		self.size = CGSize(width: width, height: height)
 	}
@@ -196,6 +220,25 @@ func Trunc (_ point: CGPoint) -> CGPoint {
 	newPoint.x = trunc(newPoint.x)
 	newPoint.y = trunc(newPoint.y)
 	return newPoint
+}
+
+func Floor (_ point: CGPoint) -> CGPoint {
+	var newPoint = point
+	newPoint.x = floor(newPoint.x)
+	newPoint.y = floor(newPoint.y)
+	return newPoint
+}
+
+func Lerp (t: CGFloat, a: CGPoint, b: CGPoint) -> CGPoint {
+	return (a * (1 - t)) + (b * t)
+}
+
+func Magnitude (_ p: CGPoint) -> CGFloat {
+	return CGFloat(sqrt(pow(p.x, 2) + pow(p.y, 2)))
+}
+
+func Distance (_ fromPoint: CGPoint, _ toPoint: CGPoint) -> CGFloat {
+	return Magnitude(CGPoint(x: fromPoint.x - toPoint.x, y: fromPoint.y - toPoint.y))
 }
 
 @discardableResult func CGImageWriteToDisk(_ image: CGImage, to destinationURL: URL) -> Bool {

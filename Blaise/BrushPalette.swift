@@ -23,7 +23,7 @@ class BrushPaletteView: NSViewController, BrushPreviewViewDelegate, ColorPickerV
 	
 	// MARK: properties
 	
-	var canvas: GLCanvasView? {
+	var canvas: CanvasView? {
 		willSet {
 			if (newValue!.currentBrush.antialias) { brushModeButton.state = .on }
 			if (newValue!.currentBrush.pressureEnabled) { tabletModeButton.state = .on }

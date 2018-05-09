@@ -15,14 +15,28 @@
 			<string></string>
 			<key>CFBundleTypeName</key>
 			<string>DocumentType</string>
-			<key>CFBundleTypeOSTypes</key>
-			<array>
-				<string>tiff</string>
-			</array>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>NSDocumentClass</key>
 			<string>$(PRODUCT_MODULE_NAME).Document</string>
+		</dict>
+		<dict>
+			<key>CFBundleTypeName</key>
+			<string>Images</string>
+			<key>LSHandlerRank</key>
+			<string>Default</string>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>NSDocumentClass</key>
+			<string>$(PRODUCT_MODULE_NAME).Document</string>
+			<key>NSExportableTypes</key>
+			<array>
+				<string>public.image</string>
+			</array>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>public.image</string>
+			</array>
 		</dict>
 	</array>
 	<key>CFBundleExecutable</key>

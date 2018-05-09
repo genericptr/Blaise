@@ -35,7 +35,7 @@ class ColorPicker {
 				let r = CGPoint(x: center.x - point.x, y: center.y - point.y)
 				let theta = atan2(Double(r.y), Double(r.x))
 				let hue = (theta + Double.pi) / (2 * Double.pi);
-				let saturation = (Distance(center, point) * 1.0) / maxDist
+				let saturation = Float(Distance(center, point) * 1.0) / maxDist
 				let brightness = 1.0
 				let color = NSColor(calibratedHue: CGFloat(hue), saturation: CGFloat(saturation), brightness: CGFloat(brightness), alpha: 1.0)
 				
@@ -94,7 +94,7 @@ class ColorPickerView: NSView {
 
 		var newPos = Clamp(point: pos, rect: backgroundRect)
 		let center = CGPoint(x: backgroundRect.width / 2, y: backgroundRect.height / 2)
-		let distance = Distance(newPos, center)
+		let distance = Float(Distance(newPos, center))
 		let radius = Float(backgroundRect.width) / 2
 
 		if distance > radius {

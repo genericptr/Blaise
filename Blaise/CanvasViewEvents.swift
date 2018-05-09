@@ -1,5 +1,5 @@
 //
-//  GLCanvasViewEvents.swift
+//  CanvasViewEvents.swift
 //  Blaise
 //
 //  Created by Ryan Joseph on 4/23/18.
@@ -9,30 +9,41 @@
 import Foundation
 import AppKit
 
-extension GLCanvasView {
+extension CanvasView {
 	override var acceptsFirstResponder: Bool {
 		return true
 	}
 	
 	override var isFlipped: Bool {
-		return false
+		return true
 	}
 	
+	func mouseLocationInView(event: NSEvent) -> CGPoint {
+		return convert(event.locationInWindow, from: nil)
+	}
+	
+	func viewPointToCanvas(_ point: CGPoint) -> V2 {
+		var newPoint = V2(Float(point.x), Float(point.y))
+//		newPoint.y = renderContext.height.int - newPoint.y
+		newPoint = newPoint.clamp(0, 0, renderContext.width.float, renderContext.height.float)
+		return newPoint
+	}
+
 	override func tabletPoint(with event: NSEvent) {
 		
 //		if currentBrush.pressure != event.pressure {
 //			print(event.pressure)
 //		}
-		let currentLocation = convert(event.locationInWindow, from: nil)
-
-		var distance: Float = MAXFLOAT
-		if !currentBrush.accumulate {
-			distance = Distance(mouseDownLocation, currentLocation)
-		}
-		if distance > 0.4 {
-			currentBrush.pressure = event.pressure
-			updateBrush()
-		}
+//		let currentLocation = mouseLocationInView(event: event)
+//
+//		var distance: CGFloat = CGFloat(MAXFLOAT)
+//		if !currentBrush.accumulate {
+//			distance = mouseDownLocation.distance(currentLocation)
+//		}
+//		if distance > 0.4 {
+//			currentBrush.pressure = event.pressure
+//			updateBrush()
+//		}
 		
 	}
 
@@ -44,33 +55,42 @@ extension GLCanvasView {
 		}
 	}
 	
-	override func resize(withOldSuperviewSize oldSize: NSSize) {
-		// override to prevent flickering inside NSScrollView
-	}
-
-	override func mouseEntered(with event: NSEvent) {
-		print("entered")
-	}
-	
-	override func mouseExited(with event: NSEvent) {
-		print("mouse exited")
-	}
-	
 	override func scrollWheel(with event: NSEvent) {
+		makeContextCurrent()
+		
 		if event.modifierFlags.contains(.option) {
 			if let scrollView = enclosingScrollView {
-				let point = convert(event.locationInWindow, from: nil)
+				let point = mouseLocationInView(event: event)
 				let factor = scrollView.magnification
 				let amount = event.deltaY / 10
 				scrollView.setMagnification(factor + amount, centeredAt: point)
 				scrollView.window?.invalidateCursorRects(for: scrollView)
+				if let overlayView = overlayView {
+					overlayView.display()
+				}
 			}
+		} else if event.modifierFlags.contains(.control) && event.modifierFlags.contains(.command) {
+			let v = Float(event.scrollingDeltaY * 0.25)
+			currentBrush.size = Clamp(value: currentBrush.size + v, min: 1, max: 64)
+			
+			
+			print("size: \(currentBrush.size)")
+
+		} else if event.modifierFlags.contains(.control) {
+			
+			let v = Float(event.scrollingDeltaY * 0.005)
+			currentBrush.hardness = Clamp(value: currentBrush.hardness + v, min: 0, max: 1)
+
+			print("hardness: \(currentBrush.hardness)")
+			
 		} else {
 			super.scrollWheel(with: event)
 		}
 	}
 	
 	override func keyDown(with event: NSEvent) {
+		makeContextCurrent()
+		
 		if event.charactersIgnoringModifiers == "e" {
 			// TOOD: eraser is part brush subclass now
 		}
@@ -93,21 +113,28 @@ extension GLCanvasView {
 	}
 	
 	override func mouseDown(with event: NSEvent) {
+		makeContextCurrent()
+		
 		window?.makeFirstResponder(self)
-		print("canvas mouse down")
-		mouseDownLocation = convert(event.locationInWindow, from: nil)
+//		print("canvas mouse down")
+		mouseDownLocation = mouseLocationInView(event: event)
 
+		
 		if !cursor.dragScrolling {
-			// TODO: restore tablet mode?
-			if (currentBrush.pressure != 1.0) && (event.subtype != .tabletPoint) {
-				currentBrush.pressure = 1.0
-				updateBrush()
-			}
 			
-			renderContext.startAction()
-			addLine(from: mouseDownLocation, to: mouseDownLocation)
-			let region = renderContext.flushOperation()
-			displayCellsInRegion(region)
+			// TODO: restore tablet mode?
+//			if (currentBrush.pressure != 1.0) && (event.subtype != .tabletPoint) {
+//				currentBrush.pressure = 1.0
+//				updateBrush()
+//			}
+
+			currentBrush.pressure = event.pressure
+			updateBrush()
+			
+//			addLine(from: mouseDownLocation, to: mouseDownLocation)
+			currentBrush.begin()
+			currentBrush.apply(location: viewPointToCanvas(mouseDownLocation))
+			renderContext.flushOperation()
 		}
 
 		lockedAxis = 0
@@ -126,8 +153,8 @@ extension GLCanvasView {
 		//            if event.modifierFlags.contains(.shift) {
 		//        }
 		
-		let currentLocation = convert(event.locationInWindow, from: nil)
-		
+		let currentLocation = mouseLocationInView(event: event)
+
 		// TODO: if accumulate is on then allow duplicate dragged events
 		
 		if cursor.dragScrolling {
@@ -151,16 +178,22 @@ extension GLCanvasView {
 				}
 
 				
-				print("scroll to \(newPoint)")
 				scrollView.contentView.scroll(to: newPoint)
 				scrollView.reflectScrolledClipView(scrollView.contentView)
 			}
 		} else {
-			if (Trunc(mouseDownLocation) != Trunc(currentLocation)) || currentBrush.accumulate {
-				addLine(from: mouseDownLocation, to: currentLocation)
+			let dragDelta = Float(mouseDownLocation.distance(currentLocation))
+			if ((Trunc(mouseDownLocation) != Trunc(currentLocation)) && (dragDelta > currentBrush.minStrokeLength())) || currentBrush.accumulate {
 				
-				let region = renderContext.flushOperation()
-				displayCellsInRegion(region)
+				currentBrush.pressure = event.pressure
+				updateBrush()
+				
+				currentBrush.apply(location: viewPointToCanvas(currentLocation))
+//				addLine(from: mouseDownLocation, to: currentLocation)
+				
+				// TODO: merge drawing into flushOperation
+				// so we can flush changes when textures run out
+				renderContext.flushOperation()
 				
 				mouseDownLocation = currentLocation
 			}
@@ -170,11 +203,12 @@ extension GLCanvasView {
 	
 	override func mouseUp(with event: NSEvent) {
 		
-		// TODO: make renderContext.isLastActionSet()
-		if renderContext.lastAction.changedPixels.count > 0 {
+		if renderContext.isLastActionSet() {
 			finalizeAction()
-			print("canvas mouse up")
+//			print("canvas mouse up")
 		}
+		
+		currentBrush.end()
 		lockedAxis = -1
 		mouseDownLocation = CGPoint(-1, -1)
 	}
@@ -182,9 +216,14 @@ extension GLCanvasView {
 	override func viewDidMoveToWindow() {
 				
 		let dropShadow = NSShadow()
+		let shadowSize: CGFloat = 4.0
 		dropShadow.shadowColor = NSColor.init(white: 0, alpha: 0.8)
-		dropShadow.shadowOffset = NSMakeSize(0, -4.0)
-		dropShadow.shadowBlurRadius = 4.0
+		if isFlipped {
+			dropShadow.shadowOffset = NSMakeSize(0, shadowSize)
+		} else {
+			dropShadow.shadowOffset = NSMakeSize(0, -shadowSize)
+		}
+		dropShadow.shadowBlurRadius = shadowSize
 		
 		wantsLayer = true
 		shadow = dropShadow

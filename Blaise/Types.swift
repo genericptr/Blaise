@@ -26,13 +26,15 @@ struct CellDim {
 	}
 }
 
-struct Vec2<T: Numeric> {
+struct Vec2<T: Numeric>: CustomStringConvertible {
 	var x, y: T
 	
 	init(_ x: T, _ y: T) {
 		self.x = x
 		self.y = y
 	}
+	
+	var description: String { return "{\(x),\(y)}" }
 	
 	// operators
 	static func ==(left: Vec2, right: Vec2) -> Bool {
@@ -43,10 +45,49 @@ struct Vec2<T: Numeric> {
 		return (left.x != right.x) || (left.y != right.y)
 	}
 	
+	static func + (left: Vec2, right: Vec2) -> Vec2 {
+		return Vec2(left.x + right.x, left.y + right.y)
+	}
+	
+	static func - (left: Vec2, right: Vec2) -> Vec2 {
+		return Vec2(left.x - right.x, left.y - right.y)
+	}
+	
+	static func * (left: Vec2, right: Vec2) -> Vec2 {
+		return Vec2(left.x * right.x, left.y * right.y)
+	}
+	
+	static func + (left: Vec2, right: T) -> Vec2 {
+		return Vec2(left.x + right, left.y + right)
+	}
+
+	static func - (left: Vec2, right: T) -> Vec2 {
+		return Vec2(left.x - right, left.y - right)
+	}
+	
 	static func * (left: Vec2, right: T) -> Vec2 {
 		return Vec2(left.x * right, left.y * right)
 	}
 
+	static func -= (left: inout Vec2, right: T) {
+		left = left - right
+	}
+	static func += (left: inout Vec2, right: T) {
+		left = left + right
+	}
+	static func *= (left: inout Vec2, right: T) {
+		left = left * right
+	}
+
+	static func -= (left: inout Vec2, right: Vec2) {
+		left = left - right
+	}
+	static func += (left: inout Vec2, right: Vec2) {
+		left = left + right
+	}
+	static func *= (left: inout Vec2, right: Vec2) {
+		left = left * right
+	}
 	
 }
 
@@ -76,6 +117,12 @@ extension Vec2 where T: SignedInteger {
 	static func / (left: Vec2, right: Vec2) -> Vec2 {
 		return Vec2(left.x / right.x, left.y / right.y)
 	}
+	static func /= (left: inout Vec2, right: T) {
+		left = left / right
+	}
+	static func /= (left: inout Vec2, right: Vec2) {
+		left = left / right
+	}
 }
 
 extension Vec2 where T: FloatingPoint {
@@ -85,6 +132,56 @@ extension Vec2 where T: FloatingPoint {
 	static func / (left: Vec2, right: Vec2) -> Vec2 {
 		return Vec2(left.x / right.x, left.y / right.y)
 	}
+	static func /= (left: inout Vec2, right: T) {
+		left = left / right
+	}
+	static func /= (left: inout Vec2, right: Vec2) {
+		left = left / right
+	}
+}
+
+// linear algebra utils
+extension Vec2 {
+	
+	func lerp (t: T, p: Vec2) -> Vec2 {
+		return (self * (1 - t)) + (p * t)
+	}
+	
+}
+
+extension Vec2 where T == IntegerLiteralType {
+	
+	func magnitude () -> T {
+		return T(sqrt(Double((x * x) + (y * y))))
+	}
+	
+	func distance (_ to: Vec2) -> T {
+		let diff = self - to
+		return diff.magnitude()
+	}
+
+}
+
+extension Vec2 where T == Float {
+	
+	func magnitude () -> T {
+		return T(sqrt(Double((x * x) + (y * y))))
+	}
+	
+	func distance (_ to: Vec2) -> T {
+		let diff = self - to
+		return diff.magnitude()
+	}
+	
+	func trunc() -> Vec2<Int> {
+		return Vec2<Int>(Int(x), Int(y))
+	}
+	
+	init <UX: FloatingPointArithmetic, UY: FloatingPointArithmetic>(_ x: UX, _ y: UY) {
+		self.x = x.toFloat
+		self.y = y.toFloat
+	}
+
 }
 
 typealias V2 = Vec2<Float>
@@ -122,7 +219,7 @@ func CGPointToCellPos (_ point: CGPoint) -> CellPos {
 	return CellPos(Int(point.x), Int(point.y))
 }
 
-struct Box {
+struct Box: CustomStringConvertible {
 	var min, max: CellPos
 	typealias PointType = Int
 	
@@ -131,6 +228,12 @@ struct Box {
 	var right: PointType { return max.x }
 	var bottom: PointType { return max.y }
 	
+	var x: PointType { return min.x }
+	var y: PointType { return min.y }
+	var maxX: PointType { return max.x }
+	var maxY: PointType { return max.y }
+
+	var description: String { return "{\(min),\(max)}" }
 	
 	// init
 	init(top: PointType, left: PointType, right: PointType, bottom: PointType) {
@@ -143,9 +246,9 @@ struct Box {
 		max = CellPos(maxX, maxY)
 	}
 
-	init(_ minX: PointType, _ minY: PointType, _ maxX: PointType, _ maxY: PointType) {
-		min = CellPos(minX, minY)
-		max = CellPos(maxX, maxY)
+	init<U: BinaryInteger>(_ minX: U, _ minY: U, _ maxX: U, _ maxY: U) {
+		min = CellPos(PointType(minX), PointType(minY))
+		max = CellPos(PointType(maxX), PointType(maxY))
 	}
 
 	init(min: CellPos, max: CellPos) {
@@ -158,6 +261,9 @@ struct Box {
 	}
 	
 	// methods
+	func isInfinite() -> Bool {
+		return (min.x > max.x || min.y > max.y)
+	}
 	func xRange() -> ClosedRange<UInt> {
 		return min.x.uint...max.x.uint
 	}
