@@ -113,6 +113,7 @@
 		53019268208D936D003C38AB /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				53733334209D4CCF00B94C3F /* LineUtils.swift */,
 				536E24C5208ED6DC008B78A3 /* Colors.swift */,
 				531B955C2083392F00FAA1EA /* Matrix.swift */,
 				53CE72D62081A0D2003C3A2B /* Types.swift */,
@@ -163,6 +164,15 @@
 			name = Views;
 			sourceTree = "<group>";
 		};
+		53846A3A24FF7C81003A8617 /* Tools */ = {
+			isa = PBXGroup;
+			children = (
+				5346AEAC2079CFEA00DEC2FE /* Brush.swift */,
+				53846A3824FF54FD003A8617 /* Tool.swift */,
+			);
+			name = Tools;
+			sourceTree = "<group>";
+		};
 		53D61BD12079BAD40051E8E6 = {
 			isa = PBXGroup;
 			children = (
@@ -188,10 +198,8 @@
 				536E24C1208DE45E008B78A3 /* NewDocumentWindow.swift */,
 				53CE72D420804D92003C3A2B /* UndoManager.swift */,
 				53CE72D2207F17B7003C3A2B /* Styles.swift */,
-				5346AEAC2079CFEA00DEC2FE /* Brush.swift */,
-				53846A3824FF54FD003A8617 /* Tool.swift */,
 				537333322098374700B94C3F /* Preferences.swift */,
-				53733334209D4CCF00B94C3F /* LineUtils.swift */,
+				53846A3A24FF7C81003A8617 /* Tools */,
 				53846A3524FE4CF4003A8617 /* Views */,
 				5349075620958CDB0041E000 /* Renderer */,
 				53019268208D936D003C38AB /* Utilities */,
