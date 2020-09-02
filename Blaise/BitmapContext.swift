@@ -20,7 +20,7 @@ class BitmapContext {
 	}
 	
 	init(width: UInt, height: UInt) {
-		let defaultColor = RGBA8.whiteColor()
+		let defaultColor = RGBA8.whiteColor
 		pixels = PixelMatrix(width: width, height: height, defaultValue: defaultColor)
 		let bytesPerComponent = MemoryLayout<RGBA8.PixelType>.size
 		

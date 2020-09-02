@@ -162,10 +162,10 @@ extension CGRect {
 		return origin + CGPoint(width, height)
 	}
 	
-	init(_ x: CGFloat, _ y: CGFloat, _ width: CGFloat, _ height: CGFloat) {
+	init<T: FloatingPointArithmetic>(_ x: T, _ y: T, _ width: T, _ height: T) {
 		self.init() // imported from c, must call
-		self.origin = CGPoint(x: x, y: y)
-		self.size = CGSize(width: width, height: height)
+		self.origin = CGPoint(x: CGFloat(x.toFloat), y: CGFloat(y.toFloat))
+		self.size = CGSize(width: CGFloat(width.toFloat), height: CGFloat(height.toFloat))
 	}
 	
 }

@@ -9,8 +9,6 @@
 import Foundation
 import AppKit
 import OpenGL
-
-// TODO: DEPRECATED, remove CoreGraphics
 import CoreGraphics
 
 struct RenderContextBrushState {
@@ -20,112 +18,126 @@ struct RenderContextBrushState {
 
 struct RenderContextInfo {
 	var backgroundColor: RGBA8
+	var textureCellSize: UInt
 }
 
 class RenderContext: MemoryUsage {
-	var pixels: PixelMatrix!
-	var texture: RenderTexture!
-	var bounds: CGRect
-	var eraser: Bool = false
+	
 	var contextInfo: RenderContextInfo
+	var layers: RenderLayers
+	var currentLayer: RenderLayer
+	var texture: RenderTexture { return currentLayer.texture }
+
+	var bounds: CGRect
 	var width: UInt = 0
 	var height: UInt = 0
 	var lastAction: RenderLastAction!
 	var lastOperationRegion: Box
 	var brush: Brush?
-	
+	var clipRects: [Box] = []
 	
 	// NOTE: TESTING
 	var overlapPoint: V2i = V2i(-1, -1)
 	
 	func calculateTotalMemoryUsage(bytes: inout UInt64) {
-		
-		bytes += UInt64(pixels.elementStride * pixels.count)
-
 		for cache in BrushStamps.values {
 			bytes += UInt64(cache.elementStride * cache.count)
 		}
-		
-		if (texture != nil) {
-			texture.calculateTotalMemoryUsage(bytes: &bytes)
-		}
+		texture.calculateTotalMemoryUsage(bytes: &bytes)
 	}
 	
-	func getDimensions() -> CellDim {
-		return CellDim(width, height)
-	}
-	
-	func getSize() -> CGSize {
-		return CGSize(width: CGFloat(width), height: CGFloat(height))
-	}
-	
-	func isLastActionSet() -> Bool {
+	public func isLastActionSet() -> Bool {
 		return lastAction.changedPixels.count > 0
 	}
 	
-	func finishAction() {
+	public func finishAction() {
 		lastAction.clear()
 	}
-	
-	func clear() {
-		pixels.fill(RGBA8.clearColor())
+			
+	public func getLastOperationCellRegion() -> Box {
+		return texture.convertRectToCells(lastOperationRegion)
+	}
+		
+	private func pushClipRect(_ region: Box) {
+		glScissor(GLint(region.minX), GLint(height - (region.minY + region.height)), GLsizei(region.width), GLsizei(region.height))
+		glEnable(GLenum(GL_SCISSOR_TEST))
+		clipRects.append(region)
 	}
 	
-	func fill(_ color: RGBA8) {
-		pixels.fill(color)
+	private func popClipRect() {
+		if clipRects.count > 0 {
+			if let clipRect = clipRects.popLast() {
+				glScissor(GLint(clipRect.minX), GLint(height - (clipRect.minY + clipRect.height)), GLsizei(clipRect.width), GLsizei(clipRect.height))
+			} else {
+				glDisable(GLenum(GL_SCISSOR_TEST))
+			}
+		} else {
+			fatalError("unbalanced clip rects")
+		}
 	}
 	
-	func fillWithBackground() {
-		fill(contextInfo.backgroundColor)
+	private func clearContext() {
+		glClear(GLbitfield(GL_COLOR_BUFFER_BIT))
 	}
 	
 	private func flushContext() {
 		glFlush()
 	}
 	
-	func flushOperation() {
+	public func flushOperation() {
 		let box = lastOperationRegion
 		if !box.isInfinite() {
-			texture.reloadDirtyCells(box)
+			pushClipRect(box)
+			clearContext()
+			
+			for layer in layers.layers {
+				if layer === currentLayer {
+					layer.reloadDirtyCells(box)
+				} else {
+					layer.draw(box)
+				}
+			}
+			
 			flushContext()
+			popClipRect()
 		}
 		lastOperationRegion = Box.infinite()
 	}
 	
-	func flushPoints(_ points: [CellPos]) {
-		let box = UnionPoints(points)
-		texture.reloadRegion(box, source: pixels)
-		flushContext()
-	}
-	
-	func flush() {
-		let box = Box(0, 0, width.int, height.int)
-		texture.reloadRegion(box, source: pixels)
-		flushContext()
-	}
-	
-	func draw(region: Box) {
-		print("[")
-		let cellRegion = region / texture.cellSize
-		for x in cellRegion.min.x...cellRegion.max.x {
-			for y in cellRegion.min.y...cellRegion.max.y {
-				texture.drawCell(x: UInt(x), y: UInt(y), textureUnit: 0)
+	public func flushRegion(_ region: Box) {
+		pushClipRect(region)
+		clearContext()
+		for layer in layers.layers {
+			if layer === currentLayer {
+				layer.reloadRegion(region)
+			} else {
+				layer.draw(region)
 			}
 		}
-		print("]")
+		flushContext()
+		popClipRect()
 	}
 
-	func prepare() {
-		print("prepare opengl context")
-//    let bgColor = contextInfo.backgroundColor.getRGBAf()
-//		glClearColor(bgColor.r, bgColor.g, bgColor.b, bgColor.a)
-		glClearColor(1.0, 1.0, 1.0, 1.0)
-		
+	public func flush() {
+		// TODO: does this mean reload all layers or just reload current layer
+		// and redraw the rest?
+		flushRegion(Box(0, 0, width.int, height.int))
+	}
+	
+	public func draw(region: Box) {
+		for layer in layers.layers {
+			layer.draw(region)
+		}
+		flushContext()
+	}
 
-		// TODO: this blending is wrong for transparent backgrounds
+	public func prepare() {
+		print("prepare opengl context")
+		glClearColor(1, 1, 1, 1)
 		glEnable(GLenum(GL_TEXTURE_2D))
 		glEnable(GLenum(GL_BLEND))
 		glBlendFunc(GLenum(GL_SRC_ALPHA), GLenum(GL_ONE_MINUS_SRC_ALPHA));
+		glDisable(GLenum(GL_DEPTH_TEST))
 	}
 	
 	init(bounds: CGRect, info: RenderContextInfo) {
@@ -138,16 +150,24 @@ class RenderContext: MemoryUsage {
 		width = UInt(self.bounds.width * resolution)
 		height = UInt(self.bounds.height * resolution)
 		
-		loadBitmap()
-	}
-	
-	func loadTexture(_ cellSize: UInt) {
-		texture = RenderTexture(width: width, height: height, cellDim: CellDim(cellSize, cellSize))
-	}
-		
-	func loadBitmap() {
 		lastAction = RenderLastAction(width: width, height: height)
-		pixels = PixelMatrix(width: width, height: height, defaultValue: contextInfo.backgroundColor)
+		
+		layers = RenderLayers(width: width, height: height, contextInfo: info)
+		
+		// TODO: RenderLayers class should keep the current
+		currentLayer = layers.addLayer()
+		
+		// NOTE: can't load images now because we don't have a unified pixel buffer
+		// to read into
+		/*
+		let pictLayer = layers.addLayer()
+		if let image = NSImage(contentsOfFile: "/Users/ryanjoseph/Downloads/if_brush_87006.png") {
+			pictLayer.clear()
+			pictLayer.loadImage(image)
+		} else {
+			fatalError("failed to load image")
+		}
+		*/
 	}
 
 }

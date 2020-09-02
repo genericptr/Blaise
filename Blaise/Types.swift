@@ -13,6 +13,14 @@ import AppKit
 struct CellDim {
 	var width, height: UInt
 	
+	func sum() -> UInt {
+		return width + height
+	}
+	
+	func volume() -> UInt {
+		return width * height
+	}
+
 	var w: UInt {
 		get { return width; }
 	}
@@ -230,8 +238,12 @@ struct Box: CustomStringConvertible {
 	
 	var x: PointType { return min.x }
 	var y: PointType { return min.y }
+	var minX: PointType { return min.x }
+	var minY: PointType { return min.y }
 	var maxX: PointType { return max.x }
 	var maxY: PointType { return max.y }
+	var width: PointType { return max.x - min.x }
+	var height: PointType { return max.y - min.y }
 
 	var description: String { return "{\(min),\(max)}" }
 	
@@ -246,9 +258,9 @@ struct Box: CustomStringConvertible {
 		max = CellPos(maxX, maxY)
 	}
 
-	init<U: BinaryInteger>(_ minX: U, _ minY: U, _ maxX: U, _ maxY: U) {
-		min = CellPos(PointType(minX), PointType(minY))
-		max = CellPos(PointType(maxX), PointType(maxY))
+	init<T: IntegerArithmetic>(_ minX: T, _ minY: T, _ maxX: T, _ maxY: T) {
+		min = CellPos(PointType(minX.toSigned), PointType(minY.toSigned))
+		max = CellPos(PointType(maxX.toSigned), PointType(maxY.toSigned))
 	}
 
 	init(min: CellPos, max: CellPos) {

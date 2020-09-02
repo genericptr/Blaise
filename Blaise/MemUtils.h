@@ -11,4 +11,11 @@
 
 #include <stdio.h>
 
+struct MemoryBuffer {
+	int index;
+	int size;
+	void* bytes;
+};
+typedef struct MemoryBuffer MemoryBuffer;
+
 #endif /* MemUtils_h */

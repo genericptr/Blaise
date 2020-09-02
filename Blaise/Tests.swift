@@ -10,7 +10,7 @@ import Foundation
 
 func TestStructForLoop() {
 	let r = 10000
-	let a = Array(repeating: RGBA8.blackColor(), count: 1000000)
+	let a = Array(repeating: RGBA8.blackColor, count: 1000000)
 	
 	var startTime = CFAbsoluteTimeGetCurrent()
 	for _ in 0..<r*r {
@@ -74,7 +74,7 @@ func TestMemmove() {
 	print("memmove:  \(endTime - startTime)")
 }
 
-struct MyData {
+fileprivate struct MyData {
 	var v: [UInt8] = Array(repeating: 0, count: 64)
 }
 

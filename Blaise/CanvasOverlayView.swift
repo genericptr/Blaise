@@ -143,10 +143,11 @@ class CanvasOverlayView: GLCanvasView {
 	}
 	
 	override func draw() {
-		glClearColor(0, 0, 0, 0)
+		glClearColor(0, 0.8, 0.3, 1)
 		glClear(GLbitfield(GL_COLOR_BUFFER_BIT))
 		
 //		testQuad()
+		print(viewZoom)
 		
 		if viewZoom >= CGFloat(Prefs.getFloat(.minGridZoom)) {
 			
@@ -192,7 +193,7 @@ class CanvasOverlayView: GLCanvasView {
 			
 		}
 		
-		display()
+		setNeedsDisplay(bounds)
 	}
 	
 	override func setup() {

@@ -19,37 +19,23 @@ struct CanvasViewCursor {
     var brushCursor: NSCursor?
 }
 
-// TODO: render context coregraphics/image utils
+struct MemoryBuffer {
+	var data: Data
+	
+	mutating func append(value: UnsafeMutableRawPointer, count: Int) {
+		var input = value
+		let buffer = UnsafeBufferPointer(start: &input, count: count)
+		self.data.append(buffer)
+	}
+	
+	mutating func append(record: MemorySizeof) {
+		var input = record
+		append(value: &input, count: Int(record.sizeof()))
+	}
 
-extension RenderContext {
-	
-	func getBounds() -> CGRect {
-		return CGRect(0, 0, CGFloat(width), CGFloat(height))
+	init(capacity: Int) {
+		data = Data(capacity: capacity)
 	}
-	
-	func makeBitmapContext() -> CGContext? {
-		let bytesPerPixel = MemoryLayout<RGBA8>.stride
-		
-		let bitmapContext = CGContext(
-			data: &pixels.table,
-			width: Int(width),
-			height: Int(height),
-			bitsPerComponent: 8,
-			bytesPerRow: bytesPerPixel * Int(width),
-			space: CGColorSpaceCreateDeviceRGB(),
-			bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue
-			)
-		
-		return bitmapContext
-	}
-	
-	func saveImageToDisk(_ filePath: String) {
-		guard let bitmapContext = makeBitmapContext() else { return }
-		guard let image = bitmapContext.makeImage() else { return }
-		CGImageWriteToDisk(image, to: URL(fileURLWithPath: filePath))
-		print("saved image to \(filePath)")
-	}
-	
 }
 
 class CanvasView: GLCanvasView {
@@ -69,44 +55,6 @@ class CanvasView: GLCanvasView {
 	
 	var sourceImage: NSImage?
 	
-	func loadImage(_ image: NSImage) {
-		if let cgImage = image.cgImage(forProposedRect: nil, context: nil, hints: nil) {
-			if let bitmapContext = renderContext.makeBitmapContext() {
-				bitmapContext.draw(cgImage, in: renderContext.getBounds())
-				bitmapContext.flush()
-			} else {
-					// bitmap context couldn't be created
-			}
-		} else {
-			// cgimage couldn't be created
-		}
-	}
-	
-	func copyImageData(typeName: String) -> Data? {
-		guard let bitmapContext = renderContext.makeBitmapContext() else { return nil }
-		guard let image = bitmapContext.makeImage() else { return nil }
-
-		let outImage = NSImage.init(cgImage: image, size: renderContext.getSize())
-		let data = outImage.tiffRepresentation
-		
-		let tempRep = NSBitmapImageRep(data: data!)
-		var fileType: NSBitmapImageRep.FileType = .tiff
-		
-		if typeName == kUTTypePNG as String {
-			fileType = .png
-		} else if typeName == kUTTypeJPEG as String {
-			fileType = .jpeg
-		} else if typeName == kUTTypeBMP as String {
-			fileType = .bmp
-		} else if typeName == kUTTypeGIF as String {
-			fileType = .gif
-		} else if typeName == kUTTypeTIFF as String {
-			fileType = .tiff
-		}
-		
-		return tempRep?.representation(using: fileType, properties: [:])
-	}
-	
 	func pushChange() {
 			if let document = window?.windowController?.document {
 					document.updateChangeCount(.changeDone)
@@ -116,15 +64,14 @@ class CanvasView: GLCanvasView {
 	func undo() {
 		if let action = UndoManager.shared.pop() {
 			print("undo last action")
-			
-			var changedPoints: [CellPos] = []
+			var region = Box.infinite()
 			
 			for p in action.pixels {
-				renderContext.pixels.setValue(x: p.x, y: p.y, value: p.oldColor)
-				changedPoints.append(p.getPoint())
+				renderContext.setPixel(p.x, p.y, color: p.oldColor)
+				region.union(p.x.int, p.y.int)
 			}
 			
-			renderContext.flushPoints(changedPoints)
+			renderContext.flushRegion(region)
 		}
 	}
 	
@@ -141,16 +88,7 @@ class CanvasView: GLCanvasView {
 		UndoManager.shared.addAction(action)
 		renderContext.finishAction()
 	}
-	
-	func displayCellsInRegion(_ region: Box) {
-		// NOTE: phasing out for merged flush/draw operation
-//		makeContextCurrent()
-//		if !region.isInfinite() {
-//			renderContext.draw(region: region)
-//			flush()
-//		}
-	}
-	
+		
 	func updateBrush() {
 		currentBrush.context = renderContext
 		updateBrushCursor()
@@ -158,7 +96,8 @@ class CanvasView: GLCanvasView {
 	
 	func updateBrushCursor() {
 		
-		return
+		// NOTE: disabling the brush cursor
+//		return
 		
 		// get scale factor from scroll view
 		var scaleFactor: CGFloat = 1.0
@@ -219,8 +158,8 @@ class CanvasView: GLCanvasView {
 
 	@objc func fireDebugTracer() {
 //		addLine(from: lastDebugTracePoint, to: debugTracePoint)
-		let startPoint = V2i(Int(lastDebugTracePoint.x), Int(lastDebugTracePoint.y))
-		let endPoint = V2i(Int(debugTracePoint.x), Int(debugTracePoint.y))
+//		let startPoint = V2i(Int(lastDebugTracePoint.x), Int(lastDebugTracePoint.y))
+//		let endPoint = V2i(Int(debugTracePoint.x), Int(debugTracePoint.y))
 		
 //		renderContext.addLine(from: startPoint, to: endPoint)
 		
@@ -244,22 +183,27 @@ class CanvasView: GLCanvasView {
 		}
 	}
 	
+	func renderContextBounds() -> CGRect {
+		return self.bounds
+//		return CGRect(x: 0, y: 0, width: 64*2, height: 64*2)
+	}
+	
 	func createRenderContext() {
-		let contextInfo = RenderContextInfo(backgroundColor: RGBA8.whiteColor())
+		let contextInfo = RenderContextInfo(backgroundColor: RGBA8.whiteColor, textureCellSize: UInt(renderContextCellSize))
 
-		renderContext = RenderContext(bounds: self.bounds, info: contextInfo)
-		renderContext.loadTexture(UInt(renderContextCellSize))
+		renderContext = RenderContext(bounds: renderContextBounds(), info: contextInfo)
 		renderContext.prepare()
 		
 		if let sourceImage = sourceImage {
-			loadImage(sourceImage)
+			renderContext.loadImage(sourceImage)
 			renderContext.flush()
 		} else {
 			renderContext.fillWithBackground()
 		}
 		
-		updateBrush()
 //		Timer.scheduledTimer(timeInterval: 0.005, target: self, selector: #selector(fireDebugTracer), userInfo: nil, repeats: true)
+		
+		PrintOpenGLInfo()
 	}
 	
 	@objc func boundsDidChange() {
@@ -290,21 +234,21 @@ class CanvasView: GLCanvasView {
 		super.setup()
 		
 		// TODO: where do we load brushes from?
+		
 		currentBrush = PaintBrush()
 		currentBrush.size = 16
-		currentBrush.color = RGBA8(255, 0, 0, 255)
+		currentBrush.color = RGBA8(0, 40, 150, 255)
 		currentBrush.hardness = 0.15
-		currentBrush.flow = 1.0
-		currentBrush.opacity = 1.0
+		currentBrush.flow = 0.015
+		currentBrush.opacity = 0.5
 		currentBrush.pressureEnabled = true
 		
-		// NOTE: pencil - make subclass?
 //		currentBrush = PaintBrush()
-//		currentBrush.size = 1
+//		currentBrush.size = 16
 //		currentBrush.antialias = false
-//		currentBrush.color = RGBA8(255, 0, 0, 255)
-//		currentBrush.hardness = 1.0
-//		currentBrush.pressureEnabled = false
+//		currentBrush.color = RGBA8.redColor
+//		currentBrush.hardness = 10.0
+//		currentBrush.pressureEnabled = true
 
 		updateBrush()
 	}
@@ -343,7 +287,7 @@ class CanvasView: GLCanvasView {
 			glLoadIdentity()
 			viewPort = bounds
 			
-			display()
+			setNeedsDisplay(bounds)
 		}
 	}
 	

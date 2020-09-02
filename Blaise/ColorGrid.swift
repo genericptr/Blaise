@@ -179,7 +179,7 @@ class ColorGridView: NSView {
 		//		cellSize.width = floor(cellSize.width)
 		//		cellSize.height = floor(cellSize.height)
 		
-		colorMatrix = PixelMatrix(width: gridSize.w, height: gridSize.h, defaultValue: RGBA8.clearColor())
+		colorMatrix = PixelMatrix(width: gridSize.w, height: gridSize.h, defaultValue: RGBA8.clearColor)
 		
 		let colorRange = gridSize.w
 		
@@ -189,9 +189,9 @@ class ColorGridView: NSView {
 			
 			// force pure black & white
 			if x == 0 {
-				color = RGBA8.blackColor()
+				color = RGBA8.blackColor
 			} else if x == colorRange - 1 {
-				color = RGBA8.whiteColor()
+				color = RGBA8.whiteColor
 			}
 			
 			colorMatrix.setValue(x, 0, color)

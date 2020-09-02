@@ -116,7 +116,6 @@ extension CanvasView {
 		makeContextCurrent()
 		
 		window?.makeFirstResponder(self)
-//		print("canvas mouse down")
 		mouseDownLocation = mouseLocationInView(event: event)
 
 		
@@ -127,14 +126,16 @@ extension CanvasView {
 //				currentBrush.pressure = 1.0
 //				updateBrush()
 //			}
-
-			currentBrush.pressure = event.pressure
+//			currentBrush.pressure = event.pressure
 			updateBrush()
 			
-//			addLine(from: mouseDownLocation, to: mouseDownLocation)
 			currentBrush.begin()
 			currentBrush.apply(location: viewPointToCanvas(mouseDownLocation))
 			renderContext.flushOperation()
+			
+			// TODO: display() is dead on 10.15+ so we need to flush during
+			// the appropriate time in the render layer (maybe flushOperation?)
+//			setNeedsDisplay(viewPort)
 		}
 
 		lockedAxis = 0
@@ -148,10 +149,6 @@ extension CanvasView {
 				super.mouseDragged(with: event)
 				return
 		}
-				
-		//        if lockedAxis == 0 {
-		//            if event.modifierFlags.contains(.shift) {
-		//        }
 		
 		let currentLocation = mouseLocationInView(event: event)
 
@@ -191,8 +188,12 @@ extension CanvasView {
 				currentBrush.apply(location: viewPointToCanvas(currentLocation))
 //				addLine(from: mouseDownLocation, to: currentLocation)
 				
-				// TODO: merge drawing into flushOperation
-				// so we can flush changes when textures run out
+				// TODO: flushOperation draws the current context
+				// but how do we draw cells in layers above/below?
+				// we have renderContext.lastOperationRegion so we could
+				// figure out which cells are affect and draw those before/after
+				let affectedCells = renderContext.getLastOperationCellRegion()
+
 				renderContext.flushOperation()
 				
 				mouseDownLocation = currentLocation
@@ -205,7 +206,6 @@ extension CanvasView {
 		
 		if renderContext.isLastActionSet() {
 			finalizeAction()
-//			print("canvas mouse up")
 		}
 		
 		currentBrush.end()

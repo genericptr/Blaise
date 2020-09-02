@@ -9,15 +9,6 @@
 import Foundation
 import AppKit
 
-class Tool {
-	weak var context: RenderContext!
-	
-	func begin() {}
-	func end() {}
-	func apply(location: V2) { Fatal("Tool does nothing") }
-	func apply(from: V2, to: V2) { Fatal("Tool does nothing") }
-}
-
 enum BrushModes {
 	case normal, clear
 }
@@ -35,7 +26,7 @@ struct BrushState {
 class Brush: Tool {
 	var size: Float = 8.0
 	var pressure: Float = 1.0
-	var color: RGBA8 = RGBA8.blackColor()
+	var color: RGBA8 = RGBA8.blackColor
 	var hardness: Float = 1.0
 	var opacity: Float = 1.0
 	var flow: Float = 1.0
@@ -83,7 +74,6 @@ class PaintBrush: Brush {
 	}
 	
 	override func apply(from: V2, to: V2) {
-//		context.strokePoints(from: from, to: to)
 		context.brush = self
 		context.strokeLine(from: from.trunc(), to: to.trunc())
 	}
@@ -99,12 +89,18 @@ class PaintBrush: Brush {
 		
 		context.brush = self
 
-		if brushSize() > 1 {
-			context.strokeLine_aa(from: from, to: location)
-//			context.strokeLine(from: from.trunc(), to: location.trunc())
+		if antialias {
+			if brushSize() > 1 {
+				context.strokeLine_aa(from: from, to: location)
+			} else {
+				context.strokePoints_aa(from: from, to: location)
+			}
 		} else {
-			context.strokePoints_aa(from: from, to: location)
-//			context.strokePoints(from: from.trunc(), to: location.trunc())
+			if brushSize() > 1 {
+				context.strokeLine(from: from.trunc(), to: location.trunc())
+			} else {
+				context.strokePoints(from: from.trunc(), to: location.trunc())
+			}
 		}
 
 		context.overlapPoint = location.trunc()

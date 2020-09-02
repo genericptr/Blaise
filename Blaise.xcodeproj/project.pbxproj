@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5302495620B7B006001E7081 /* DocumentFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5302495520B7B006001E7081 /* DocumentFormat.swift */; };
 		531B95572082ED5F00FAA1EA /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 531B95562082ED5F00FAA1EA /* TestView.swift */; };
 		531B955A208300DD00FAA1EA /* RenderTexture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 531B9558208300DD00FAA1EA /* RenderTexture.swift */; };
 		531B955B208300DD00FAA1EA /* RenderContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 531B9559208300DD00FAA1EA /* RenderContext.swift */; };
@@ -14,11 +15,11 @@
 		53230D5320898DD0006CD9D9 /* ColorPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53230D5220898DD0006CD9D9 /* ColorPicker.swift */; };
 		5346AEAD2079CFEA00DEC2FE /* Brush.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5346AEAC2079CFEA00DEC2FE /* Brush.swift */; };
 		534907512091C2D00041E000 /* BitmapContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 534907502091C2D00041E000 /* BitmapContext.swift */; };
-		5349075320941C070041E000 /* Geometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5349075220941C070041E000 /* Geometry.swift */; };
 		5349075520958CB50041E000 /* RenderAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5349075420958CB50041E000 /* RenderAction.swift */; };
 		535FA8E82090315300F5B8B8 /* BrushPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 535FA8E72090315300F5B8B8 /* BrushPreview.swift */; };
 		535FA8EA209043BA00F5B8B8 /* BrushPalette.swift in Sources */ = {isa = PBXBuildFile; fileRef = 535FA8E9209043B900F5B8B8 /* BrushPalette.swift */; };
 		535FE27520A29D730078F719 /* RenderTextureCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 535FE27420A29D730078F719 /* RenderTextureCell.swift */; };
+		535FE27720A2E99E0078F719 /* RenderLayers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 535FE27620A2E99E0078F719 /* RenderLayers.swift */; };
 		536E24C3208DE45E008B78A3 /* NewDocumentWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 536E24C1208DE45E008B78A3 /* NewDocumentWindow.swift */; };
 		536E24C4208DE45E008B78A3 /* NewDocumentWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 536E24C2208DE45E008B78A3 /* NewDocumentWindow.xib */; };
 		536E24C6208ED6DC008B78A3 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 536E24C5208ED6DC008B78A3 /* Colors.swift */; };
@@ -29,6 +30,8 @@
 		5373333120981AB300B94C3F /* RenderDrawing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5373333020981AB300B94C3F /* RenderDrawing.swift */; };
 		537333332098374700B94C3F /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 537333322098374700B94C3F /* Preferences.swift */; };
 		53733335209D4CCF00B94C3F /* LineUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53733334209D4CCF00B94C3F /* LineUtils.swift */; };
+		53846A3724FF4888003A8617 /* RenderImageIO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53846A3624FF4888003A8617 /* RenderImageIO.swift */; };
+		53846A3924FF54FD003A8617 /* Tool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53846A3824FF54FD003A8617 /* Tool.swift */; };
 		53CE72CF207F0DEE003C3A2B /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53CE72CE207F0DEE003C3A2B /* Utils.swift */; };
 		53CE72D1207F169E003C3A2B /* GLCanvasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53CE72D0207F169E003C3A2B /* GLCanvasView.swift */; };
 		53CE72D3207F17B7003C3A2B /* Styles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53CE72D2207F17B7003C3A2B /* Styles.swift */; };
@@ -48,6 +51,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5302495520B7B006001E7081 /* DocumentFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentFormat.swift; sourceTree = "<group>"; };
 		531B95562082ED5F00FAA1EA /* TestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestView.swift; sourceTree = "<group>"; };
 		531B9558208300DD00FAA1EA /* RenderTexture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenderTexture.swift; sourceTree = "<group>"; };
 		531B9559208300DD00FAA1EA /* RenderContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenderContext.swift; sourceTree = "<group>"; };
@@ -55,11 +59,11 @@
 		53230D5220898DD0006CD9D9 /* ColorPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPicker.swift; sourceTree = "<group>"; };
 		5346AEAC2079CFEA00DEC2FE /* Brush.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Brush.swift; sourceTree = "<group>"; };
 		534907502091C2D00041E000 /* BitmapContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BitmapContext.swift; sourceTree = "<group>"; };
-		5349075220941C070041E000 /* Geometry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Geometry.swift; sourceTree = "<group>"; };
 		5349075420958CB50041E000 /* RenderAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenderAction.swift; sourceTree = "<group>"; };
 		535FA8E72090315300F5B8B8 /* BrushPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrushPreview.swift; sourceTree = "<group>"; };
 		535FA8E9209043B900F5B8B8 /* BrushPalette.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrushPalette.swift; sourceTree = "<group>"; };
 		535FE27420A29D730078F719 /* RenderTextureCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenderTextureCell.swift; sourceTree = "<group>"; };
+		535FE27620A2E99E0078F719 /* RenderLayers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenderLayers.swift; sourceTree = "<group>"; };
 		536E24C1208DE45E008B78A3 /* NewDocumentWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewDocumentWindow.swift; sourceTree = "<group>"; };
 		536E24C2208DE45E008B78A3 /* NewDocumentWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewDocumentWindow.xib; sourceTree = "<group>"; };
 		536E24C5208ED6DC008B78A3 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
@@ -70,6 +74,8 @@
 		5373333020981AB300B94C3F /* RenderDrawing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RenderDrawing.swift; sourceTree = "<group>"; };
 		537333322098374700B94C3F /* Preferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
 		53733334209D4CCF00B94C3F /* LineUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineUtils.swift; sourceTree = "<group>"; };
+		53846A3624FF4888003A8617 /* RenderImageIO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenderImageIO.swift; sourceTree = "<group>"; };
+		53846A3824FF54FD003A8617 /* Tool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tool.swift; sourceTree = "<group>"; };
 		53CE72CE207F0DEE003C3A2B /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		53CE72D0207F169E003C3A2B /* GLCanvasView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GLCanvasView.swift; sourceTree = "<group>"; };
 		53CE72D2207F17B7003C3A2B /* Styles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Styles.swift; sourceTree = "<group>"; };
@@ -107,8 +113,8 @@
 		53019268208D936D003C38AB /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				536E24C5208ED6DC008B78A3 /* Colors.swift */,
 				531B955C2083392F00FAA1EA /* Matrix.swift */,
-				5349075220941C070041E000 /* Geometry.swift */,
 				53CE72D62081A0D2003C3A2B /* Types.swift */,
 				53E5A3FF208856E000380422 /* TypeUtils.swift */,
 				53CE72CE207F0DEE003C3A2B /* Utils.swift */,
@@ -133,6 +139,8 @@
 			isa = PBXGroup;
 			children = (
 				531B9559208300DD00FAA1EA /* RenderContext.swift */,
+				535FE27620A2E99E0078F719 /* RenderLayers.swift */,
+				53846A3624FF4888003A8617 /* RenderImageIO.swift */,
 				5373333020981AB300B94C3F /* RenderDrawing.swift */,
 				531B9558208300DD00FAA1EA /* RenderTexture.swift */,
 				535FE27420A29D730078F719 /* RenderTextureCell.swift */,
@@ -141,15 +149,18 @@
 			name = Renderer;
 			sourceTree = "<group>";
 		};
-		536E24C7208ED6F7008B78A3 /* Colors */ = {
+		53846A3524FE4CF4003A8617 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				535FA8E9209043B900F5B8B8 /* BrushPalette.swift */,
 				535FA8E72090315300F5B8B8 /* BrushPreview.swift */,
-				53230D5220898DD0006CD9D9 /* ColorPicker.swift */,
+				537333282096C37800B94C3F /* CanvasView.swift */,
+				537333262096C35E00B94C3F /* CanvasViewEvents.swift */,
+				5373332A2096D03500B94C3F /* CanvasOverlayView.swift */,
 				536E24C8208ED750008B78A3 /* ColorGrid.swift */,
-				536E24C5208ED6DC008B78A3 /* Colors.swift */,
+				53230D5220898DD0006CD9D9 /* ColorPicker.swift */,
 			);
-			name = Colors;
+			name = Views;
 			sourceTree = "<group>";
 		};
 		53D61BD12079BAD40051E8E6 = {
@@ -173,18 +184,16 @@
 			children = (
 				53D61BDD2079BAD40051E8E6 /* AppDelegate.swift */,
 				53D61BDF2079BAD40051E8E6 /* Document.swift */,
+				5302495520B7B006001E7081 /* DocumentFormat.swift */,
 				536E24C1208DE45E008B78A3 /* NewDocumentWindow.swift */,
-				535FA8E9209043B900F5B8B8 /* BrushPalette.swift */,
-				537333282096C37800B94C3F /* CanvasView.swift */,
-				537333262096C35E00B94C3F /* CanvasViewEvents.swift */,
-				5373332A2096D03500B94C3F /* CanvasOverlayView.swift */,
 				53CE72D420804D92003C3A2B /* UndoManager.swift */,
 				53CE72D2207F17B7003C3A2B /* Styles.swift */,
 				5346AEAC2079CFEA00DEC2FE /* Brush.swift */,
+				53846A3824FF54FD003A8617 /* Tool.swift */,
 				537333322098374700B94C3F /* Preferences.swift */,
 				53733334209D4CCF00B94C3F /* LineUtils.swift */,
+				53846A3524FE4CF4003A8617 /* Views */,
 				5349075620958CDB0041E000 /* Renderer */,
-				536E24C7208ED6F7008B78A3 /* Colors */,
 				53019268208D936D003C38AB /* Utilities */,
 				53019269208D9389003C38AB /* Tests */,
 				53DF02F520858C900065B70D /* C */,
@@ -251,6 +260,11 @@
 						CreatedOnToolsVersion = 9.0;
 						LastSwiftMigration = 0900;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.Sandbox = {
+								enabled = 0;
+							};
+						};
 					};
 				};
 			};
@@ -307,12 +321,15 @@
 				53CE72D72081A0D2003C3A2B /* Types.swift in Sources */,
 				536E24C6208ED6DC008B78A3 /* Colors.swift in Sources */,
 				53E5A400208856E000380422 /* TypeUtils.swift in Sources */,
+				53846A3924FF54FD003A8617 /* Tool.swift in Sources */,
+				535FE27720A2E99E0078F719 /* RenderLayers.swift in Sources */,
 				53CE72D3207F17B7003C3A2B /* Styles.swift in Sources */,
+				5302495620B7B006001E7081 /* DocumentFormat.swift in Sources */,
 				53E5A3FE2086ED1100380422 /* Tests.swift in Sources */,
 				53DF02F820858DC50065B70D /* CGUtils.swift in Sources */,
+				53846A3724FF4888003A8617 /* RenderImageIO.swift in Sources */,
 				534907512091C2D00041E000 /* BitmapContext.swift in Sources */,
 				535FA8E82090315300F5B8B8 /* BrushPreview.swift in Sources */,
-				5349075320941C070041E000 /* Geometry.swift in Sources */,
 				5346AEAD2079CFEA00DEC2FE /* Brush.swift in Sources */,
 				536E24C3208DE45E008B78A3 /* NewDocumentWindow.swift in Sources */,
 				536E24C9208ED750008B78A3 /* ColorGrid.swift in Sources */,
@@ -461,7 +478,6 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = Blaise/Blaise.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = Blaise/Info.plist;
@@ -480,7 +496,6 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = Blaise/Blaise.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = Blaise/Info.plist;

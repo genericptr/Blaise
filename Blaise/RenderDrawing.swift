@@ -16,19 +16,42 @@ var BrushStamps = BrushStampDictionary()
 
 extension RenderContext {
 	
-	
-	func plotPixel(_ x: UInt, _ y: UInt, _ color: RGBA8, _ alpha: UInt8) {
-		
-		lastAction.setPixel(x, y, newColor: color, oldColor: pixels[x, y], alpha: alpha)
-		lastOperationRegion.union(x.int, y.int)
-		
-//		print("set \(x),\(y))")
-		pixels.setValue(x, y, color)
-		
-		texture.setPixel(x: x, y: y, source: pixels)
+	private func unionPixelChanges(_ box: Box) {
+		lastOperationRegion.union(box)
+		lastAction.region.union(box)
+	}
+
+	private func unionPixelChanges<T: BinaryInteger>(x: T, y: T) {
+		lastOperationRegion.union(Int(x), Int(y))
+		lastAction.region.union(Int(x), Int(y))
 	}
 	
-	func drawPoint_aa(_ point: V2, alpha: Float = 1.0) {
+	public func clear() {
+		texture.fill(RGBA8.clearColor)
+	}
+	
+	public func fill(_ color: RGBA8) {
+		texture.fill(color)
+	}
+	
+	public func fillWithBackground() {
+		fill(contextInfo.backgroundColor)
+	}
+	
+	public func getPixel<T: BinaryInteger> (_ x: T, _ y: T) -> RGBA8 {
+		return texture.getPixel(UInt(x), UInt(y))
+	}
+	
+	public func setPixel<T: BinaryInteger> (_ x: T, _ y: T, color: RGBA8) {
+		return texture.setPixel(UInt(x), UInt(y), color: color)
+	}
+
+	private func plotPixel(_ x: UInt, _ y: UInt, _ color: RGBA8, _ alpha: UInt8) {
+		lastAction.setPixel(x, y, newColor: color, oldColor: getPixel(x, y), alpha: alpha)
+		texture.setPixel(x, y, color: color)
+	}
+	
+	private func drawPoint_aa(_ point: V2, alpha: Float = 1.0) {
 		
 		let px = point.x.uint
 		let py = point.y.uint
@@ -58,45 +81,51 @@ extension RenderContext {
 		if xr > 0 && yr > 0 { drawPoint(px + 1, py + 1, (xr / 2) + (yr / 2)) } // bottom right
 
 		// TODO: union box that covers entire 2x2 region
-		lastAction.region.union(V2i(Int(px), Int(py)))
+//		lastAction.region.union(V2i(Int(px), Int(py)))
+		unionPixelChanges(x: px, y: py)
 	}
 	
-	func drawPoint(_ point: V2, alpha: Float = 1.0) {
+	private func drawPoint(_ point: V2, alpha: Float = 1.0) {
 		let px = point.x.uint
 		let py = point.y.uint
 		
 		let color = RGBA8(255, 0, 0, UInt8(255 * alpha))
-		let dest = pixels[px, py]
+		let dest = getPixel(px, py)
 		let blend = BlendColors(src: color, dest: dest)
 		
 		plotPixel(px, py, blend, color.a)
 		
-		lastAction.region.union(V2i(Int(px), Int(py)))
+//		lastAction.region.union(V2i(Int(px), Int(py)))
+		unionPixelChanges(x: px, y: py)
 	}
 
-	func drawPoint(_ px: UInt, _ py: UInt, _ alpha: Float) {
+	private func drawPoint(_ px: UInt, _ py: UInt, _ alpha: Float) {
 		let a = UInt8(Clamp(value: Float(255) * alpha, min: 0, max: 255))
 		let color = RGBA8(255, 0, 0, a)
-		let dest = pixels[px, py]
+		let dest = getPixel(px, py)
 		let blend = BlendColors(src: color, dest: dest)
 		
 		plotPixel(px, py, blend, color.a)
+		
+//		lastAction.region.union(V2i(Int(px), Int(py)))
+		unionPixelChanges(x: px, y: py)
 	}
 	
-	func drawPoint(_ point: V2i) {
+	private func drawPoint(_ point: V2i) {
 		let px = point.x.uint
 		let py = point.y.uint
 		
 		let color = RGBA8(255, 0, 0, 255)
-		let dest = pixels[px, py]
+		let dest = getPixel(px, py)
 		let blend = BlendColors(src: color, dest: dest)
 		
 		plotPixel(px, py, blend, color.a)
 		
-		lastAction.region.union(point)
+//		lastAction.region.union(point)
+		unionPixelChanges(x: px, y: py)
 	}
 	
-	func drawLine(from startPoint: V2i, to endPoint: V2i) {
+	private func drawLine(from startPoint: V2i, to endPoint: V2i) {
 		if startPoint != endPoint {
 			PlotLine(x0: startPoint.x, y0: startPoint.y, x1: endPoint.x, y1: endPoint.y, plot: {
 				drawPoint(V2i($0, $1))
@@ -106,7 +135,7 @@ extension RenderContext {
 		}
 	}
 	
-	func loadBrushStamp(hardness: Float, radius r: Int) -> BrushStampMatrix {
+	private func loadBrushStamp(hardness: Float, radius r: Int) -> BrushStampMatrix {
 		
 		let key = "\(hardness)\(r)"
 		var stamp: BrushStampMatrix
@@ -123,6 +152,8 @@ extension RenderContext {
 				for x in -r...r {
 					if (x*x + yy <= range) {
 						
+						// TODO: this needs to be a quadaric curve with a better falloff
+						// instead of lerping.
 						var dist = 1 - Magnitude(Float(x), Float(y)) / Float(r)
 						dist = Lerp(t: dist, a: -0.2, b: hardness)
 						
@@ -146,19 +177,21 @@ extension RenderContext {
 		return stamp
 	}
 	
-	func drawCircle_aa(_ origin: V2) {
+	private func drawCircle_aa(_ origin: V2) {
 		guard let brush = brush else { return }
-		
-		var r: Int = Int(brush.brushSize() / 2)
-		if r < 2 {
-			r = 2
-		}
 		
 		let ox = origin.x - trunc(origin.x) - 0.5
 		let oy = origin.y - trunc(origin.y) - 0.5
 		let dx = 0.5 - ox < 0.5 ? 1 : -1
 		let dy = 0.5 - oy < 0.5 ? 1 : -1
 
+		
+		// TODO: take this a param to drawCircle so
+		// we can load it once when the line is drawn
+		// instead of for each pass
+		var r: Int = Int(brush.brushSize() / 2)
+		if r < 2 { r = 2 }
+		
 		var color = brush.color
 		let opacity: Float = 1.0
 		let flow: Float = 1.0
@@ -198,7 +231,7 @@ extension RenderContext {
 					
 					let px = p.x.int
 					let py = p.y.int
-					let dest = pixels[px, py]
+					let dest = getPixel(px, py)
 
 					
 					// offset to sample alpha
@@ -229,13 +262,14 @@ extension RenderContext {
 			}
 		}
 		
-		lastAction.region.union(Box(minX: origin.x.int - r, minY: origin.y.int - r, maxX: origin.x.int + r, maxY: origin.y.int + r))
+//		lastAction.region.union(Box(minX: origin.x.int - r, minY: origin.y.int - r, maxX: origin.x.int + r, maxY: origin.y.int + r))
+		unionPixelChanges(Box(minX: origin.x.int - r, minY: origin.y.int - r, maxX: origin.x.int + r, maxY: origin.y.int + r))
 	}
 	
 	// https://stackoverflow.com/questions/1201200/fast-algorithm-for-drawing-filled-circles
 	// https://stackoverflow.com/questions/10878209/midpoint-circle-algorithm-for-filled-circle
 	
-	func drawCircle(_ origin: V2i) {
+	private func drawCircle(_ origin: V2i) {
 		guard let brush = brush else { return }
 		
 		var r: Int = Int(brush.brushSize() / 2)
@@ -260,7 +294,7 @@ extension RenderContext {
 
 					let px = p.x.uint
 					let py = p.y.uint
-					let dest = pixels[px, py]
+					let dest = getPixel(px, py)
 
 					color.a = UInt8(Float(color.a) * flow)
 					color.a = UInt8(Float(color.a) * opacity)
@@ -279,10 +313,11 @@ extension RenderContext {
 			}
 		}
 		
-		lastAction.region.union(Box(minX: origin.x - r, minY: origin.y - r, maxX: origin.x + r, maxY: origin.y + r))
+//		lastAction.region.union(Box(minX: origin.x - r, minY: origin.y - r, maxX: origin.x + r, maxY: origin.y + r))
+		unionPixelChanges(Box(minX: origin.x - r, minY: origin.y - r, maxX: origin.x + r, maxY: origin.y + r))
 	}
 	
-	func strokeLine_aa(from startPoint: V2, to endPoint: V2) {
+	public func strokeLine_aa(from startPoint: V2, to endPoint: V2) {
 		
 		guard let brush = brush else { return }
 		var lastPoint = V2(-1000, -1000)
@@ -305,7 +340,7 @@ extension RenderContext {
 		}
 	}
 	
-	func strokeLine(from startPoint: V2i, to endPoint: V2i) {
+	public func strokeLine(from startPoint: V2i, to endPoint: V2i) {
 		
 		guard let brush = brush else { return }
 		var lastPoint = V2i(-1000, -1000)
@@ -328,7 +363,7 @@ extension RenderContext {
 		}
 	}
 	
-	func strokePoints_aa(from startPoint: V2, to endPoint: V2) {
+	public func strokePoints_aa(from startPoint: V2, to endPoint: V2) {
 		
 		if startPoint != endPoint {
 			PlotLine_AA(Vec2<Double>(Double(startPoint.x), Double(startPoint.y)), Vec2<Double>(Double(endPoint.x), Double(endPoint.y)), plot: {
@@ -341,7 +376,7 @@ extension RenderContext {
 		}
 	}
 	
-	func strokePoints(from startPoint: V2i, to endPoint: V2i) {
+	public func strokePoints(from startPoint: V2i, to endPoint: V2i) {
 		if startPoint != endPoint {
 			PlotLine(x0: startPoint.x, y0: startPoint.y, x1: endPoint.x, y1: endPoint.y, plot: {
 				
@@ -361,7 +396,7 @@ extension RenderContext {
 
 // MARK: Utils
 
-func BlendColors (src: RGBA8, dest: RGBA8) -> RGBA8 {
+fileprivate func BlendColors (src: RGBA8, dest: RGBA8) -> RGBA8 {
 	let a = Float(src.a) / 255
 	let preMulSrc = RGBAf((Float(src.r) / 255) * a, (Float(src.g) / 255) * a, (Float(src.b) / 255) * a, a)
 	var blend = preMulSrc + (dest.getRGBAf() * (1 - a))

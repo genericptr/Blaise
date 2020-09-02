@@ -22,6 +22,9 @@ class GLCanvasView: NSOpenGLView {
 	
 	private func createOpenGLContext() {
 		
+		// TODO: to support high-res contexts set this to true
+		wantsBestResolutionOpenGLSurface = false
+		
 		let attr = [
 			NSOpenGLPixelFormatAttribute(NSOpenGLPFAOpenGLProfile),
 			NSOpenGLPixelFormatAttribute(NSOpenGLProfileVersionLegacy),
@@ -36,7 +39,7 @@ class GLCanvasView: NSOpenGLView {
 		self.openGLContext = context
 		self.openGLContext?.makeCurrentContext()
 		
-		PrintOpenGLInfo()
+		print("created openGL context")
 	}
 	
 	func flush() {
@@ -58,8 +61,8 @@ class GLCanvasView: NSOpenGLView {
 	func setup() {
 		createOpenGLContext()
 	}
-
-	override func display() {
+	
+	override func draw(_ dirtyRect: NSRect) {
 		makeContextCurrent()
 		draw()
 		flush()
@@ -72,13 +75,13 @@ class GLCanvasView: NSOpenGLView {
 	override init(frame frameRect: NSRect) {
 		super.init(frame: frameRect)
 		
-		setup()
+//		setup()
 	}
 	
 	required init?(coder decoder: NSCoder) {
 		super.init(coder: decoder)
 		
-		setup()
+//		setup()
 	}
 	
 }

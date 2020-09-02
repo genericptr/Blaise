@@ -83,6 +83,18 @@ extension UInt8: FloatingPointArithmetic, UnsignedIntegerArithmetic {
 	var toFloat: Float { return Float(self) }
 }
 
+extension UInt32: FloatingPointArithmetic, UnsignedIntegerArithmetic {
+	var toSigned: Int { return Int(self) }
+	var toUnsigned: UInt { return UInt(self) }
+	var toFloat: Float { return Float(self) }
+}
+
+extension UInt16: FloatingPointArithmetic, UnsignedIntegerArithmetic {
+	var toSigned: Int { return Int(self) }
+	var toUnsigned: UInt { return UInt(self) }
+	var toFloat: Float { return Float(self) }
+}
+
 extension UInt64: FloatingPointArithmetic, UnsignedIntegerArithmetic {
 	var toSigned: Int { return Int(self) }
 	var toUnsigned: UInt { return UInt(self) }
@@ -110,6 +122,22 @@ extension UInt {
 	var string: String { return String(self) }
 }
 
+extension UInt32 {
+	var int: Int { return Int(self) }
+	var uint: UInt { return UInt(self) }
+	var float: Float { return Float(self) }
+	var double: Double { return Double(self) }
+	var string: String { return String(self) }
+}
+
+extension UInt16 {
+	var int: Int { return Int(self) }
+	var uint: UInt { return UInt(self) }
+	var float: Float { return Float(self) }
+	var double: Double { return Double(self) }
+	var string: String { return String(self) }
+}
+
 extension UInt8 {
 	var int: Int { return Int(self) }
 	var uint: UInt { return UInt(self) }
@@ -126,8 +154,10 @@ extension Int {
 
 // MARK: CoreGraphics
 
-extension CGFloat: FloatingPointArithmetic {
+extension CGFloat: FloatingPointArithmetic, IntegerArithmetic {
 	var toFloat: Float { return Float(self) }
+	var toUnsigned: UInt { return UInt(self) }
+	var toSigned: Int { return Int(self) }
 }
 
 // MARK: Cocoa

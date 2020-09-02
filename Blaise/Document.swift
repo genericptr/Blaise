@@ -125,7 +125,9 @@ class Document: NSDocument, MemoryUsage {
 	}
 	
 	func backgroundViewBoundsChanged() {
-		overlayView?.resizeToFit(scrollView: scrollView)
+		if overlayView != nil {
+			overlayView?.resizeToFit(scrollView: scrollView)
+		}
 	}
 	
 	func calculateTotalMemoryUsage(bytes: inout UInt64) {
@@ -144,19 +146,17 @@ class Document: NSDocument, MemoryUsage {
 	}
 	
 	override func windowControllerDidLoadNib(_ windowController: NSWindowController) {
-//		guard let window = windowController.window else { return }
 		
 		Prefs.set(.minGridZoom, 16)
-		
-		// TOOD: set this based on new document window
 		
 		if let openedImage = openedImage {
 			canvasView.sourceImage = openedImage
 			canvasView.setFrameSize(openedImage.size)
 		} else {
-			canvasView.setFrameSize([300, 300].cgSize)
+			canvasView.setFrameSize([64*2, 64*2].cgSize)
 		}
-		
+		canvasView.setup()
+
 		openedImage = nil
 
 		scrollView.verticalScrollElasticity = .none
@@ -165,11 +165,12 @@ class Document: NSDocument, MemoryUsage {
 		scrollView.maxMagnification = 32.0
 		
 		// overlay view
-		overlayView = CanvasOverlayView(frame: scrollView.frame)
-		backgroundView.addSubview(overlayView!)
-		overlayView?.targetView = canvasView
-		canvasView.overlayView = overlayView
-		
+		// TODO: overlay view is broken
+//		overlayView = CanvasOverlayView(frame: scrollView.frame)
+//		backgroundView.addSubview(overlayView!)
+//		overlayView?.targetView = canvasView
+//		canvasView.overlayView = overlayView
+				
 		backgroundView.document = self
 		
 		scrollView.contentView.scroll(to: CGPoint(0, 0))
@@ -179,11 +180,11 @@ class Document: NSDocument, MemoryUsage {
 
 		backgroundViewBoundsChanged()
 
-//		brushPalette = BrushPaletteView.init(nibName: NSNib.Name(rawValue: "BrushPaletteView"), bundle: nil)
-//		if let brushPalette = brushPalette  {
-//			scrollView.addSubview(brushPalette.view)
-//			brushPalette.canvas = canvasView
-//		}
+		brushPalette = BrushPaletteView.init(nibName: NSNib.Name(rawValue: "BrushPaletteView"), bundle: nil)
+		if let brushPalette = brushPalette  {
+			scrollView.addSubview(brushPalette.view)
+			brushPalette.canvas = canvasView
+		}
 	}
 	
 	override func writableTypes(for saveOperation: NSDocument.SaveOperationType) -> [String] {
@@ -197,7 +198,7 @@ class Document: NSDocument, MemoryUsage {
 	}
 		
 	override func data(ofType typeName: String) throws -> Data {
-		if let data = canvasView.copyImageData(typeName: typeName) {
+		if let data = canvasView.renderContext.copyImageData(typeName: typeName) {
 			return data
 		} else {
 			throw NSError(domain: NSOSStatusErrorDomain, code: unimpErr, userInfo: nil)
@@ -207,6 +208,7 @@ class Document: NSDocument, MemoryUsage {
 	override func read(from url: URL, ofType typeName: String) throws {
 		
 		if let tempRep = NSImageRep(contentsOf: url) {
+			Swift.print("loaded image \(url)")
 			Swift.print("\(tempRep.pixelsWide)x\(tempRep.pixelsHigh)")
 			openedImage = NSImage(size: NSMakeSize(CGFloat(tempRep.pixelsWide), CGFloat(tempRep.pixelsHigh)))
 			openedImage?.addRepresentation(tempRep)

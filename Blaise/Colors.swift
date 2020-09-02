@@ -93,19 +93,15 @@ extension RGBA where T == UInt8  {
 	func getColor() -> NSColor {
 		return NSColor(calibratedRed: CGFloat(r) / 255.0, green: CGFloat(g) / 255.0, blue: CGFloat(b) / 255.0, alpha: CGFloat(a) / 255.0)
 	}
-	
-	
+		
 	// common colors
-	static func whiteColor() -> RGBA8 {
-		return RGBA8(r: 255, g: 255, b: 255, a: 255)
-	}
-	static func blackColor() -> RGBA8 {
-		return RGBA8(r: 0, g: 0, b: 0, a: 255)
-	}
-	static func clearColor() -> RGBA8 {
-		return RGBA8(r: 0, g: 0, b: 0, a: 0)
-	}
 	
+	static let whiteColor: RGBA8 = RGBA8(r: 255, g: 255, b: 255, a: 255)
+	static let blackColor: RGBA8 = RGBA8(r: 0, g: 0, b: 0, a: 255)
+	static let clearColor: RGBA8 = RGBA8(r: 0, g: 0, b: 0, a: 0)
+	static let redColor: RGBA8 = RGBA8(r: 255, g: 0, b: 0, a: 255)
+	static let greenColor: RGBA8 = RGBA8(r: 0, g: 255, b: 0, a: 255)
+	static let blueColor: RGBA8 = RGBA8(r: 0, g: 0, b: 255, a: 255)
 }
 
 extension RGBA where T == Float  {
